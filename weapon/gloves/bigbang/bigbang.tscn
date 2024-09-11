@@ -1,0 +1,84 @@
+[gd_scene load_steps=13 format=3 uid="uid://bomv36e46qg6l"]
+
+[ext_resource type="Texture2D" uid="uid://ddmibsfuqlf3o" path="res://vfx/explosion/Flare00.PNG" id="1_mfyc8"]
+[ext_resource type="Script" path="res://weapon/gloves/bigbang/bigbang.gd" id="1_uy0nj"]
+[ext_resource type="Texture2D" uid="uid://chj68tg2fwmes" path="res://vfx/explosion/Circle03.png" id="2_j7rnb"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tgqfm"]
+radius = 0.4
+
+[sub_resource type="Curve" id="Curve_ci1sa"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_v7ayo"]
+curve = SubResource("Curve_ci1sa")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_27es2"]
+gravity = Vector3(0, 0, 0)
+scale_min = 3.0
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_v7ayo")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lye35"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.25098, 0.670588, 0.811765, 1)
+albedo_texture = ExtResource("2_j7rnb")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_wj7qx"]
+material = SubResource("StandardMaterial3D_lye35")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3fsjb"]
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2vp60"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.458824, 0.709804, 0.941176, 1)
+albedo_texture = ExtResource("1_mfyc8")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_nrxoc"]
+material = SubResource("StandardMaterial3D_2vp60")
+
+[node name="BigBang" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 2
+gravity_scale = 0.0
+max_contacts_reported = 4
+contact_monitor = true
+script = ExtResource("1_uy0nj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_tgqfm")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.619608, 0.858824, 0.945098, 1)
+light_energy = 10.0
+omni_range = 7.0
+
+[node name="Ring" type="GPUParticles3D" parent="."]
+amount = 3
+lifetime = 0.01
+process_material = SubResource("ParticleProcessMaterial_27es2")
+draw_pass_1 = SubResource("QuadMesh_wj7qx")
+
+[node name="Ball" type="GPUParticles3D" parent="."]
+amount = 50
+lifetime = 0.01
+process_material = SubResource("ParticleProcessMaterial_3fsjb")
+draw_pass_1 = SubResource("QuadMesh_nrxoc")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

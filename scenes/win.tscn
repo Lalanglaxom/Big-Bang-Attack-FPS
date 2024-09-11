@@ -1,0 +1,89 @@
+[gd_scene load_steps=6 format=3 uid="uid://bph0pl80iywmj"]
+
+[ext_resource type="Script" path="res://scenes/win.gd" id="1_2a7hc"]
+[ext_resource type="Texture2D" uid="uid://jdw2as2lr3fh" path="res://ui/menu/yamaha-vs-saibaman-how-it-should-of-ended-v0-m0x8w25rt3hb1.png" id="1_2r7ck"]
+
+[sub_resource type="SystemFont" id="SystemFont_bn3bo"]
+font_names = PackedStringArray("SVN-A Love Of Thunder")
+
+[sub_resource type="LabelSettings" id="LabelSettings_bwucx"]
+line_spacing = -50.0
+font = SubResource("SystemFont_bn3bo")
+font_size = 100
+font_color = Color(0.993483, 1, 0.721977, 1)
+outline_size = 25
+outline_color = Color(0.113725, 0.113725, 0, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_ygaj8"]
+font_names = PackedStringArray("Impact")
+
+[node name="Win" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2a7hc")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.694118, 0.694118, 0.694118, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_2r7ck")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -386.0
+offset_top = -75.0
+offset_right = 405.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Yamcha Survied"
+label_settings = SubResource("LabelSettings_bwucx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = -228.0
+offset_right = 181.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ButtonContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="ButtonContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_ygaj8")
+theme_override_font_sizes/font_size = 50
+keep_pressed_outside = true
+text = "Try again"
+
+[node name="Menu" type="Button" parent="ButtonContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_ygaj8")
+theme_override_font_sizes/font_size = 50
+text = "Menu"
+
+[connection signal="button_up" from="ButtonContainer/VBoxContainer/Play" to="." method="_on_play_button_up"]
+[connection signal="button_up" from="ButtonContainer/VBoxContainer/Menu" to="." method="_on_menu_button_up"]

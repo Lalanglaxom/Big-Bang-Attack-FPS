@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Ammo" load_steps=3 format=3 uid="uid://bkcfifvos745g"]
+
+[ext_resource type="PackedScene" uid="uid://gqehmuy2341s" path="res://weapon/rocket_launcher/rocket/rocket.tscn" id="1_eubwy"]
+[ext_resource type="Script" path="res://weapon/ammo_resources.gd" id="1_rdxla"]
+
+[resource]
+script = ExtResource("1_rdxla")
+ammo_scene = ExtResource("1_eubwy")
+name = "rocket ammo"
+ammo_speed = 20.5
+position = Vector3(0.401798, -0.113029, -2.52601)
+rotation = Vector3(0, 90, 0)

@@ -1,0 +1,388 @@
+[gd_scene load_steps=23 format=3 uid="uid://cc1m2a1obsyn4"]
+
+[ext_resource type="Script" path="res://entities/player/character.gd" id="1_5q61e"]
+[ext_resource type="PackedScene" uid="uid://bki433ajvtxh5" path="res://entities/player/prefab/view_model.tscn" id="2_cstpq"]
+[ext_resource type="PackedScene" uid="uid://3mij3cjhkwsm" path="res://addons/fpc/reticles/reticle_1.tscn" id="2_uuexm"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="3_22iiu"]
+[ext_resource type="Script" path="res://entities/player/debug.gd" id="3_x1wcc"]
+[ext_resource type="Texture2D" uid="uid://cqfuit4fudjdm" path="res://ui/heart/Heart_coraz_C3_B3n.png" id="5_kg5q0"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="5_tai33"]
+[ext_resource type="Texture2D" uid="uid://bxi3tcatdsipi" path="res://ui/heart/heart back.png" id="5_v37wx"]
+[ext_resource type="Texture2D" uid="uid://wncd23376147" path="res://ui/heart/heart front.png" id="6_6wbf0"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="6_pcou8"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="7_wggv0"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="8_enft1"]
+
+[sub_resource type="Animation" id="Animation_onuoq"]
+resource_name = "Crouch"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Collision:shape:height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Collision:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1, 0), Vector3(0, 0.726614, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1.3728, 0), Vector3(0, 0.822172, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_gh776"]
+resource_name = "RESET"
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Collision:shape:height")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Collision:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.697272, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.3728, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_lrqmv"]
+resource_name = "headbob"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.05, -0.05, 0), Vector3(0, 0, 0), Vector3(0.05, -0.05, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o0unb"]
+_data = {
+"Crouch": SubResource("Animation_onuoq"),
+"RESET": SubResource("Animation_gh776"),
+"headbob": SubResource("Animation_lrqmv")
+}
+
+[sub_resource type="Theme" id="Theme_wdf0f"]
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 10
+MarginContainer/constants/margin_right = 10
+MarginContainer/constants/margin_top = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_w5s5p"]
+font_size = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_cqqaq"]
+font_size = 45
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
+albedo_color = Color(0.909804, 0.596078, 0, 1)
+clearcoat_enabled = true
+clearcoat_roughness = 0.2
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jw1de"]
+material = SubResource("StandardMaterial3D_kp17n")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
+
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION")]
+collision_mask = 2
+script = ExtResource("1_5q61e")
+health = null
+base_speed = null
+sprint_speed = null
+crouch_speed = null
+acceleration = null
+mouse_sensitivity = null
+to_crouch_speed = null
+throwForce = null
+jump_height = 2.0
+jump_peak_time = 0.3
+jump_descent_time = 0.3
+HEAD = NodePath("Head")
+CAMERA = NodePath("Head/Camera")
+CAMERA_ANIMATION = NodePath("Head/camera_animation")
+JUMP = null
+LEFT = null
+RIGHT = null
+FORWARD = null
+BACKWARD = null
+PAUSE = null
+CROUCH = null
+SPRINT = null
+SHOOT = null
+immobile = null
+jumping_enabled = null
+in_air_momentum = false
+motion_smoothing = null
+sprint_enabled = null
+crouch_enabled = null
+crouch_mode = null
+sprint_mode = null
+dynamic_fov = null
+continuous_jumping = null
+view_bobbing = false
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3728, 0)
+
+[node name="Camera" type="Camera3D" parent="Head"]
+cull_mask = 1048573
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Head/Camera"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="Head/Camera/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="view_model_cam" parent="Head/Camera/SubViewportContainer/SubViewport" instance=ExtResource("2_cstpq")]
+
+[node name="AnimationTree" parent="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" index="0"]
+root_node = NodePath("../FPS_Rig/Weapon/@Node3D@34727")
+anim_player = NodePath("/root/@EditorNode@17141/@Panel@13/@VBoxContainer@14/@HSplitContainer@17/@HSplitContainer@25/@HSplitContainer@33/@VBoxContainer@34/@VSplitContainer@36/@VSplitContainer@62/@VBoxContainer@63/@PanelContainer@110/MainScreen/@CanvasItemEditor@9462/@VSplitContainer@9281/@HSplitContainer@9283/@HSplitContainer@9285/@Control@9286/@SubViewportContainer@9287/@SubViewport@9288/Character/Head/Camera/SubViewportContainer/SubViewport/view_model_cam/FPS_Rig/Weapon/@Node3D@34727/AnimationPlayer")
+
+[node name="camera_animation" type="AnimationPlayer" parent="Head"]
+libraries = {
+"": SubResource("AnimationLibrary_o0unb")
+}
+blend_times = [&"headbob", &"RESET", 0.5, &"RESET", &"headbob", 0.5, &"RESET", &"RESET", 0.5]
+
+[node name="BombSpawnPoint" type="Node3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.219906, -0.880232)
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Reticle_1" parent="UserInterface" node_paths=PackedStringArray("reticle_lines", "character") instance=ExtResource("2_uuexm")]
+layout_mode = 1
+reticle_lines = [NodePath("top"), NodePath("left"), NodePath("right"), NodePath("bottom")]
+character = NodePath("../..")
+
+[node name="DebugPanel" type="PanelContainer" parent="UserInterface"]
+visible = false
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 453.0
+offset_bottom = 50.0
+theme = SubResource("Theme_wdf0f")
+script = ExtResource("3_x1wcc")
+
+[node name="MarginContainer" type="MarginContainer" parent="UserInterface/DebugPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/DebugPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -71.0001
+offset_top = -136.0
+offset_right = 569.0
+offset_bottom = 504.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.22, 0.22)
+value = 100.0
+fill_mode = 3
+texture_under = ExtResource("5_v37wx")
+texture_over = ExtResource("6_6wbf0")
+texture_progress = ExtResource("5_kg5q0")
+
+[node name="EnemyRemainText" type="Label" parent="UserInterface"]
+layout_mode = 1
+offset_right = 187.0
+offset_bottom = 57.0
+text = "Enemy Remain"
+label_settings = SubResource("LabelSettings_w5s5p")
+
+[node name="HealthText" type="Label" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -107.0
+offset_right = 78.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "100"
+label_settings = SubResource("LabelSettings_cqqaq")
+horizontal_alignment = 1
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("5_tai33")
+
+[node name="Roor" type="Node" parent="StateChart"]
+script = ExtResource("6_pcou8")
+
+[node name="Character" type="Node" parent="StateChart/Roor"]
+script = ExtResource("7_wggv0")
+initial_state = NodePath("Grounded")
+
+[node name="Airborne" type="Node" parent="StateChart/Roor/Character"]
+script = ExtResource("7_wggv0")
+initial_state = NodePath("Jump")
+
+[node name="Jump" type="Node" parent="StateChart/Roor/Character/Airborne"]
+script = ExtResource("8_enft1")
+
+[node name="to Grounded" type="Node" parent="StateChart/Roor/Character/Airborne/Jump"]
+script = ExtResource("3_22iiu")
+to = NodePath("../../../Grounded")
+event = &"grounded"
+
+[node name="Grounded" type="Node" parent="StateChart/Roor/Character"]
+script = ExtResource("7_wggv0")
+initial_state = NodePath("Walk")
+
+[node name="Walk" type="Node" parent="StateChart/Roor/Character/Grounded"]
+script = ExtResource("8_enft1")
+
+[node name="to Airborne" type="Node" parent="StateChart/Roor/Character/Grounded/Walk"]
+script = ExtResource("3_22iiu")
+to = NodePath("../../../Airborne")
+event = &"jump"
+
+[node name="to Run" type="Node" parent="StateChart/Roor/Character/Grounded/Walk"]
+script = ExtResource("3_22iiu")
+to = NodePath("../../Run")
+event = &"run"
+
+[node name="To Crouch" type="Node" parent="StateChart/Roor/Character/Grounded/Walk"]
+script = ExtResource("3_22iiu")
+to = NodePath("../../Crouch")
+event = &"crouch"
+
+[node name="Run" type="Node" parent="StateChart/Roor/Character/Grounded"]
+script = ExtResource("8_enft1")
+
+[node name="to Airborne" type="Node" parent="StateChart/Roor/Character/Grounded/Run"]
+script = ExtResource("3_22iiu")
+to = NodePath("../../../Airborne")
+event = &"jump"
+
+[node name="to Walk" type="Node" parent="StateChart/Roor/Character/Grounded/Run"]
+script = ExtResource("3_22iiu")
+to = NodePath("../../Walk")
+event = &"walk"
+
+[node name="To Crouch" type="Node" parent="StateChart/Roor/Character/Grounded/Run"]
+script = ExtResource("3_22iiu")
+to = NodePath("../../Crouch")
+event = &"crouch"
+
+[node name="Crouch" type="Node" parent="StateChart/Roor/Character/Grounded"]
+script = ExtResource("8_enft1")
+
+[node name="To Walk" type="Node" parent="StateChart/Roor/Character/Grounded/Crouch"]
+script = ExtResource("3_22iiu")
+to = NodePath("../../Walk")
+event = &"crouch_to_walk"
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_jw1de")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.697272, 0)
+shape = SubResource("CapsuleShape3D_uy03j")
+
+[connection signal="shoot_button_clicked" from="." to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_character_shoot_button_clicked"]
+[connection signal="shoot_button_clicked" from="." to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam/FPS_Rig/Weapon" method="_on_character_shoot_button_clicked"]
+[connection signal="state_entered" from="StateChart/Roor/Character/Grounded" to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_grounded_state_entered"]
+[connection signal="state_entered" from="StateChart/Roor/Character/Grounded/Walk" to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_walk_state_entered"]
+[connection signal="state_entered" from="StateChart/Roor/Character/Grounded/Run" to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_run_state_entered"]
+[connection signal="state_entered" from="StateChart/Roor/Character/Grounded/Crouch" to="." method="_on_crouch_state_entered"]
+[connection signal="state_exited" from="StateChart/Roor/Character/Grounded/Crouch" to="." method="_on_crouch_state_exited"]
+
+[editable path="Head/Camera/SubViewportContainer/SubViewport/view_model_cam"]
+[editable path="UserInterface/Reticle_1"]

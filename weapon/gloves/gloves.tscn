@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bariqy2yln4rg"]
+
+[ext_resource type="PackedScene" uid="uid://bujcyhb2vi3m2" path="res://wip/weapon/gloves/gloves.blend" id="1_d8myh"]
+
+[node name="gloves" instance=ExtResource("1_d8myh")]
+
+[node name="Right hand" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.835981, 0)

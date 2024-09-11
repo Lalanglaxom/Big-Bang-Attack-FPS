@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://bns2r8ht1b8m8"]
+
+[ext_resource type="PackedScene" uid="uid://dmy6u5afg8k2l" path="res://entities/enemy/saihaimen.glb" id="1_t6bd0"]
+[ext_resource type="Script" path="res://entities/enemy/saihaimen.gd" id="2_im7ee"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a3w6v"]
+radius = 0.769998
+height = 3.8507
+
+[node name="Basaiman" groups=["enemies"] instance=ExtResource("1_t6bd0")]
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("2_im7ee")
+
+[node name="Saibamen" parent="." index="0"]
+transform = Transform3D(-1.24977e-08, 0, 0.522292, 0, 0.522292, 0, -0.285913, 0, -2.28301e-08, 0, 1.76133, 0)
+
+[node name="Hitbox" type="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.999748, 0.0224605, 0, -0.0224605, 0.999748, 0, 1.93404, 0)
+shape = SubResource("CapsuleShape3D_a3w6v")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="2"]
+target_desired_distance = 1.5
+path_height_offset = 1.2
+
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]

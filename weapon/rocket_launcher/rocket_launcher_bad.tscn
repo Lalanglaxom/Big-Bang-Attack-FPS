@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjv7811n7lsf3"]
+
+[ext_resource type="PackedScene" uid="uid://bm41uq1jpas2x" path="res://wip/weapon/rocket_launcher/rocket_launcher_bad.blend" id="1_jb5dr"]
+
+[node name="rocket_launcher_bad" instance=ExtResource("1_jb5dr")]
+
+[node name="Rocket_launcher" parent="." index="0"]
+transform = Transform3D(-0.0124497, 0.0413625, 5.55743e-09, -0.0413626, -0.0124497, -1.67273e-09, 3.06923e-16, -5.8037e-09, 0.0431956, -0.18951, -0.0582903, 0)
+layers = 2
+
+[node name="ProjectilePos" type="Node3D" parent="." index="2"]
+transform = Transform3D(0.991016, -0.133744, 0, 0.133744, 0.991016, 0, 0, 0, 1, 0.33943, 0.0555797, 0.00139144)

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://gqehmuy2341s"]
+
+[ext_resource type="PackedScene" uid="uid://iqd4in4y5qjk" path="res://wip/weapon/rocket_launcher/rocket/rocket.blend" id="1_8lbjb"]
+[ext_resource type="Script" path="res://weapon/rocket_launcher/rocket/rocket.gd" id="2_pfpsp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3oxly"]
+size = Vector3(3.12781, 7.7201, 3.02227)
+
+[node name="rocket" instance=ExtResource("1_8lbjb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.024, 0, 0)
+gravity_scale = 0.0
+max_contacts_reported = 4
+contact_monitor = true
+script = ExtResource("2_pfpsp")
+
+[node name="Rocket" parent="." index="0"]
+transform = Transform3D(1.52855e-16, -3.49691e-09, 0.08, -0.08, -3.49691e-09, 2.87991e-22, 3.49691e-09, -0.08, -3.49691e-09, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(0.08, 0, 0, 0, -3.49691e-09, 0.08, 0, -0.08, -3.49691e-09, -0.0013501, 0.000171872, -0.0823115)
+shape = SubResource("BoxShape3D_3oxly")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dl4ihus0gn0i5"]
+
+[ext_resource type="PackedScene" uid="uid://c7tpfpuxtinqa" path="res://vfx/explosion/vfx_explosion_1.tscn" id="1_mx10m"]
+
+[node name="Main" type="Node3D"]
+
+[node name="vfx_Explosion1" parent="." instance=ExtResource("1_mx10m")]

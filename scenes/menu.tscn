@@ -1,0 +1,95 @@
+[gd_scene load_steps=7 format=3 uid="uid://c84fp5qeqdo21"]
+
+[ext_resource type="Script" path="res://scenes/menu.gd" id="1_a0ssx"]
+[ext_resource type="Texture2D" uid="uid://cyeqsdf2g57sx" path="res://ui/menu/Yamcha_with_Saibaman_Level_Sets.webp" id="2_72q0j"]
+
+[sub_resource type="SystemFont" id="SystemFont_rqdf2"]
+font_names = PackedStringArray("Impact")
+
+[sub_resource type="SystemFont" id="SystemFont_kccbu"]
+font_names = PackedStringArray("Impact")
+
+[sub_resource type="SystemFont" id="SystemFont_yklms"]
+font_names = PackedStringArray("SVN-Apple")
+font_stretch = 125
+
+[sub_resource type="LabelSettings" id="LabelSettings_ci6kn"]
+font = SubResource("SystemFont_yklms")
+font_size = 175
+font_color = Color(0.984314, 0.45098, 0.211765, 1)
+outline_size = 30
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a0ssx")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_72q0j")
+expand_mode = 1
+
+[node name="ButtonContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 64.0
+offset_top = -191.0
+offset_right = 425.0
+offset_bottom = 58.0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ButtonContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Play" type="Button" parent="ButtonContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_rqdf2")
+theme_override_font_sizes/font_size = 50
+keep_pressed_outside = true
+text = "Play"
+
+[node name="CheckButton" type="Button" parent="ButtonContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_kccbu")
+theme_override_font_sizes/font_size = 50
+text = "Endless Mode"
+
+[node name="Quit" type="Button" parent="ButtonContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_rqdf2")
+theme_override_font_sizes/font_size = 50
+text = "Quit"
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -472.0
+offset_top = 418.0
+offset_right = 517.0
+offset_bottom = 617.0
+grow_horizontal = 2
+text = "Yamcha The Game"
+label_settings = SubResource("LabelSettings_ci6kn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="button_up" from="ButtonContainer/VBoxContainer/Play" to="." method="_on_play_button_up"]
+[connection signal="button_up" from="ButtonContainer/VBoxContainer/CheckButton" to="." method="_on_check_button_button_up"]
+[connection signal="button_up" from="ButtonContainer/VBoxContainer/Quit" to="." method="_on_quit_button_up"]

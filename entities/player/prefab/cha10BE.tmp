@@ -1,0 +1,222 @@
+[gd_scene load_steps=18 format=3 uid="uid://cc1m2a1obsyn4"]
+
+[ext_resource type="Script" path="res://entities/player/character.gd" id="1_5q61e"]
+[ext_resource type="PackedScene" uid="uid://bki433ajvtxh5" path="res://entities/player/prefab/view_model.tscn" id="2_sa04j"]
+[ext_resource type="PackedScene" uid="uid://3mij3cjhkwsm" path="res://addons/fpc/reticles/reticle_1.tscn" id="2_uuexm"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="3_22iiu"]
+[ext_resource type="Script" path="res://entities/player/debug.gd" id="3_x1wcc"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="5_tai33"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="6_pcou8"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="7_wggv0"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="8_enft1"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="10_qgm32"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
+albedo_color = Color(0.909804, 0.596078, 0, 1)
+clearcoat_enabled = true
+clearcoat_roughness = 0.2
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jw1de"]
+material = SubResource("StandardMaterial3D_kp17n")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
+
+[sub_resource type="Animation" id="Animation_gh776"]
+resource_name = "RESET"
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_lrqmv"]
+resource_name = "headbob"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.05, -0.05, 0), Vector3(0, 0, 0), Vector3(0.05, -0.05, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o0unb"]
+_data = {
+"RESET": SubResource("Animation_gh776"),
+"headbob": SubResource("Animation_lrqmv")
+}
+
+[sub_resource type="Theme" id="Theme_wdf0f"]
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 10
+MarginContainer/constants/margin_right = 10
+MarginContainer/constants/margin_top = 10
+
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION")]
+script = ExtResource("1_5q61e")
+HEAD = NodePath("Head")
+CAMERA = NodePath("Head/Camera")
+CAMERA_ANIMATION = NodePath("Head/camera_animation")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_jw1de")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_uy03j")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Camera" type="Camera3D" parent="Head"]
+cull_mask = 1048573
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Head/Camera"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="Head/Camera/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="view_model_cam" parent="Head/Camera/SubViewportContainer/SubViewport" instance=ExtResource("2_sa04j")]
+
+[node name="Skeleton3D" parent="Head/Camera/SubViewportContainer/SubViewport/view_model_cam/fps_rig/basic_bomb/arm/Arm_FPS" index="0"]
+bones/1/position = Vector3(-1.88588, 0.229439, 0.515943)
+bones/1/rotation = Quaternion(-0.668102, 0.519085, -0.0257666, 0.532473)
+bones/2/position = Vector3(-3.96787, 0.375114, 3.17556)
+bones/3/rotation = Quaternion(0.229794, 0.177293, 0.639219, 0.712153)
+bones/4/rotation = Quaternion(-0.558836, 3.11167e-07, -0.000748051, 0.829278)
+bones/5/rotation = Quaternion(-0.117742, -1.17984e-05, 9.25984e-05, 0.993044)
+bones/20/position = Vector3(-0.734967, 1.59885, -0.954729)
+bones/20/rotation = Quaternion(0.119004, 0.21323, -0.884987, 0.396446)
+bones/22/position = Vector3(-4.18948, 0.907115, -2.6841)
+bones/23/rotation = Quaternion(-0.243188, 0.734103, -0.418787, -0.475993)
+bones/24/rotation = Quaternion(-0.549944, -3.20499e-07, 0.000736015, 0.835201)
+bones/25/rotation = Quaternion(-0.343516, -0.0303025, 0.667862, 0.659575)
+
+[node name="basic_bomb" parent="Head/Camera/SubViewportContainer/SubViewport/view_model_cam/fps_rig/basic_bomb/arm/Arm_FPS/Skeleton3D" index="0"]
+transform = Transform3D(0.00124399, -0.00381714, -0.0201587, -0.00260101, -0.00167582, 0.0498802, -0.00301379, -0.000129295, -0.0513692, 0.761921, 1.45946, -0.366594)
+
+[node name="camera_animation" type="AnimationPlayer" parent="Head"]
+libraries = {
+"": SubResource("AnimationLibrary_o0unb")
+}
+blend_times = [&"RESET", &"RESET", 0.5, &"RESET", &"headbob", 0.5, &"headbob", &"RESET", 0.5]
+
+[node name="BombSpawnPoint" type="Node3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.219906, -0.880232)
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Reticle_1" parent="UserInterface" node_paths=PackedStringArray("reticle_lines", "character") instance=ExtResource("2_uuexm")]
+layout_mode = 1
+reticle_lines = [NodePath("top"), NodePath("left"), NodePath("right"), NodePath("bottom")]
+character = NodePath("../..")
+
+[node name="DebugPanel" type="PanelContainer" parent="UserInterface"]
+visible = false
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 453.0
+offset_bottom = 50.0
+theme = SubResource("Theme_wdf0f")
+script = ExtResource("3_x1wcc")
+
+[node name="MarginContainer" type="MarginContainer" parent="UserInterface/DebugPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/DebugPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("5_tai33")
+
+[node name="Roor" type="Node" parent="StateChart"]
+script = ExtResource("6_pcou8")
+
+[node name="Movement" type="Node" parent="StateChart/Roor"]
+script = ExtResource("7_wggv0")
+initial_state = NodePath("Grounded")
+
+[node name="Airborne" type="Node" parent="StateChart/Roor/Movement"]
+script = ExtResource("7_wggv0")
+initial_state = NodePath("Jump")
+
+[node name="Jump" type="Node" parent="StateChart/Roor/Movement/Airborne"]
+script = ExtResource("8_enft1")
+
+[node name="to Grounded" type="Node" parent="StateChart/Roor/Movement/Airborne/Jump"]
+script = ExtResource("3_22iiu")
+to = NodePath("../../../Grounded")
+event = &"grounded"
+
+[node name="Grounded" type="Node" parent="StateChart/Roor/Movement"]
+script = ExtResource("7_wggv0")
+initial_state = NodePath("Walk")
+
+[node name="Walk" type="Node" parent="StateChart/Roor/Movement/Grounded"]
+script = ExtResource("8_enft1")
+
+[node name="to Airborne" type="Node" parent="StateChart/Roor/Movement/Grounded/Walk"]
+script = ExtResource("3_22iiu")
+to = NodePath("../../../Airborne")
+event = &"jump"
+
+[node name="to Run" type="Node" parent="StateChart/Roor/Movement/Grounded/Walk"]
+script = ExtResource("3_22iiu")
+to = NodePath("../../Run")
+event = &"run"
+
+[node name="Run" type="Node" parent="StateChart/Roor/Movement/Grounded"]
+script = ExtResource("8_enft1")
+
+[node name="to Airborne" type="Node" parent="StateChart/Roor/Movement/Grounded/Run"]
+script = ExtResource("3_22iiu")
+to = NodePath("../../../Airborne")
+event = &"jump"
+
+[node name="to Walk" type="Node" parent="StateChart/Roor/Movement/Grounded/Run"]
+script = ExtResource("3_22iiu")
+to = NodePath("../../Walk")
+event = &"walk"
+
+[node name="StateChartDebugger" parent="." instance=ExtResource("10_qgm32")]
+offset_left = 910.0
+offset_right = -8.0
+offset_bottom = -265.0
+initial_node_to_watch = NodePath("../StateChart")
+
+[connection signal="state_processing" from="StateChart/Roor/Movement/Airborne/Jump" to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_jump_state_processing"]
+[connection signal="state_processing" from="StateChart/Roor/Movement/Grounded/Walk" to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_walk_state_processing"]
+[connection signal="state_processing" from="StateChart/Roor/Movement/Grounded/Run" to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_run_state_processing"]
+
+[editable path="Head/Camera/SubViewportContainer/SubViewport/view_model_cam"]
+[editable path="UserInterface/Reticle_1"]

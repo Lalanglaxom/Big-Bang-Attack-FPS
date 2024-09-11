@@ -1,0 +1,69 @@
+[gd_scene load_steps=17 format=3 uid="uid://bki433ajvtxh5"]
+
+[ext_resource type="Script" path="res://entities/player/view_model.gd" id="1_jhvm1"]
+[ext_resource type="Script" path="res://weapon/weapon_manager.gd" id="2_duwvg"]
+[ext_resource type="Resource" uid="uid://t2t5fhfs6jja" path="res://weapon/rocket_launcher/rocket_launcher.tres" id="3_ie6yc"]
+[ext_resource type="Resource" uid="uid://dlrwxo3t01ilm" path="res://weapon/grenade_launcher/grenade_launcher.tres" id="4_hbbmq"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3pwb4"]
+animation = &"Run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_o7ynw"]
+animation = &"Shoot"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fcsdn"]
+animation = &"Walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ixpyf"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_43btv"]
+xfade_time = 0.3
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yg7ws"]
+xfade_time = 0.3
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_02wp8"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_y030y"]
+xfade_time = 0.2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4y36u"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3nrh0"]
+xfade_time = 0.2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_icjai"]
+states/Run/node = SubResource("AnimationNodeAnimation_3pwb4")
+states/Run/position = Vector2(527, 100)
+states/Shoot/node = SubResource("AnimationNodeAnimation_o7ynw")
+states/Shoot/position = Vector2(434, 9)
+states/Walk/node = SubResource("AnimationNodeAnimation_fcsdn")
+states/Walk/position = Vector2(352, 100)
+transitions = ["Start", "Walk", SubResource("AnimationNodeStateMachineTransition_ixpyf"), "Walk", "Run", SubResource("AnimationNodeStateMachineTransition_43btv"), "Run", "Walk", SubResource("AnimationNodeStateMachineTransition_yg7ws"), "Walk", "Shoot", SubResource("AnimationNodeStateMachineTransition_02wp8"), "Shoot", "Walk", SubResource("AnimationNodeStateMachineTransition_y030y"), "Run", "Shoot", SubResource("AnimationNodeStateMachineTransition_4y36u"), "Shoot", "Run", SubResource("AnimationNodeStateMachineTransition_3nrh0")]
+graph_offset = Vector2(-48, -37)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c2vje"]
+
+[node name="view_model_cam" type="Camera3D"]
+cull_mask = 1047554
+fov = 35.0
+script = ExtResource("1_jhvm1")
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../FPS_Rig")
+tree_root = SubResource("AnimationNodeStateMachine_icjai")
+
+[node name="FPS_Rig" type="Node3D" parent="."]
+
+[node name="Weapon" type="Node3D" parent="FPS_Rig"]
+transform = Transform3D(-2.40413e-08, 0, 0.55, 0, 0.55, 0, -0.55, 0, -2.40413e-08, 0.397, -0.326, -0.895)
+script = ExtResource("2_duwvg")
+current_weapon = ExtResource("3_ie6yc")
+weapon_loadout = Array[Resource("res://weapon/weapon_resources.gd")]([ExtResource("3_ie6yc"), ExtResource("4_hbbmq")])
+
+[node name="WeaponAnimPlayer" type="AnimationPlayer" parent="FPS_Rig/Weapon"]
+root_node = NodePath("")
+libraries = {
+"Weapon Anim": SubResource("AnimationLibrary_c2vje")
+}
