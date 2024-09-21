@@ -1,129 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://bki433ajvtxh5"]
+[gd_scene load_steps=20 format=3 uid="uid://bki433ajvtxh5"]
 
 [ext_resource type="Script" path="res://entities/player/view_model.gd" id="1_jhvm1"]
 [ext_resource type="Script" path="res://weapon/weapon_manager.gd" id="2_duwvg"]
 [ext_resource type="Resource" uid="uid://t2t5fhfs6jja" path="res://weapon/rocket_launcher/rocket_launcher.tres" id="3_ie6yc"]
+[ext_resource type="Script" path="res://weapon/weapon_resources.gd" id="3_xhbcf"]
 [ext_resource type="Resource" uid="uid://x5i3w1h6ik73" path="res://weapon/gloves/gloves.tres" id="4_srkvv"]
-
-[sub_resource type="Animation" id="Animation_kwrjq"]
-resource_name = "Enter"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("right hand:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, -1, 0), Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("left hand:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, -1, 0), Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_hruis"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("right hand:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("left hand:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_jo57q"]
-resource_name = "Run"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("left hand:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(-0.199139, -0.17454, 0), Vector3(0.246397, -0.17454, 0), Vector3(-0.199139, -0.17454, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("right hand:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(-0.199139, -0.17454, 0), Vector3(0.246397, -0.17454, 0), Vector3(-0.199139, -0.17454, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_f7w1g"]
-resource_name = "Walk"
-length = 3.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("right hand:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.5, 3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0.165, 0), Vector3(0, -0.039, 0), Vector3(0, 0.165, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("left hand:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.5, 3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0.165, 0), Vector3(0, -0.039, 0), Vector3(0, 0.165, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_b6vqx"]
-_data = {
-"Enter": SubResource("Animation_kwrjq"),
-"RESET": SubResource("Animation_hruis"),
-"Run": SubResource("Animation_jo57q"),
-"Walk": SubResource("Animation_f7w1g")
-}
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nvwyq"]
 animation = &"Enter"
@@ -203,9 +84,6 @@ animation_tree = NodePath("AnimationTree")
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 root_node = NodePath("../FPS_Rig/Weapon/gloves")
-libraries = {
-"": SubResource("AnimationLibrary_b6vqx")
-}
 tree_root = SubResource("AnimationNodeStateMachine_icjai")
 anim_player = NodePath("/root/@EditorNode@17141/@Panel@13/@VBoxContainer@14/@HSplitContainer@17/@HSplitContainer@25/@HSplitContainer@33/@VBoxContainer@34/@VSplitContainer@36/@VSplitContainer@62/@VBoxContainer@63/@PanelContainer@110/MainScreen/@CanvasItemEditor@9462/@VSplitContainer@9281/@HSplitContainer@9283/@HSplitContainer@9285/@Control@9286/@SubViewportContainer@9287/@SubViewport@9288/view_model_cam/FPS_Rig/Weapon/gloves/AnimationPlayer")
 parameters/conditions/run = false
@@ -218,7 +96,7 @@ parameters/conditions/walk = false
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, -0.24)
 script = ExtResource("2_duwvg")
 animation_tree = NodePath("../../AnimationTree")
-weapon_loadout = Array[Resource("res://weapon/weapon_resources.gd")]([ExtResource("4_srkvv"), ExtResource("3_ie6yc")])
+weapon_loadout = Array[ExtResource("3_xhbcf")]([ExtResource("4_srkvv"), ExtResource("3_ie6yc")])
 
 [node name="Aim_End" type="Node3D" parent="FPS_Rig"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)

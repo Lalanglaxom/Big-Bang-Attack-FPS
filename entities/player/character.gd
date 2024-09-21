@@ -1,22 +1,17 @@
 extends CharacterBody3D
 
-# TODO: Add descriptions for each value
+## Gameplay properties
 @export var health: float = 100
+enum CharacterStand {LEFT, RIGHT, UP, DOWN, CENTER}
+@export var cur_stand: CharacterStand
+@export var start_pos: Vector3
 
-@export_category("Speed Force")
-@export var base_speed : float = 3.0
-@export var sprint_speed : float = 6.0
-@export var crouch_speed : float = 1.0
-@export var acceleration : float = 10.0
-@export var mouse_sensitivity : float = 0.1
-@export var to_crouch_speed : float = 1.0
-@export var throwForce = 10.0
 
 @export_group("Nodes")
 @export var HEAD : Node3D
 @export var CAMERA : Camera3D
 @export var CAMERA_ANIMATION : AnimationPlayer
-
+@export var TARGET: Node3D
 
 @export_group("Controls")
 # We are using UI controls because they are built into Godot Engine so they can be used right away
@@ -28,24 +23,14 @@ extends CharacterBody3D
 @export var DODGE : String = "dodge"
 @export var ATTACK : String = "attack"
 
-@export_group("Feature Settings")
-@export var immobile : bool = false
-@export var in_air_momentum : bool = true
-@export var motion_smoothing : bool = true
-@export var dynamic_fov : bool = true
-@export var continuous_jumping : bool = true
-@export var view_bobbing : bool = true
-
 @export_group("Others")
 @onready var view_model_cam = $Head/Camera/SubViewportContainer/SubViewport/view_model_cam
-# @export var bomb = preload("res://weapon/bad_bomb.tscn")
+@onready var fps_rig: Node3D = $Head/Camera/SubViewportContainer/SubViewport/view_model_cam/FPS_Rig
 @onready var main = $".."
-var canShoot: bool = true
+
+var canAtack: bool = true
 
 # Member variables
-var speed : float = base_speed
-var is_crouching : bool = false
-var is_sprinting : bool = false
 
 # Get state chart 
 @onready var _state_chart = $StateChart
@@ -71,13 +56,11 @@ func _ready():
 	Global.on_hit.connect(take_damage)
 
 func _physics_process(delta):
-	$Head/Camera/SubViewportContainer/SubViewport/view_model_cam.global_transform = CAMERA.global_transform
-
 	# Add some debug data
-	$UserInterface/DebugPanel.add_property("Movement Speed", speed, 1)
-	$UserInterface/DebugPanel.add_property("Velocity", get_real_velocity(), 2)
+	#$UserInterface/DebugPanel.add_property("Movement Speed", speed, 1)
+	#$UserInterface/DebugPanel.add_property("Velocity", get_real_velocity(), 2)
 	
-	handle_state()
+	handle_movement(delta)
 
 
 func _process(delta):
@@ -90,22 +73,24 @@ func _process(delta):
 	$UserInterface/DebugPanel.add_property("FPS", 1.0/delta, 0)
 	
 	handle_game_input()
-
-func _unhandled_input(event):
-	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		HEAD.rotation_degrees.y -= event.relative.x * mouse_sensitivity
-		HEAD.rotation_degrees.x -= event.relative.y * mouse_sensitivity
-		HEAD.rotation.x = clamp(HEAD.rotation.x, deg_to_rad(-90), deg_to_rad(90))
-		view_model_cam.sway(Vector2(event.relative.x, event.relative.y))
+	handle_state()
 	
-func handle_movement(delta, input_dir):
-	var direction = input_dir.rotated(-HEAD.rotation.y)
+#func _unhandled_input(event):
+	#if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		#HEAD.rotation_degrees.y -= event.relative.x * mouse_sensitivity
+		#HEAD.rotation_degrees.x -= event.relative.y * mouse_sensitivity
+		#HEAD.rotation.x = clamp(HEAD.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+		#view_model_cam.sway(Vector2(event.relative.x, event.relative.y))
+	
+func handle_movement(delta):
+	look_at(TARGET.global_position)
 	move_and_slide()
 
 func handle_game_input():
-	var input_dir = Input.get_vector("left", "right", "up", "down")
+	var input_dir = Input.get_vector("left", "right", "down", "up")
 	if Input.is_action_just_pressed("attack"):
-		print("ATTACK")
+		#print("ATTACK")
+		return
 	
 	if Input.is_action_just_pressed("parry"):
 		print("PARRY")
@@ -113,18 +98,29 @@ func handle_game_input():
 	if Input.is_action_just_pressed("dodge"):
 		print("DODGE")
 		
-func handle_state():
-	if !is_on_floor():
-		_state_chart.send_event("jump")
-	else: 
-		_state_chart.send_event("grounded")
-		
-	if is_sprinting:
-		_state_chart.send_event("run")
+	if Input.is_action_pressed("up"):
+		view_model_cam.sway("up")
+		cur_stand = CharacterStand.UP
+	elif Input.is_action_pressed("down"):
+		view_model_cam.sway("down")
+		cur_stand = CharacterStand.DOWN
+	elif Input.is_action_pressed("left"):
+		view_model_cam.sway("left")
+		cur_stand = CharacterStand.LEFT
+	elif Input.is_action_pressed("right"):
+		view_model_cam.sway("right")
+		cur_stand = CharacterStand.RIGHT
 	else:
-		_state_chart.send_event("walk")
-		
+		cur_stand = CharacterStand.CENTER
 	
+	#print(CharacterStand.keys()[cur_stand])
+	
+func handle_state():
+	return
+
+func start():
+	global_position = start_pos
+
 func take_damage(damage):
 	health -= damage
 	health_text.text = str(health)

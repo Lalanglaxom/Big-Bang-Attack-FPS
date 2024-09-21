@@ -14,11 +14,18 @@ func _process(delta):
 	fps_rig.position.y = lerp(fps_rig.position.y, 0.0, delta * 5)
 
 
-func sway(sway_amount):
-	fps_rig.position.x -= sway_amount.x * 0.00002
-	fps_rig.position.y += sway_amount.y * 0.00002
-	
-	
+func sway(direction: String):
+	match direction:
+		"up":
+			fps_rig.position.y = lerp(fps_rig.position.y, 0.1, get_process_delta_time() * 5)
+		"down":
+			fps_rig.position.y = lerp(fps_rig.position.y, -0.05, get_process_delta_time() * 5)
+		"left":
+			fps_rig.position.x = lerp(fps_rig.position.x, -0.1, get_process_delta_time() * 5)
+		"right":
+			fps_rig.position.x = lerp(fps_rig.position.x, 0.1, get_process_delta_time() * 5)
+
+
 func _on_run_state_entered():
 	animation_tree["parameters/conditions/walk"] = false
 	animation_tree["parameters/conditions/run"] = true

@@ -1,17 +1,20 @@
-[gd_scene load_steps=27 format=3 uid="uid://bi0mjqfq0586x"]
+[gd_scene load_steps=35 format=3 uid="uid://bi0mjqfq0586x"]
 
-[ext_resource type="Script" path="res://entities/player/character.gd" id="1_s6rfl"]
-[ext_resource type="PackedScene" uid="uid://bki433ajvtxh5" path="res://entities/player/prefab/view_model.tscn" id="2_6rbdn"]
-[ext_resource type="Script" path="res://entities/player/debug.gd" id="3_rqfdo"]
-[ext_resource type="Texture2D" uid="uid://bxi3tcatdsipi" path="res://ui/heart/heart back.png" id="4_5hyss"]
-[ext_resource type="Texture2D" uid="uid://wncd23376147" path="res://ui/heart/heart front.png" id="5_sv86g"]
-[ext_resource type="Texture2D" uid="uid://cqfuit4fudjdm" path="res://ui/heart/Heart_coraz_C3_B3n.png" id="6_coq2m"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="7_6sa8q"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="8_ks13i"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="9_qopt3"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="10_vf41l"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="11_jnpi0"]
+[ext_resource type="Script" path="res://entities/player/character.gd" id="1_6107o"]
+[ext_resource type="PackedScene" uid="uid://bki433ajvtxh5" path="res://entities/player/prefab/view_model.tscn" id="2_w12w8"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_k22o3"]
+[ext_resource type="PackedScene" uid="uid://3mij3cjhkwsm" path="res://addons/fpc/reticles/reticle_1.tscn" id="3_uwyjn"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="4_r0bfi"]
+[ext_resource type="Script" path="res://entities/player/debug.gd" id="4_xhm2h"]
+[ext_resource type="Texture2D" uid="uid://bxi3tcatdsipi" path="res://ui/heart/heart back.png" id="5_2mejs"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="5_mfumn"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="6_5dhd0"]
+[ext_resource type="Texture2D" uid="uid://wncd23376147" path="res://ui/heart/heart front.png" id="6_h1lkq"]
+[ext_resource type="Texture2D" uid="uid://cqfuit4fudjdm" path="res://ui/heart/Heart_coraz_C3_B3n.png" id="7_1k15d"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="8_xt443"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="9_onyxt"]
 [ext_resource type="Texture2D" uid="uid://cr1lqchpf8byy" path="res://textures/kenney_prototype_textures/dark/texture_01.png" id="12_qgk6i"]
+[ext_resource type="Script" path="res://entities/enemy/dummy.gd" id="14_p4let"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mgxq1"]
 sky_top_color = Color(0.0828822, 0.476112, 0.704393, 1)
@@ -149,15 +152,28 @@ MarginContainer/constants/margin_left = 10
 MarginContainer/constants/margin_right = 10
 MarginContainer/constants/margin_top = 10
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
-albedo_color = Color(0.909804, 0.596078, 0, 1)
-clearcoat_enabled = true
-clearcoat_roughness = 0.2
+[sub_resource type="LabelSettings" id="LabelSettings_w5s5p"]
+font_size = 25
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_jw1de"]
-material = SubResource("StandardMaterial3D_kp17n")
+[sub_resource type="LabelSettings" id="LabelSettings_cqqaq"]
+font_size = 45
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_sd826"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xj801"]
+albedo_color = Color(0.81, 0.23544, 0.1944, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kj3fx"]
+size = Vector3(0.2, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0olkk"]
+size = Vector3(0.2, 0.2, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oeakn"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6tgni"]
 albedo_texture = ExtResource("12_qgk6i")
@@ -167,7 +183,7 @@ uv1_scale = Vector3(5, 5, 5)
 size = Vector2(100, 100)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vltsd"]
-size = Vector3(100, 1, 100)
+size = Vector3(100, 0.478516, 100)
 
 [node name="Blank3d" type="Node3D"]
 
@@ -178,14 +194,14 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_gg2ef")
 
-[node name="Character" type="CharacterBody3D" parent="." node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION")]
+[node name="Character" type="CharacterBody3D" parent="." node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION", "TARGET") groups=["player"]]
 collision_mask = 2
-script = ExtResource("1_s6rfl")
+script = ExtResource("1_6107o")
+start_pos = Vector3(0, 1, 0)
 HEAD = NodePath("Head")
 CAMERA = NodePath("Head/Camera")
 CAMERA_ANIMATION = NodePath("Head/camera_animation")
-in_air_momentum = false
-view_bobbing = false
+TARGET = NodePath("../Dummy")
 
 [node name="Head" type="Node3D" parent="Character"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3728, 0)
@@ -205,7 +221,7 @@ transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 4
 
-[node name="view_model_cam" parent="Character/Head/Camera/SubViewportContainer/SubViewport" instance=ExtResource("2_6rbdn")]
+[node name="view_model_cam" parent="Character/Head/Camera/SubViewportContainer/SubViewport" instance=ExtResource("2_w12w8")]
 
 [node name="AnimationTree" parent="Character/Head/Camera/SubViewportContainer/SubViewport/view_model_cam" index="0"]
 root_node = NodePath("../FPS_Rig/Weapon/@Node3D@34727")
@@ -229,6 +245,12 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
+[node name="Reticle_1" parent="Character/UserInterface" node_paths=PackedStringArray("reticle_lines", "character") instance=ExtResource("3_uwyjn")]
+visible = false
+layout_mode = 1
+reticle_lines = [NodePath("top"), NodePath("left"), NodePath("right"), NodePath("bottom")]
+character = NodePath("../..")
+
 [node name="DebugPanel" type="PanelContainer" parent="Character/UserInterface"]
 visible = false
 layout_mode = 0
@@ -237,7 +259,7 @@ offset_top = 10.0
 offset_right = 453.0
 offset_bottom = 50.0
 theme = SubResource("Theme_wdf0f")
-script = ExtResource("3_rqfdo")
+script = ExtResource("4_xhm2h")
 
 [node name="MarginContainer" type="MarginContainer" parent="Character/UserInterface/DebugPanel"]
 layout_mode = 2
@@ -262,95 +284,212 @@ grow_vertical = 0
 scale = Vector2(0.22, 0.22)
 value = 100.0
 fill_mode = 3
-texture_under = ExtResource("4_5hyss")
-texture_over = ExtResource("5_sv86g")
-texture_progress = ExtResource("6_coq2m")
+texture_under = ExtResource("5_2mejs")
+texture_over = ExtResource("6_h1lkq")
+texture_progress = ExtResource("7_1k15d")
+
+[node name="EnemyRemainText" type="Label" parent="Character/UserInterface"]
+visible = false
+layout_mode = 1
+offset_right = 187.0
+offset_bottom = 57.0
+text = "Basaiman remain: 3"
+label_settings = SubResource("LabelSettings_w5s5p")
+
+[node name="HealthText" type="Label" parent="Character/UserInterface"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -107.0
+offset_right = 78.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "100"
+label_settings = SubResource("LabelSettings_cqqaq")
+horizontal_alignment = 1
+
+[node name="StateChartDebugger" parent="Character/UserInterface" instance=ExtResource("8_xt443")]
+layout_mode = 1
+offset_left = 849.0
+initial_node_to_watch = NodePath("../../../Dummy/EnemyStateChart")
 
 [node name="StateChart" type="Node" parent="Character"]
-script = ExtResource("7_6sa8q")
+script = ExtResource("3_k22o3")
 
 [node name="Roor" type="Node" parent="Character/StateChart"]
-script = ExtResource("8_ks13i")
+script = ExtResource("9_onyxt")
 
 [node name="Character" type="Node" parent="Character/StateChart/Roor"]
-script = ExtResource("9_qopt3")
+script = ExtResource("4_r0bfi")
 initial_state = NodePath("Grounded")
 
 [node name="Airborne" type="Node" parent="Character/StateChart/Roor/Character"]
-script = ExtResource("9_qopt3")
+script = ExtResource("4_r0bfi")
 initial_state = NodePath("Jump")
 
 [node name="Jump" type="Node" parent="Character/StateChart/Roor/Character/Airborne"]
-script = ExtResource("10_vf41l")
+script = ExtResource("5_mfumn")
 
 [node name="to Grounded" type="Node" parent="Character/StateChart/Roor/Character/Airborne/Jump"]
-script = ExtResource("11_jnpi0")
+script = ExtResource("6_5dhd0")
 to = NodePath("../../../Grounded")
 event = &"grounded"
 
 [node name="Grounded" type="Node" parent="Character/StateChart/Roor/Character"]
-script = ExtResource("9_qopt3")
+script = ExtResource("4_r0bfi")
 initial_state = NodePath("Walk")
 
 [node name="Walk" type="Node" parent="Character/StateChart/Roor/Character/Grounded"]
-script = ExtResource("10_vf41l")
+script = ExtResource("5_mfumn")
 
 [node name="to Airborne" type="Node" parent="Character/StateChart/Roor/Character/Grounded/Walk"]
-script = ExtResource("11_jnpi0")
+script = ExtResource("6_5dhd0")
 to = NodePath("../../../Airborne")
 event = &"jump"
 
 [node name="to Run" type="Node" parent="Character/StateChart/Roor/Character/Grounded/Walk"]
-script = ExtResource("11_jnpi0")
+script = ExtResource("6_5dhd0")
 to = NodePath("../../Run")
 event = &"run"
 
 [node name="To Crouch" type="Node" parent="Character/StateChart/Roor/Character/Grounded/Walk"]
-script = ExtResource("11_jnpi0")
+script = ExtResource("6_5dhd0")
 to = NodePath("../../Crouch")
 event = &"crouch"
 
 [node name="Run" type="Node" parent="Character/StateChart/Roor/Character/Grounded"]
-script = ExtResource("10_vf41l")
+script = ExtResource("5_mfumn")
 
 [node name="to Airborne" type="Node" parent="Character/StateChart/Roor/Character/Grounded/Run"]
-script = ExtResource("11_jnpi0")
+script = ExtResource("6_5dhd0")
 to = NodePath("../../../Airborne")
 event = &"jump"
 
 [node name="to Walk" type="Node" parent="Character/StateChart/Roor/Character/Grounded/Run"]
-script = ExtResource("11_jnpi0")
+script = ExtResource("6_5dhd0")
 to = NodePath("../../Walk")
 event = &"walk"
 
 [node name="To Crouch" type="Node" parent="Character/StateChart/Roor/Character/Grounded/Run"]
-script = ExtResource("11_jnpi0")
+script = ExtResource("6_5dhd0")
 to = NodePath("../../Crouch")
 event = &"crouch"
 
 [node name="Crouch" type="Node" parent="Character/StateChart/Roor/Character/Grounded"]
-script = ExtResource("10_vf41l")
+script = ExtResource("5_mfumn")
 
 [node name="To Walk" type="Node" parent="Character/StateChart/Roor/Character/Grounded/Crouch"]
-script = ExtResource("11_jnpi0")
+script = ExtResource("6_5dhd0")
 to = NodePath("../../Walk")
 event = &"crouch_to_walk"
-
-[node name="Mesh" type="MeshInstance3D" parent="Character"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_jw1de")
 
 [node name="Collision" type="CollisionShape3D" parent="Character"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.697272, 0)
 shape = SubResource("CapsuleShape3D_uy03j")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="Dummy" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.56778, -10.9353)
+script = ExtResource("14_p4let")
+_minium_beam_count = 7
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="Model" type="Node3D" parent="Dummy"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Capsule" type="MeshInstance3D" parent="Dummy/Model"]
+mesh = SubResource("CapsuleMesh_sd826")
+skeleton = NodePath("../../..")
+
+[node name="Left Arm" type="MeshInstance3D" parent="Dummy/Model"]
+transform = Transform3D(1, 0, 0, 0, 0.918122, -0.396299, 0, 0.396299, 0.918122, 0.601494, 0.00041914, 0.403341)
+material_override = SubResource("StandardMaterial3D_xj801")
+mesh = SubResource("BoxMesh_kj3fx")
+
+[node name="Right Arm" type="MeshInstance3D" parent="Dummy/Model"]
+transform = Transform3D(1, 0, 0, 0, 0.918122, -0.396299, 0, 0.396299, 0.918122, -0.591414, -0.00041914, 0.405283)
+material_override = SubResource("StandardMaterial3D_xj801")
+mesh = SubResource("BoxMesh_0olkk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dummy"]
+shape = SubResource("CapsuleShape3D_oeakn")
+
+[node name="MovingTimer" type="Timer" parent="Dummy"]
+wait_time = 5.0
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Dummy"]
+
+[node name="AnimationTree" type="AnimationTree" parent="Dummy"]
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="EnemyStateChart" type="Node" parent="Dummy"]
+script = ExtResource("3_k22o3")
+
+[node name="Grounded" type="Node" parent="Dummy/EnemyStateChart"]
+script = ExtResource("4_r0bfi")
+initial_state = NodePath("Movement")
+
+[node name="Movement" type="Node" parent="Dummy/EnemyStateChart/Grounded"]
+script = ExtResource("4_r0bfi")
+initial_state = NodePath("Walk")
+
+[node name="Walk" type="Node" parent="Dummy/EnemyStateChart/Grounded/Movement"]
+script = ExtResource("5_mfumn")
+
+[node name="ToDamage" type="Node" parent="Dummy/EnemyStateChart/Grounded/Movement"]
+script = ExtResource("6_5dhd0")
+to = NodePath("../../Damage")
+event = &"damage"
+
+[node name="ToNegate" type="Node" parent="Dummy/EnemyStateChart/Grounded/Movement"]
+script = ExtResource("6_5dhd0")
+to = NodePath("../../Negate")
+event = &"negate"
+
+[node name="ToAttack" type="Node" parent="Dummy/EnemyStateChart/Grounded/Movement"]
+script = ExtResource("6_5dhd0")
+to = NodePath("../../Attack")
+event = &"attack"
+
+[node name="Attack" type="Node" parent="Dummy/EnemyStateChart/Grounded"]
+script = ExtResource("4_r0bfi")
+initial_state = NodePath("Beam Attack")
+
+[node name="Normal Attack" type="Node" parent="Dummy/EnemyStateChart/Grounded/Attack"]
+script = ExtResource("5_mfumn")
+
+[node name="ToBeam" type="Node" parent="Dummy/EnemyStateChart/Grounded/Attack/Normal Attack"]
+script = ExtResource("6_5dhd0")
+to = NodePath("../../Beam Attack")
+event = &"beam"
+
+[node name="Beam Attack" type="Node" parent="Dummy/EnemyStateChart/Grounded/Attack"]
+script = ExtResource("5_mfumn")
+
+[node name="ToMove" type="Node" parent="Dummy/EnemyStateChart/Grounded/Attack"]
+script = ExtResource("6_5dhd0")
+to = NodePath("../../Movement")
+event = &"move"
+
+[node name="Damage" type="Node" parent="Dummy/EnemyStateChart/Grounded"]
+script = ExtResource("5_mfumn")
+
+[node name="Negate" type="Node" parent="Dummy/EnemyStateChart/Grounded"]
+script = ExtResource("5_mfumn")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 material_override = SubResource("StandardMaterial3D_6tgni")
 mesh = SubResource("PlaneMesh_qo21t")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.260742, 0)
 shape = SubResource("BoxShape3D_vltsd")
 
 [connection signal="shoot_button_clicked" from="Character" to="Character/Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_character_shoot_button_clicked"]
@@ -360,5 +499,7 @@ shape = SubResource("BoxShape3D_vltsd")
 [connection signal="state_entered" from="Character/StateChart/Roor/Character/Grounded/Run" to="Character/Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_run_state_entered"]
 [connection signal="state_entered" from="Character/StateChart/Roor/Character/Grounded/Crouch" to="Character" method="_on_crouch_state_entered"]
 [connection signal="state_exited" from="Character/StateChart/Roor/Character/Grounded/Crouch" to="Character" method="_on_crouch_state_exited"]
+[connection signal="timeout" from="Dummy/MovingTimer" to="Dummy" method="_on_distance_timer_timeout"]
 
 [editable path="Character/Head/Camera/SubViewportContainer/SubViewport/view_model_cam"]
+[editable path="Character/UserInterface/Reticle_1"]

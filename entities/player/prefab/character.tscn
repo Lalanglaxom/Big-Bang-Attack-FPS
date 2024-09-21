@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=21 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://entities/player/character.gd" id="1_5q61e"]
 [ext_resource type="PackedScene" uid="uid://bki433ajvtxh5" path="res://entities/player/prefab/view_model.tscn" id="2_cstpq"]
@@ -143,27 +143,15 @@ font_size = 45
 outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
-albedo_color = Color(0.909804, 0.596078, 0, 1)
-clearcoat_enabled = true
-clearcoat_roughness = 0.2
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_jw1de"]
-material = SubResource("StandardMaterial3D_kp17n")
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
 
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "CAMERA_ANIMATION")]
 collision_mask = 2
 script = ExtResource("1_5q61e")
-jump_height = 2.0
-jump_peak_time = 0.3
-jump_descent_time = 0.3
+start_pos = Vector3(0, 1, 0)
 HEAD = NodePath("Head")
 CAMERA = NodePath("Head/Camera")
 CAMERA_ANIMATION = NodePath("Head/camera_animation")
-in_air_momentum = false
-view_bobbing = false
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3728, 0)
@@ -229,6 +217,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="UserInterface"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -249,6 +238,7 @@ texture_over = ExtResource("6_6wbf0")
 texture_progress = ExtResource("5_kg5q0")
 
 [node name="EnemyRemainText" type="Label" parent="UserInterface"]
+visible = false
 layout_mode = 1
 offset_right = 187.0
 offset_bottom = 57.0
@@ -256,6 +246,7 @@ text = "Basaiman remain: 3"
 label_settings = SubResource("LabelSettings_w5s5p")
 
 [node name="HealthText" type="Label" parent="UserInterface"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -341,10 +332,6 @@ script = ExtResource("8_enft1")
 script = ExtResource("3_22iiu")
 to = NodePath("../../Walk")
 event = &"crouch_to_walk"
-
-[node name="Mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_jw1de")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.697272, 0)
