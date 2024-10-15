@@ -1,0 +1,352 @@
+[gd_scene load_steps=19 format=3 uid="uid://dixnwefcmk136"]
+
+[ext_resource type="Script" path="res://entities/enemy/dummy.gd" id="1_cva7j"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_mniyf"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_4hqos"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_wd3gv"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_pserh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_amdgj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xj801"]
+albedo_color = Color(0.81, 0.23544, 0.1944, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kj3fx"]
+size = Vector3(0.2, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0olkk"]
+size = Vector3(0.2, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ed6kf"]
+size = Vector3(0.2, 0.2, 1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lmsxe"]
+size = Vector3(0.2, 0.2, 1.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8m4qj"]
+size = Vector3(1, 2.36768, 1)
+
+[sub_resource type="Animation" id="Animation_gon1u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model/Right Arm:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.591414, -0.00041914, 0.405283)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model/Right Arm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.407482, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Model/Left Arm:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.601494, 0.00041914, 0.403341)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Model/Left Arm:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.407482, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Model/Right Leg:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.245351, -1.12523, 0.00376934)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Model/Right Leg:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.58216, 0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Model/Capsule:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Model/Capsule:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_j6d8v"]
+resource_name = "leg sweep"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model/Right Leg:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.433333, 0.733333, 0.833333, 1, 1.6, 1.7, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.245351, -1.12523, 0.00376934), Vector3(-0.409882, -1.12523, -0.261047), Vector3(-0.409882, -1.02562, -0.357706), Vector3(-0.420057, -0.97475, 0.41557), Vector3(0.120057, -0.822129, 0.349434), Vector3(-0.409882, -1.02562, -0.357706), Vector3(-0.409882, -1.12523, -0.261047), Vector3(-0.245351, -1.12523, 0.00376934)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model/Right Leg:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.433333, 0.733333, 0.833333, 1, 1.6, 1.7, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1.58216, 0, 0), Vector3(1.12383, -2.48339, -2.43279), Vector3(0.948791, -2.75632, -2.74146), Vector3(0.834821, -0.395796, -0.30033), Vector3(0.562914, 1.01532, 0.710159), Vector3(0.948791, -2.75632, -2.74146), Vector3(1.12383, -2.48339, -2.43279), Vector3(1.58216, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_f2mc2"]
+resource_name = "left punch"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model/Left Arm:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.8, 1, 1.2, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.601494, 0.00041914, 0.403341), Vector3(0.601494, 0.0868881, 0.402298), Vector3(0.601494, 0.0854582, 0.283736), Vector3(0.601494, 0.0906335, 0.712837), Vector3(0.601494, 0.0854582, 0.283736), Vector3(0.601494, 0.0868881, 0.402298), Vector3(0.601494, 0.00041914, 0.403341)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model/Left Arm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.8, 1, 1.2, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.407482, 0, 0), Vector3(-0.0120602, 0, 0), Vector3(-0.0120602, 0, 0), Vector3(-0.0120602, 0, 0), Vector3(-0.0120602, 0, 0), Vector3(-0.0120602, 0, 0), Vector3(0.407482, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tg3av"]
+resource_name = "right punch"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model/Right Arm:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.466667, 0.766667, 1, 1.26667, 1.66667, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.591414, -0.00041914, 0.405283), Vector3(-0.591414, 0.106302, 0.402203), Vector3(-0.591414, 0.102704, 0.277524), Vector3(-0.591414, 0.116054, 0.740152), Vector3(-0.591414, 0.102704, 0.277524), Vector3(-0.591414, 0.106302, 0.402203), Vector3(-0.591414, -0.00041914, 0.405283)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model/Right Arm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.466667, 0.766667, 1, 1.26667, 1.66667, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.407482, 0, 0), Vector3(-0.0288503, 0, 0), Vector3(-0.0288503, 0, 0), Vector3(-0.0288503, 0, 0), Vector3(-0.0288503, 0, 0), Vector3(-0.0288503, 0, 0), Vector3(0.407482, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_84v6n"]
+resource_name = "beam"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model/Capsule:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.86667, 1.93333, 2.06667, 2.13333, 2.4, 2.9, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(8.71081e-08, 0, -0.9964), Vector3(1.10177e-07, 0, -1.26027), Vector3(1.27416e-07, 0, -1.45747), Vector3(-2.03382e-07, 0, 2.32642), Vector3(-2.03382e-07, 0, 2.32642), Vector3(-2.03382e-07, 0, 2.32642), Vector3(0, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model/Capsule:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.8, 1.86667, 1.93333, 2.06667, 2.13333, 2.4, 2.9, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vnc8t"]
+_data = {
+"RESET": SubResource("Animation_gon1u"),
+"beam": SubResource("Animation_84v6n"),
+"left punch": SubResource("Animation_f2mc2"),
+"leg sweep": SubResource("Animation_j6d8v"),
+"right punch": SubResource("Animation_tg3av")
+}
+
+[node name="Dummy" type="CharacterBody3D"]
+script = ExtResource("1_cva7j")
+_minium_beam_count = 4
+
+[node name="Model" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Capsule" type="MeshInstance3D" parent="Model"]
+mesh = SubResource("BoxMesh_amdgj")
+skeleton = NodePath("../../..")
+
+[node name="Left Arm" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 0.918122, -0.396299, 0, 0.396299, 0.918122, 0.601494, 0.00041914, 0.403341)
+material_override = SubResource("StandardMaterial3D_xj801")
+mesh = SubResource("BoxMesh_kj3fx")
+
+[node name="Right Arm" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 0.918122, -0.396299, 0, 0.396299, 0.918122, -0.591414, -0.00041914, 0.405283)
+material_override = SubResource("StandardMaterial3D_xj801")
+mesh = SubResource("BoxMesh_0olkk")
+
+[node name="Right Leg" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, -0.011362, -0.999935, 0, 0.999936, -0.011362, -0.245351, -1.12523, 0.00376934)
+material_override = SubResource("StandardMaterial3D_xj801")
+mesh = SubResource("BoxMesh_ed6kf")
+
+[node name="Left Leg" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, -0.011362, -0.999936, 0, 0.999936, -0.011362, 0.322194, -1.12523, 0.00376939)
+material_override = SubResource("StandardMaterial3D_xj801")
+mesh = SubResource("BoxMesh_lmsxe")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.683838, 0)
+shape = SubResource("BoxShape3D_8m4qj")
+
+[node name="MovingTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vnc8t")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="EnemyStateChart" type="Node" parent="."]
+script = ExtResource("2_mniyf")
+
+[node name="Grounded" type="Node" parent="EnemyStateChart"]
+script = ExtResource("3_4hqos")
+initial_state = NodePath("Movement")
+
+[node name="Movement" type="Node" parent="EnemyStateChart/Grounded"]
+script = ExtResource("3_4hqos")
+initial_state = NodePath("Walk")
+
+[node name="Walk" type="Node" parent="EnemyStateChart/Grounded/Movement"]
+script = ExtResource("4_wd3gv")
+
+[node name="ToDamage" type="Node" parent="EnemyStateChart/Grounded/Movement"]
+script = ExtResource("5_pserh")
+to = NodePath("../../Damage")
+event = &"damage"
+
+[node name="ToNegate" type="Node" parent="EnemyStateChart/Grounded/Movement"]
+script = ExtResource("5_pserh")
+to = NodePath("../../Negate")
+event = &"negate"
+
+[node name="ToAttack" type="Node" parent="EnemyStateChart/Grounded/Movement"]
+script = ExtResource("5_pserh")
+to = NodePath("../../Attack")
+event = &"attack"
+
+[node name="Attack" type="Node" parent="EnemyStateChart/Grounded"]
+script = ExtResource("3_4hqos")
+initial_state = NodePath("Beam Attack")
+
+[node name="Normal Attack" type="Node" parent="EnemyStateChart/Grounded/Attack"]
+script = ExtResource("4_wd3gv")
+
+[node name="ToBeam" type="Node" parent="EnemyStateChart/Grounded/Attack/Normal Attack"]
+script = ExtResource("5_pserh")
+to = NodePath("../../Beam Attack")
+event = &"beam"
+
+[node name="Beam Attack" type="Node" parent="EnemyStateChart/Grounded/Attack"]
+script = ExtResource("4_wd3gv")
+
+[node name="ToMove" type="Node" parent="EnemyStateChart/Grounded/Attack"]
+script = ExtResource("5_pserh")
+to = NodePath("../../Movement")
+event = &"move"
+
+[node name="Damage" type="Node" parent="EnemyStateChart/Grounded"]
+script = ExtResource("4_wd3gv")
+
+[node name="Negate" type="Node" parent="EnemyStateChart/Grounded"]
+script = ExtResource("4_wd3gv")
+
+[connection signal="timeout" from="MovingTimer" to="." method="_on_distance_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]

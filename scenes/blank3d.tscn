@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bi0mjqfq0586x"]
+[gd_scene load_steps=30 format=3 uid="uid://bi0mjqfq0586x"]
 
 [ext_resource type="Script" path="res://entities/player/character.gd" id="1_6107o"]
 [ext_resource type="PackedScene" uid="uid://bki433ajvtxh5" path="res://entities/player/prefab/view_model.tscn" id="2_w12w8"]
@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="8_xt443"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="9_onyxt"]
 [ext_resource type="Texture2D" uid="uid://cr1lqchpf8byy" path="res://textures/kenney_prototype_textures/dark/texture_01.png" id="12_qgk6i"]
-[ext_resource type="Script" path="res://entities/enemy/dummy.gd" id="14_p4let"]
+[ext_resource type="PackedScene" uid="uid://dixnwefcmk136" path="res://entities/enemy/dummy.tscn" id="14_vdq85"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mgxq1"]
 sky_top_color = Color(0.0828822, 0.476112, 0.704393, 1)
@@ -161,19 +161,6 @@ outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_sd826"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xj801"]
-albedo_color = Color(0.81, 0.23544, 0.1944, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_kj3fx"]
-size = Vector3(0.2, 0.2, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_0olkk"]
-size = Vector3(0.2, 0.2, 1)
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oeakn"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6tgni"]
 albedo_texture = ExtResource("12_qgk6i")
@@ -393,94 +380,8 @@ event = &"crouch_to_walk"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.697272, 0)
 shape = SubResource("CapsuleShape3D_uy03j")
 
-[node name="Dummy" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.56778, -10.9353)
-script = ExtResource("14_p4let")
-_minium_beam_count = 7
-
-[node name="Model" type="Node3D" parent="Dummy"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-
-[node name="Capsule" type="MeshInstance3D" parent="Dummy/Model"]
-mesh = SubResource("CapsuleMesh_sd826")
-skeleton = NodePath("../../..")
-
-[node name="Left Arm" type="MeshInstance3D" parent="Dummy/Model"]
-transform = Transform3D(1, 0, 0, 0, 0.918122, -0.396299, 0, 0.396299, 0.918122, 0.601494, 0.00041914, 0.403341)
-material_override = SubResource("StandardMaterial3D_xj801")
-mesh = SubResource("BoxMesh_kj3fx")
-
-[node name="Right Arm" type="MeshInstance3D" parent="Dummy/Model"]
-transform = Transform3D(1, 0, 0, 0, 0.918122, -0.396299, 0, 0.396299, 0.918122, -0.591414, -0.00041914, 0.405283)
-material_override = SubResource("StandardMaterial3D_xj801")
-mesh = SubResource("BoxMesh_0olkk")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Dummy"]
-shape = SubResource("CapsuleShape3D_oeakn")
-
-[node name="MovingTimer" type="Timer" parent="Dummy"]
-wait_time = 5.0
-autostart = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Dummy"]
-
-[node name="AnimationTree" type="AnimationTree" parent="Dummy"]
-anim_player = NodePath("../AnimationPlayer")
-
-[node name="EnemyStateChart" type="Node" parent="Dummy"]
-script = ExtResource("3_k22o3")
-
-[node name="Grounded" type="Node" parent="Dummy/EnemyStateChart"]
-script = ExtResource("4_r0bfi")
-initial_state = NodePath("Movement")
-
-[node name="Movement" type="Node" parent="Dummy/EnemyStateChart/Grounded"]
-script = ExtResource("4_r0bfi")
-initial_state = NodePath("Walk")
-
-[node name="Walk" type="Node" parent="Dummy/EnemyStateChart/Grounded/Movement"]
-script = ExtResource("5_mfumn")
-
-[node name="ToDamage" type="Node" parent="Dummy/EnemyStateChart/Grounded/Movement"]
-script = ExtResource("6_5dhd0")
-to = NodePath("../../Damage")
-event = &"damage"
-
-[node name="ToNegate" type="Node" parent="Dummy/EnemyStateChart/Grounded/Movement"]
-script = ExtResource("6_5dhd0")
-to = NodePath("../../Negate")
-event = &"negate"
-
-[node name="ToAttack" type="Node" parent="Dummy/EnemyStateChart/Grounded/Movement"]
-script = ExtResource("6_5dhd0")
-to = NodePath("../../Attack")
-event = &"attack"
-
-[node name="Attack" type="Node" parent="Dummy/EnemyStateChart/Grounded"]
-script = ExtResource("4_r0bfi")
-initial_state = NodePath("Beam Attack")
-
-[node name="Normal Attack" type="Node" parent="Dummy/EnemyStateChart/Grounded/Attack"]
-script = ExtResource("5_mfumn")
-
-[node name="ToBeam" type="Node" parent="Dummy/EnemyStateChart/Grounded/Attack/Normal Attack"]
-script = ExtResource("6_5dhd0")
-to = NodePath("../../Beam Attack")
-event = &"beam"
-
-[node name="Beam Attack" type="Node" parent="Dummy/EnemyStateChart/Grounded/Attack"]
-script = ExtResource("5_mfumn")
-
-[node name="ToMove" type="Node" parent="Dummy/EnemyStateChart/Grounded/Attack"]
-script = ExtResource("6_5dhd0")
-to = NodePath("../../Movement")
-event = &"move"
-
-[node name="Damage" type="Node" parent="Dummy/EnemyStateChart/Grounded"]
-script = ExtResource("5_mfumn")
-
-[node name="Negate" type="Node" parent="Dummy/EnemyStateChart/Grounded"]
-script = ExtResource("5_mfumn")
+[node name="Dummy" parent="." instance=ExtResource("14_vdq85")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.33116, -10.8572)
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
@@ -499,7 +400,6 @@ shape = SubResource("BoxShape3D_vltsd")
 [connection signal="state_entered" from="Character/StateChart/Roor/Character/Grounded/Run" to="Character/Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_run_state_entered"]
 [connection signal="state_entered" from="Character/StateChart/Roor/Character/Grounded/Crouch" to="Character" method="_on_crouch_state_entered"]
 [connection signal="state_exited" from="Character/StateChart/Roor/Character/Grounded/Crouch" to="Character" method="_on_crouch_state_exited"]
-[connection signal="timeout" from="Dummy/MovingTimer" to="Dummy" method="_on_distance_timer_timeout"]
 
 [editable path="Character/Head/Camera/SubViewportContainer/SubViewport/view_model_cam"]
 [editable path="Character/UserInterface/Reticle_1"]

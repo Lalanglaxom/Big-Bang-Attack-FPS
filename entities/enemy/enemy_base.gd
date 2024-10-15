@@ -13,19 +13,20 @@ const JUMP_VELOCITY = 10
 
 var	time = 0
 var walk_speed = 1
+var approach_speed = 0
 var rng = RandomNumberGenerator.new()
+var base_distance: float
+var lock_movement = false
 
 func _ready() -> void:
 	rng.randomize()
-
+	base_distance = position.distance_to(player.position)
 
 func _physics_process(delta: float) -> void:
 	look_at(player.global_position)
 	update_wait_time(delta)
 
 	handle_movement()
-	move_and_slide()
-	
 	handle_attack()
 
 
@@ -47,15 +48,28 @@ func handle_movement():
 
 	time += get_physics_process_delta_time()
 	
-	var direction := (transform.basis * Vector3(walk_speed, 0, 0))
+	var direction := (transform.basis * Vector3(walk_speed, 0, approach_speed))
+	
+	if lock_movement:
+		direction = Vector3.ZERO
+		
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-
-
+	
+	if position.distance_to(player.position) < 4:
+		if approach_speed < 0:
+			lock_movement = true
+			
+	if position.distance_to(player.position) >= base_distance:
+		if approach_speed > 0:
+			approach_speed = 0
+		
+	move_and_slide()
+	
 func damage(attack: Attack):
 	return
 
