@@ -125,32 +125,32 @@ tracks/7/keys = {
 "values": [Vector3(0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_j6d8v"]
-resource_name = "leg sweep"
-length = 2.0
+[sub_resource type="Animation" id="Animation_84v6n"]
+resource_name = "beam"
+length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Model/Right Leg:position")
+tracks/0/path = NodePath("Model/Capsule:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.433333, 0.733333, 0.833333, 1, 1.6, 1.7, 2),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 1.8, 1.86667, 1.93333, 2.06667, 2.13333, 2.4, 2.9, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(-0.245351, -1.12523, 0.00376934), Vector3(-0.409882, -1.12523, -0.261047), Vector3(-0.409882, -1.02562, -0.357706), Vector3(-0.420057, -0.97475, 0.41557), Vector3(0.120057, -0.822129, 0.349434), Vector3(-0.409882, -1.02562, -0.357706), Vector3(-0.409882, -1.12523, -0.261047), Vector3(-0.245351, -1.12523, 0.00376934)]
+"values": [Vector3(0, 0, 0), Vector3(8.71081e-08, 0, -0.9964), Vector3(1.10177e-07, 0, -1.26027), Vector3(1.27416e-07, 0, -1.45747), Vector3(-2.03382e-07, 0, 2.32642), Vector3(-2.03382e-07, 0, 2.32642), Vector3(-2.03382e-07, 0, 2.32642), Vector3(0, 0, 0), Vector3(0, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Model/Right Leg:rotation")
+tracks/1/path = NodePath("Model/Capsule:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.433333, 0.733333, 0.833333, 1, 1.6, 1.7, 2),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 1.8, 1.86667, 1.93333, 2.06667, 2.13333, 2.4, 2.9, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(1.58216, 0, 0), Vector3(1.12383, -2.48339, -2.43279), Vector3(0.948791, -2.75632, -2.74146), Vector3(0.834821, -0.395796, -0.30033), Vector3(0.562914, 1.01532, 0.710159), Vector3(0.948791, -2.75632, -2.74146), Vector3(1.12383, -2.48339, -2.43279), Vector3(1.58216, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_f2mc2"]
@@ -181,6 +181,34 @@ tracks/1/keys = {
 "values": [Vector3(0.407482, 0, 0), Vector3(-0.0120602, 0, 0), Vector3(-0.0120602, 0, 0), Vector3(-0.0120602, 0, 0), Vector3(-0.0120602, 0, 0), Vector3(-0.0120602, 0, 0), Vector3(0.407482, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_j6d8v"]
+resource_name = "leg sweep"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model/Right Leg:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.433333, 0.733333, 0.833333, 1, 1.6, 1.7, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.245351, -1.12523, 0.00376934), Vector3(-0.409882, -1.12523, -0.261047), Vector3(-0.409882, -1.02562, -0.357706), Vector3(-0.420057, -0.97475, 0.41557), Vector3(0.120057, -0.822129, 0.349434), Vector3(-0.409882, -1.02562, -0.357706), Vector3(-0.409882, -1.12523, -0.261047), Vector3(-0.245351, -1.12523, 0.00376934)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model/Right Leg:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.433333, 0.733333, 0.833333, 1, 1.6, 1.7, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1.58216, 0, 0), Vector3(1.12383, -2.48339, -2.43279), Vector3(0.948791, -2.75632, -2.74146), Vector3(0.834821, -0.395796, -0.30033), Vector3(0.562914, 1.01532, 0.710159), Vector3(0.948791, -2.75632, -2.74146), Vector3(1.12383, -2.48339, -2.43279), Vector3(1.58216, 0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_tg3av"]
 resource_name = "right punch"
 length = 2.0
@@ -207,34 +235,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector3(0.407482, 0, 0), Vector3(-0.0288503, 0, 0), Vector3(-0.0288503, 0, 0), Vector3(-0.0288503, 0, 0), Vector3(-0.0288503, 0, 0), Vector3(-0.0288503, 0, 0), Vector3(0.407482, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_84v6n"]
-resource_name = "beam"
-length = 3.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Model/Capsule:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.86667, 1.93333, 2.06667, 2.13333, 2.4, 2.9, 3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(8.71081e-08, 0, -0.9964), Vector3(1.10177e-07, 0, -1.26027), Vector3(1.27416e-07, 0, -1.45747), Vector3(-2.03382e-07, 0, 2.32642), Vector3(-2.03382e-07, 0, 2.32642), Vector3(-2.03382e-07, 0, 2.32642), Vector3(0, 0, 0), Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Model/Capsule:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.8, 1.86667, 1.93333, 2.06667, 2.13333, 2.4, 2.9, 3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vnc8t"]
@@ -268,7 +268,7 @@ material_override = SubResource("StandardMaterial3D_xj801")
 mesh = SubResource("BoxMesh_0olkk")
 
 [node name="Right Leg" type="MeshInstance3D" parent="Model"]
-transform = Transform3D(1, 0, 0, 0, -0.011362, -0.999935, 0, 0.999936, -0.011362, -0.245351, -1.12523, 0.00376934)
+transform = Transform3D(1, 0, 0, 0, -0.0113634, -0.999935, 0, 0.999936, -0.0113634, -0.245351, -1.12523, 0.00376934)
 material_override = SubResource("StandardMaterial3D_xj801")
 mesh = SubResource("BoxMesh_ed6kf")
 

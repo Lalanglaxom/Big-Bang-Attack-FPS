@@ -14,9 +14,21 @@ const JUMP_VELOCITY = 10
 var	time = 0
 var walk_speed = 1
 var approach_speed = 0
+var cur_approach_speed: float
 var rng = RandomNumberGenerator.new()
 var base_distance: float
 var lock_movement = false
+
+
+## Attack
+var skill = ["apple", "orange", "pear", "banana"]
+var beam = ["beam", "slash"]
+var minium_beam_count = 4
+
+var last_skill = ""
+var last_skill_count = 0
+var total_skill_count = 0
+var skill_need_to_beam = 6
 
 func _ready() -> void:
 	rng.randomize()
@@ -24,6 +36,9 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	look_at(player.global_position)
+	rotation.x = 0
+	rotation.z = 0
+	
 	update_wait_time(delta)
 
 	handle_movement()
@@ -75,7 +90,7 @@ func damage(attack: Attack):
 
 
 func handle_attack():
-	return
+	pass
 
 
 func _on_distance_timer_timeout() -> void:
@@ -91,34 +106,5 @@ func switch_state(state_name: String):
 
 
 class EnemyAttack:
-	var skill = ["apple", "orange", "pear", "banana"]
-	var beam = ["beam", "slash"]
-	var minium_beam_count = 4
-
-	var last_skill = ""
-	var last_skill_count = 0
-	var total_skill_count = 0
-	var skill_need_to_beam = 6
-	var rng = RandomNumberGenerator.new()
-		
-	func use_skill():
-		var random_skill = skill[randi() % skill.size()]
-		
-		# skill only repeat once
-		while last_skill_count == 1:
-			random_skill = skill[randi() % skill.size()]
-			if random_skill != last_skill:
-				last_skill_count = 0
-				
-		if random_skill == last_skill:
-			last_skill_count = 1
-
-		last_skill = random_skill
-		
-		if total_skill_count >= skill_need_to_beam:
-			random_skill = beam[randi() % beam.size()]
-			skill_need_to_beam = rng.randi_range(minium_beam_count, minium_beam_count + 3)
-			total_skill_count = 0
-		else:
-			total_skill_count += 1
-		return random_skill
+	var atk_stand = []
+	var atk_damage: int

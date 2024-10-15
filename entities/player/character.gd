@@ -56,10 +56,7 @@ func _ready():
 	Global.on_hit.connect(take_damage)
 
 func _physics_process(delta):
-	# Add some debug data
-	#$UserInterface/DebugPanel.add_property("Movement Speed", speed, 1)
-	#$UserInterface/DebugPanel.add_property("Velocity", get_real_velocity(), 2)
-	
+	CAMERA.look_at(TARGET.global_position)
 	handle_movement(delta)
 
 
@@ -74,16 +71,10 @@ func _process(delta):
 	
 	handle_game_input()
 	handle_state()
-	
-#func _unhandled_input(event):
-	#if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		#HEAD.rotation_degrees.y -= event.relative.x * mouse_sensitivity
-		#HEAD.rotation_degrees.x -= event.relative.y * mouse_sensitivity
-		#HEAD.rotation.x = clamp(HEAD.rotation.x, deg_to_rad(-90), deg_to_rad(90))
-		#view_model_cam.sway(Vector2(event.relative.x, event.relative.y))
-	
+
+
 func handle_movement(delta):
-	look_at(TARGET.global_position)
+	
 	move_and_slide()
 
 func handle_game_input():
