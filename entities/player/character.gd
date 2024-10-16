@@ -112,9 +112,6 @@ func handle_state():
 func start():
 	global_position = start_pos
 
-func take_damage(damage):
-	health -= damage
-	health_text.text = str(health)
-	texture_progress_bar.value = health
-	if health <= 0:
-		health_depleted.emit()
+func take_damage(attack: Attack):
+	if cur_stand in attack.atk_stand:
+		print("get hit")

@@ -180,6 +180,20 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector3(0.407482, 0, 0), Vector3(-0.0120602, 0, 0), Vector3(-0.0120602, 0, 0), Vector3(-0.0120602, 0, 0), Vector3(-0.0120602, 0, 0), Vector3(-0.0120602, 0, 0), Vector3(0.407482, 0, 0)]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"call_damage"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_j6d8v"]
 resource_name = "leg sweep"

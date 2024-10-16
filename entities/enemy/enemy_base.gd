@@ -30,6 +30,8 @@ var last_skill_count = 0
 var total_skill_count = 0
 var skill_need_to_beam = 6
 
+var attack = Attack.new()
+
 func _ready() -> void:
 	rng.randomize()
 	base_distance = position.distance_to(player.position)
@@ -84,9 +86,42 @@ func handle_movement():
 			approach_speed = 0
 		
 	move_and_slide()
+
+func use_skill():
+	if skill.size() == 1:
+		return skill[0]
 	
+	var random_skill = skill[randi() % skill.size()]
+	# skill only repeat once
+	while last_skill_count == 1:
+		random_skill = skill[randi() % skill.size()]
+		if random_skill != last_skill:
+			last_skill_count = 0
+				
+	if random_skill == last_skill:
+		last_skill_count = 1
+
+	last_skill = random_skill
+		
+	if total_skill_count >= skill_need_to_beam:
+		random_skill = beam[randi() % beam.size()]
+		skill_need_to_beam = rng.randi_range(minium_beam_count, minium_beam_count + 3)
+		total_skill_count = 0
+	else:
+		total_skill_count += 1
+
+	return random_skill
+
+
 func damage(attack: Attack):
-	return
+	player.take_damage(attack)
+
+
+func call_damage():
+	damage(attack)
+
+func take_damage(attack: Attack):
+	pass
 
 
 func handle_attack():
@@ -103,8 +138,3 @@ func handle_state():
 
 func switch_state(state_name: String):
 	state_chart.send_event(state_name)
-
-
-class EnemyAttack:
-	var atk_stand = []
-	var atk_damage: int

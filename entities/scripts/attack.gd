@@ -1,5 +1,5 @@
 class_name Attack
 
-var attack_damage: float
-enum AttackStand {LEFT, RIGHT, UP, DOWN, CENTER}
-var cur_atk_stand: AttackStand = AttackStand.CENTER
+enum AttackStand {RIGHT, LEFT, UP, DOWN, CENTER}
+var atk_stand: Array[int]
+var atk_damage: int
