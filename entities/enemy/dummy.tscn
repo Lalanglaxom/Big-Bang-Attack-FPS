@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://dixnwefcmk136"]
+[gd_scene load_steps=20 format=3 uid="uid://dixnwefcmk136"]
 
 [ext_resource type="Script" path="res://entities/enemy/dummy.gd" id="1_cva7j"]
+[ext_resource type="Resource" uid="uid://x2rdiqgq3ujc" path="res://entities/enemy/dummy.tres" id="2_13im6"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_mniyf"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_4hqos"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_wd3gv"]
@@ -152,6 +153,20 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0)]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"call_damage"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_f2mc2"]
 resource_name = "left punch"
@@ -222,6 +237,20 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector3(1.58216, 0, 0), Vector3(1.12383, -2.48339, -2.43279), Vector3(0.948791, -2.75632, -2.74146), Vector3(0.834821, -0.395796, -0.30033), Vector3(0.562914, 1.01532, 0.710159), Vector3(0.948791, -2.75632, -2.74146), Vector3(1.12383, -2.48339, -2.43279), Vector3(1.58216, 0, 0)]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"call_damage"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_tg3av"]
 resource_name = "right punch"
@@ -250,6 +279,20 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector3(0.407482, 0, 0), Vector3(-0.0288503, 0, 0), Vector3(-0.0288503, 0, 0), Vector3(-0.0288503, 0, 0), Vector3(-0.0288503, 0, 0), Vector3(-0.0288503, 0, 0), Vector3(0.407482, 0, 0)]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"call_damage"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vnc8t"]
 _data = {
@@ -262,7 +305,7 @@ _data = {
 
 [node name="Dummy" type="CharacterBody3D"]
 script = ExtResource("1_cva7j")
-_minium_beam_count = 4
+enemy_resource = ExtResource("2_13im6")
 
 [node name="Model" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
@@ -297,6 +340,11 @@ shape = SubResource("BoxShape3D_8m4qj")
 
 [node name="MovingTimer" type="Timer" parent="."]
 wait_time = 5.0
+autostart = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
 autostart = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

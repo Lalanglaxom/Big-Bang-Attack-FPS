@@ -6,3 +6,7 @@
 script = ExtResource("1_2s6s8")
 name = "dummy"
 health = 20.0
+skill_name = Array[String](["left punch", "right punch", "leg sweep"])
+beam_name = Array[String](["beam"])
+minium_beam_count = 4
+approach_speed = 4

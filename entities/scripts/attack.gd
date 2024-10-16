@@ -1,5 +1,5 @@
 class_name Attack
 
-enum AttackStand {RIGHT, LEFT, UP, DOWN, CENTER}
-var atk_stand: Array[int]
+var atk_stand: Array[String]
 var atk_damage: int
+var atk_anim_name: String

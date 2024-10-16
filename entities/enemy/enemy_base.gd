@@ -5,11 +5,12 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 10
 
 @onready var moving_timer: Timer = $MovingTimer
+@onready var attack_timer: Timer = $AttackTimer
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var state_chart: StateChart = $EnemyStateChart
 @onready var player = get_tree().get_nodes_in_group("player")[0]
 
-@export var enemy_resource: Enemy
+@export var hello: int
 
 var	time = 0
 var walk_speed = 1
@@ -21,11 +22,13 @@ var lock_movement = false
 
 
 ## Attack
-var skill = ["apple", "orange", "pear", "banana"]
-var beam = ["beam", "slash"]
+var skill_array: Array[Attack]
+var skill_anim = []
+var beam_array: Array[Attack]
+var beam_anim = []
 var minium_beam_count = 4
 
-var last_skill = ""
+var last_skill: Attack
 var last_skill_count = 0
 var total_skill_count = 0
 var skill_need_to_beam = 6
@@ -34,6 +37,8 @@ var attack = Attack.new()
 
 func _ready() -> void:
 	rng.randomize()
+	moving_timer.timeout.connect(on_distance_timer_timeout)
+	attack_timer.timeout.connect(on_attack_timer_timeout)
 	base_distance = position.distance_to(player.position)
 
 func _physics_process(delta: float) -> void:
@@ -47,11 +52,6 @@ func _physics_process(delta: float) -> void:
 	handle_attack()
 
 
-func update_wait_time(delta):
-	time += delta
-	if time >= 5:
-		moving_timer.wait_time = randf_range(3,6)
-		time = 0
 
 
 func handle_movement():
@@ -87,14 +87,14 @@ func handle_movement():
 		
 	move_and_slide()
 
-func use_skill():
-	if skill.size() == 1:
-		return skill[0]
+func get_skill() -> Attack:
+	if skill_array.size() == 1:
+		return skill_array[0]
 	
-	var random_skill = skill[randi() % skill.size()]
+	var random_skill = skill_array[randi() % skill_array.size()]
 	# skill only repeat once
 	while last_skill_count == 1:
-		random_skill = skill[randi() % skill.size()]
+		random_skill = skill_array[randi() % skill_array.size()]
 		if random_skill != last_skill:
 			last_skill_count = 0
 				
@@ -104,12 +104,12 @@ func use_skill():
 	last_skill = random_skill
 		
 	if total_skill_count >= skill_need_to_beam:
-		random_skill = beam[randi() % beam.size()]
+		random_skill = beam_array[randi() % beam_array.size()]
 		skill_need_to_beam = rng.randi_range(minium_beam_count, minium_beam_count + 3)
 		total_skill_count = 0
 	else:
 		total_skill_count += 1
-
+		
 	return random_skill
 
 
@@ -128,8 +128,19 @@ func handle_attack():
 	pass
 
 
-func _on_distance_timer_timeout() -> void:
+func update_wait_time(delta):
+	time += delta
+	if time >= 5:
+		moving_timer.wait_time = randf_range(2,5)
+		time = 0
+		
+		
+func on_distance_timer_timeout() -> void:
 	walk_speed *= -1
+
+
+func on_attack_timer_timeout() -> void:
+	print("Attack")
 
 
 func handle_state():

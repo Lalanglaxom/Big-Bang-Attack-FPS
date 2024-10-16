@@ -52,7 +52,7 @@ var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	$Head/Camera/SubViewportContainer/SubViewport.size = DisplayServer.window_get_size()
-	
+
 	Global.on_hit.connect(take_damage)
 
 func _physics_process(delta):
@@ -113,5 +113,5 @@ func start():
 	global_position = start_pos
 
 func take_damage(attack: Attack):
-	if cur_stand in attack.atk_stand:
+	if CharacterStand.keys()[cur_stand] in attack.atk_stand:
 		print("get hit")
