@@ -6,24 +6,26 @@ extends Camera3D
 @onready var fps_rig = $FPS_Rig
 @onready var state_chart = $"../../../../../StateChart"
 
+@export var lerp_speed: int = 5
+
 func _ready():
 	pass
 
 func _process(delta):
-	fps_rig.position.x = lerp(fps_rig.position.x, 0.0, delta * 5)
-	fps_rig.position.y = lerp(fps_rig.position.y, 0.0, delta * 5)
+	fps_rig.position.x = lerp(fps_rig.position.x, 0.0, delta * lerp_speed)
+	fps_rig.position.y = lerp(fps_rig.position.y, 0.0, delta * lerp_speed)
 
 
 func sway(direction: String):
 	match direction:
 		"up":
-			fps_rig.position.y = lerp(fps_rig.position.y, 0.1, get_process_delta_time() * 5)
+			fps_rig.position.y = lerp(fps_rig.position.y, 0.1, get_process_delta_time() * lerp_speed)
 		"down":
-			fps_rig.position.y = lerp(fps_rig.position.y, -0.05, get_process_delta_time() * 5)
+			fps_rig.position.y = lerp(fps_rig.position.y, -0.05, get_process_delta_time() * lerp_speed)
 		"left":
-			fps_rig.position.x = lerp(fps_rig.position.x, -0.1, get_process_delta_time() * 5)
+			fps_rig.position.x = lerp(fps_rig.position.x, -0.1, get_process_delta_time() * lerp_speed)
 		"right":
-			fps_rig.position.x = lerp(fps_rig.position.x, 0.1, get_process_delta_time() * 5)
+			fps_rig.position.x = lerp(fps_rig.position.x, 0.1, get_process_delta_time() * lerp_speed)
 
 
 func _on_run_state_entered():

@@ -1,16 +1,10 @@
 extends Node
 
 @onready var root = $"."
-var projectile_path: Vector3
-var enemy_remain
 
-var ui: Control
-var endless: bool
-
-signal on_hit(damage)
-signal on_enemy_hit(body, damage)
-signal on_enemy_die()
-signal on_pause()
+signal on_parry_pressed()
+signal on_parry_success()
+signal on_parry_failed()
 
 func _unhandled_input(event):
 	if event.is_action_pressed("screenshot") :

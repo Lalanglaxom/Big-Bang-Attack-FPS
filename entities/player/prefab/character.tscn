@@ -1,23 +1,19 @@
-[gd_scene load_steps=16 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=17 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://entities/player/character.gd" id="1_5q61e"]
 [ext_resource type="PackedScene" uid="uid://bki433ajvtxh5" path="res://entities/player/prefab/view_model.tscn" id="2_cstpq"]
 [ext_resource type="PackedScene" uid="uid://3mij3cjhkwsm" path="res://addons/fpc/reticles/reticle_1.tscn" id="2_uuexm"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="3_22iiu"]
-[ext_resource type="Script" path="res://entities/player/debug.gd" id="3_x1wcc"]
 [ext_resource type="Texture2D" uid="uid://cqfuit4fudjdm" path="res://ui/heart/Heart_coraz_C3_B3n.png" id="5_kg5q0"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="5_tai33"]
 [ext_resource type="Texture2D" uid="uid://bxi3tcatdsipi" path="res://ui/heart/heart back.png" id="5_v37wx"]
 [ext_resource type="Texture2D" uid="uid://wncd23376147" path="res://ui/heart/heart front.png" id="6_6wbf0"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="6_pcou8"]
+[ext_resource type="Texture2D" uid="uid://bxlifgohg73dx" path="res://ui/star/star_many_back.png" id="7_in4c2"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="7_wggv0"]
+[ext_resource type="Texture2D" uid="uid://ixfcyee6qqcv" path="res://ui/star/star_many_border.png" id="8_08utv"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="8_enft1"]
-
-[sub_resource type="Theme" id="Theme_wdf0f"]
-MarginContainer/constants/margin_bottom = 10
-MarginContainer/constants/margin_left = 10
-MarginContainer/constants/margin_right = 10
-MarginContainer/constants/margin_top = 10
+[ext_resource type="Texture2D" uid="uid://dti3ngj8i7a1b" path="res://ui/star/star_many.png" id="9_w1udi"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_w5s5p"]
 font_size = 25
@@ -71,38 +67,22 @@ grow_vertical = 2
 mouse_filter = 1
 
 [node name="Reticle_1" parent="UserInterface" node_paths=PackedStringArray("reticle_lines", "character") instance=ExtResource("2_uuexm")]
+visible = false
 layout_mode = 1
 reticle_lines = [NodePath("top"), NodePath("left"), NodePath("right"), NodePath("bottom")]
 character = NodePath("../..")
 
-[node name="DebugPanel" type="PanelContainer" parent="UserInterface"]
-visible = false
-layout_mode = 0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 453.0
-offset_bottom = 50.0
-theme = SubResource("Theme_wdf0f")
-script = ExtResource("3_x1wcc")
-
-[node name="MarginContainer" type="MarginContainer" parent="UserInterface/DebugPanel"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/DebugPanel/MarginContainer"]
-layout_mode = 2
-
 [node name="TextureProgressBar" type="TextureProgressBar" parent="UserInterface"]
-visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -71.0001
-offset_top = -136.0
-offset_right = 569.0
-offset_bottom = 504.0
+offset_left = -519.0
+offset_top = -166.0
+offset_right = 121.0
+offset_bottom = 474.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.22, 0.22)
@@ -112,26 +92,41 @@ texture_under = ExtResource("5_v37wx")
 texture_over = ExtResource("6_6wbf0")
 texture_progress = ExtResource("5_kg5q0")
 
-[node name="EnemyRemainText" type="Label" parent="UserInterface"]
-visible = false
+[node name="StarProgressBar" type="TextureProgressBar" parent="UserInterface"]
+custom_minimum_size = Vector2(211, 57)
 layout_mode = 1
-offset_right = 187.0
-offset_bottom = 57.0
-text = "Basaiman remain: 3"
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 46.0
+offset_top = -17.0
+offset_right = 257.0
+offset_bottom = 40.0
+grow_vertical = 2
+texture_under = ExtResource("7_in4c2")
+texture_over = ExtResource("8_08utv")
+texture_progress = ExtResource("9_w1udi")
+
+[node name="Parry Cooldown" type="Label" parent="UserInterface"]
+layout_mode = 1
+offset_left = 29.0
+offset_top = 250.0
+offset_right = 269.0
+offset_bottom = 307.0
+text = "Cooldown: 3"
 label_settings = SubResource("LabelSettings_w5s5p")
 
 [node name="HealthText" type="Label" parent="UserInterface"]
-visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -80.0
-offset_top = -107.0
-offset_right = 78.0
-offset_bottom = 8.0
+offset_left = -530.0
+offset_top = -132.0
+offset_right = -372.0
+offset_bottom = -17.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "100"
@@ -208,16 +203,15 @@ script = ExtResource("3_22iiu")
 to = NodePath("../../Walk")
 event = &"crouch_to_walk"
 
-[node name="Collision" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.899176, 0)
+[node name="ParryCooldown" type="Timer" parent="."]
+one_shot = true
 
-[connection signal="shoot_button_clicked" from="." to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_character_shoot_button_clicked"]
-[connection signal="shoot_button_clicked" from="." to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam/FPS_Rig/Weapon" method="_on_character_shoot_button_clicked"]
 [connection signal="state_entered" from="StateChart/Roor/Character/Grounded" to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_grounded_state_entered"]
 [connection signal="state_entered" from="StateChart/Roor/Character/Grounded/Walk" to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_walk_state_entered"]
 [connection signal="state_entered" from="StateChart/Roor/Character/Grounded/Run" to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_run_state_entered"]
 [connection signal="state_entered" from="StateChart/Roor/Character/Grounded/Crouch" to="." method="_on_crouch_state_entered"]
 [connection signal="state_exited" from="StateChart/Roor/Character/Grounded/Crouch" to="." method="_on_crouch_state_exited"]
+[connection signal="timeout" from="ParryCooldown" to="." method="_on_parry_cooldown_timeout"]
 
 [editable path="Head/Camera/SubViewportContainer/SubViewport/view_model_cam"]
 [editable path="UserInterface/Reticle_1"]

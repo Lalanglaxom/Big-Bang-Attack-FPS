@@ -81,6 +81,7 @@ current = true
 fov = 35.0
 script = ExtResource("1_jhvm1")
 animation_tree = NodePath("AnimationTree")
+lerp_speed = 7
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 root_node = NodePath("../FPS_Rig/Weapon/gloves")
