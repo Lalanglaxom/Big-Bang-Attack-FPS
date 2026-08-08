@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://cc1m2a1obsyn4"]
+
+[ext_resource type="Script" uid="uid://dshfdjs3ghfl8" path="res://entities/player/character.gd" id="1_5q61e"]
+[ext_resource type="PackedScene" uid="uid://bki433ajvtxh5" path="res://entities/player/prefab/view_model.tscn" id="2_cstpq"]
+[ext_resource type="PackedScene" uid="uid://3mij3cjhkwsm" path="res://addons/fpc/reticles/reticle_1.tscn" id="2_uuexm"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cqqaq"]
+font_size = 45
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Character" type="CharacterBody3D" unique_id=1838307977 node_paths=PackedStringArray("HEAD")]
+collision_mask = 2
+script = ExtResource("1_5q61e")
+HEAD = NodePath("Head")
+
+[node name="Head" type="Node3D" parent="." unique_id=243022474]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+
+[node name="Camera" type="Camera3D" parent="Head" unique_id=1898295705]
+cull_mask = 1048573
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Head/Camera" unique_id=431915068]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="Head/Camera/SubViewportContainer" unique_id=1239528823]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="view_model_cam" parent="Head/Camera/SubViewportContainer/SubViewport" unique_id=775049455 instance=ExtResource("2_cstpq")]
+
+[node name="AnimationTree" parent="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" index="0"]
+root_node = NodePath("../FPS_Rig/Weapon/@Node3D@34727")
+anim_player = NodePath("/root/@EditorNode@17141/@Panel@13/@VBoxContainer@14/@HSplitContainer@17/@HSplitContainer@25/@HSplitContainer@33/@VBoxContainer@34/@VSplitContainer@36/@VSplitContainer@62/@VBoxContainer@63/@PanelContainer@110/MainScreen/@CanvasItemEditor@9462/@VSplitContainer@9281/@HSplitContainer@9283/@HSplitContainer@9285/@Control@9286/@SubViewportContainer@9287/@SubViewport@9288/Character/Head/Camera/SubViewportContainer/SubViewport/view_model_cam/FPS_Rig/Weapon/@Node3D@34727/AnimationPlayer")
+
+[node name="UserInterface" type="Control" parent="." unique_id=1401076298]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Reticle_1" parent="UserInterface" unique_id=1497184641 node_paths=PackedStringArray("reticle_lines", "character") instance=ExtResource("2_uuexm")]
+visible = false
+layout_mode = 1
+reticle_lines = [NodePath("top"), NodePath("left"), NodePath("right"), NodePath("bottom")]
+character = NodePath("../..")
+
+[node name="HealthText" type="Label" parent="UserInterface" unique_id=49567931]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -530.0
+offset_top = -132.0
+offset_right = -372.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "100"
+label_settings = SubResource("LabelSettings_cqqaq")
+horizontal_alignment = 1
+
+[editable path="Head/Camera/SubViewportContainer/SubViewport/view_model_cam"]
+[editable path="UserInterface/Reticle_1"]

@@ -1,10 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://bki433ajvtxh5"]
+[gd_scene format=3 uid="uid://bki433ajvtxh5"]
 
-[ext_resource type="Script" path="res://entities/player/view_model.gd" id="1_jhvm1"]
-[ext_resource type="Script" path="res://weapon/weapon_manager.gd" id="2_duwvg"]
-[ext_resource type="Resource" uid="uid://t2t5fhfs6jja" path="res://weapon/rocket_launcher/rocket_launcher.tres" id="3_ie6yc"]
-[ext_resource type="Script" path="res://weapon/weapon_resources.gd" id="3_xhbcf"]
-[ext_resource type="Resource" uid="uid://x5i3w1h6ik73" path="res://weapon/gloves/gloves.tres" id="4_srkvv"]
+[ext_resource type="Script" uid="uid://cc28gwcahd848" path="res://entities/player/view_model.gd" id="1_jhvm1"]
+[ext_resource type="Script" uid="uid://cts6kkcuw56cs" path="res://items/weapon/weapon_manager.gd" id="2_duwvg"]
+[ext_resource type="Resource" uid="uid://t2t5fhfs6jja" path="res://items/weapon/rocket_launcher/rocket_launcher.tres" id="3_ie6yc"]
+[ext_resource type="Script" uid="uid://dxoxth8a1rwvt" path="res://items/weapon/weapon_resources.gd" id="3_xhbcf"]
+[ext_resource type="Resource" uid="uid://x5i3w1h6ik73" path="res://items/weapon/gloves/gloves.tres" id="4_srkvv"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nvwyq"]
 animation = &"Enter"

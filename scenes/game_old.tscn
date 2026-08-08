@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://d3iar416kbook"]
 
-[ext_resource type="Script" path="res://scenes/game.gd" id="1_kup4d"]
-[ext_resource type="Script" path="res://scenes/pause_control.gd" id="2_g8dc1"]
+[ext_resource type="Script" path="res://scenes/scripts/game.gd" id="1_kup4d"]
+[ext_resource type="Script" path="res://scenes/scripts/pause_control.gd" id="2_g8dc1"]
 [ext_resource type="PackedScene" uid="uid://c1blfug38vakm" path="res://environment/terrain/terrain.tscn" id="3_oapbx"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://entities/player/prefab/character.tscn" id="4_ujyud"]
 

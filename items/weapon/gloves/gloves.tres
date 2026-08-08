@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://x5i3w1h6ik73"]
+
+[ext_resource type="Script" uid="uid://dxoxth8a1rwvt" path="res://items/weapon/weapon_resources.gd" id="1_85lq2"]
+[ext_resource type="Resource" uid="uid://cjunpj5ik76qj" path="res://items/weapon/gloves/bigbang/bigbang.tres" id="2_viy1x"]
+[ext_resource type="PackedScene" uid="uid://x1aj5im2ybj8" path="res://items/weapon/gloves/gloves2.tscn" id="3_l2j1f"]
+
+[resource]
+script = ExtResource("1_85lq2")
+weapon_scene = ExtResource("3_l2j1f")
+weapon_ammo = ExtResource("2_viy1x")
+position = Vector3(0, 0, -0.24)
+scale = Vector3(0.1, 0.1, 0.1)
+delay_time = 2.0

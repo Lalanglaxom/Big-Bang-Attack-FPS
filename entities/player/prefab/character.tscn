@@ -1,63 +1,51 @@
-[gd_scene load_steps=17 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene format=3 uid="uid://cc1m2a1obsyn4"]
 
-[ext_resource type="Script" path="res://entities/player/character.gd" id="1_5q61e"]
+[ext_resource type="Script" uid="uid://dshfdjs3ghfl8" path="res://entities/player/character.gd" id="1_5q61e"]
 [ext_resource type="PackedScene" uid="uid://bki433ajvtxh5" path="res://entities/player/prefab/view_model.tscn" id="2_cstpq"]
 [ext_resource type="PackedScene" uid="uid://3mij3cjhkwsm" path="res://addons/fpc/reticles/reticle_1.tscn" id="2_uuexm"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="3_22iiu"]
-[ext_resource type="Texture2D" uid="uid://cqfuit4fudjdm" path="res://ui/heart/Heart_coraz_C3_B3n.png" id="5_kg5q0"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="5_tai33"]
-[ext_resource type="Texture2D" uid="uid://bxi3tcatdsipi" path="res://ui/heart/heart back.png" id="5_v37wx"]
-[ext_resource type="Texture2D" uid="uid://wncd23376147" path="res://ui/heart/heart front.png" id="6_6wbf0"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="6_pcou8"]
-[ext_resource type="Texture2D" uid="uid://bxlifgohg73dx" path="res://ui/star/star_many_back.png" id="7_in4c2"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="7_wggv0"]
-[ext_resource type="Texture2D" uid="uid://ixfcyee6qqcv" path="res://ui/star/star_many_border.png" id="8_08utv"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="8_enft1"]
-[ext_resource type="Texture2D" uid="uid://dti3ngj8i7a1b" path="res://ui/star/star_many.png" id="9_w1udi"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_w5s5p"]
-font_size = 25
+[ext_resource type="Script" uid="uid://dxoxth8a1rwvt" path="res://items/weapon/weapon_resources.gd" id="3_go822"]
+[ext_resource type="Resource" uid="uid://t2t5fhfs6jja" path="res://items/weapon/rocket_launcher/rocket_launcher.tres" id="4_c7stc"]
+[ext_resource type="Resource" uid="uid://x5i3w1h6ik73" path="res://items/weapon/gloves/gloves.tres" id="5_1uytp"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_cqqaq"]
 font_size = 45
 outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
-[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA")]
+[node name="Character" type="CharacterBody3D" unique_id=1838307977 node_paths=PackedStringArray("HEAD", "camera")]
 collision_mask = 2
 script = ExtResource("1_5q61e")
-start_pos = Vector3(0, 1, 0)
 HEAD = NodePath("Head")
-CAMERA = NodePath("Head/Camera")
+camera = NodePath("Head/Camera")
 
-[node name="Head" type="Node3D" parent="."]
+[node name="Head" type="Node3D" parent="." unique_id=243022474]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 
-[node name="Camera" type="Camera3D" parent="Head"]
+[node name="Camera" type="Camera3D" parent="Head" unique_id=1898295705]
 cull_mask = 1048573
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Head/Camera"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Head/Camera" unique_id=431915068]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SubViewport" type="SubViewport" parent="Head/Camera/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="Head/Camera/SubViewportContainer" unique_id=1239528823]
 transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 4
 
-[node name="view_model_cam" parent="Head/Camera/SubViewportContainer/SubViewport" instance=ExtResource("2_cstpq")]
+[node name="view_model_cam" parent="Head/Camera/SubViewportContainer/SubViewport" unique_id=775049455 instance=ExtResource("2_cstpq")]
 
 [node name="AnimationTree" parent="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" index="0"]
 root_node = NodePath("../FPS_Rig/Weapon/@Node3D@34727")
 anim_player = NodePath("/root/@EditorNode@17141/@Panel@13/@VBoxContainer@14/@HSplitContainer@17/@HSplitContainer@25/@HSplitContainer@33/@VBoxContainer@34/@VSplitContainer@36/@VSplitContainer@62/@VBoxContainer@63/@PanelContainer@110/MainScreen/@CanvasItemEditor@9462/@VSplitContainer@9281/@HSplitContainer@9283/@HSplitContainer@9285/@Control@9286/@SubViewportContainer@9287/@SubViewport@9288/Character/Head/Camera/SubViewportContainer/SubViewport/view_model_cam/FPS_Rig/Weapon/@Node3D@34727/AnimationPlayer")
 
-[node name="BombSpawnPoint" type="Node3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.219906, -0.880232)
+[node name="Weapon" parent="Head/Camera/SubViewportContainer/SubViewport/view_model_cam/FPS_Rig" index="0"]
+weapon_loadout = Array[ExtResource("3_go822")]([ExtResource("4_c7stc"), ExtResource("5_1uytp")])
 
-[node name="UserInterface" type="Control" parent="."]
+[node name="UserInterface" type="Control" parent="." unique_id=1401076298]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -66,57 +54,13 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="Reticle_1" parent="UserInterface" node_paths=PackedStringArray("reticle_lines", "character") instance=ExtResource("2_uuexm")]
+[node name="Reticle_1" parent="UserInterface" unique_id=1497184641 node_paths=PackedStringArray("reticle_lines", "character") instance=ExtResource("2_uuexm")]
 visible = false
 layout_mode = 1
 reticle_lines = [NodePath("top"), NodePath("left"), NodePath("right"), NodePath("bottom")]
 character = NodePath("../..")
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="UserInterface"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -519.0
-offset_top = -166.0
-offset_right = 121.0
-offset_bottom = 474.0
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(0.22, 0.22)
-value = 100.0
-fill_mode = 3
-texture_under = ExtResource("5_v37wx")
-texture_over = ExtResource("6_6wbf0")
-texture_progress = ExtResource("5_kg5q0")
-
-[node name="StarProgressBar" type="TextureProgressBar" parent="UserInterface"]
-custom_minimum_size = Vector2(211, 57)
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 46.0
-offset_top = -17.0
-offset_right = 257.0
-offset_bottom = 40.0
-grow_vertical = 2
-texture_under = ExtResource("7_in4c2")
-texture_over = ExtResource("8_08utv")
-texture_progress = ExtResource("9_w1udi")
-
-[node name="Parry Cooldown" type="Label" parent="UserInterface"]
-layout_mode = 1
-offset_left = 29.0
-offset_top = 250.0
-offset_right = 269.0
-offset_bottom = 307.0
-text = "Cooldown: 3"
-label_settings = SubResource("LabelSettings_w5s5p")
-
-[node name="HealthText" type="Label" parent="UserInterface"]
+[node name="HealthText" type="Label" parent="UserInterface" unique_id=49567931]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -132,86 +76,6 @@ grow_vertical = 0
 text = "100"
 label_settings = SubResource("LabelSettings_cqqaq")
 horizontal_alignment = 1
-
-[node name="StateChart" type="Node" parent="."]
-script = ExtResource("5_tai33")
-
-[node name="Roor" type="Node" parent="StateChart"]
-script = ExtResource("6_pcou8")
-
-[node name="Character" type="Node" parent="StateChart/Roor"]
-script = ExtResource("7_wggv0")
-initial_state = NodePath("Grounded")
-
-[node name="Airborne" type="Node" parent="StateChart/Roor/Character"]
-script = ExtResource("7_wggv0")
-initial_state = NodePath("Jump")
-
-[node name="Jump" type="Node" parent="StateChart/Roor/Character/Airborne"]
-script = ExtResource("8_enft1")
-
-[node name="to Grounded" type="Node" parent="StateChart/Roor/Character/Airborne/Jump"]
-script = ExtResource("3_22iiu")
-to = NodePath("../../../Grounded")
-event = &"grounded"
-
-[node name="Grounded" type="Node" parent="StateChart/Roor/Character"]
-script = ExtResource("7_wggv0")
-initial_state = NodePath("Walk")
-
-[node name="Walk" type="Node" parent="StateChart/Roor/Character/Grounded"]
-script = ExtResource("8_enft1")
-
-[node name="to Airborne" type="Node" parent="StateChart/Roor/Character/Grounded/Walk"]
-script = ExtResource("3_22iiu")
-to = NodePath("../../../Airborne")
-event = &"jump"
-
-[node name="to Run" type="Node" parent="StateChart/Roor/Character/Grounded/Walk"]
-script = ExtResource("3_22iiu")
-to = NodePath("../../Run")
-event = &"run"
-
-[node name="To Crouch" type="Node" parent="StateChart/Roor/Character/Grounded/Walk"]
-script = ExtResource("3_22iiu")
-to = NodePath("../../Crouch")
-event = &"crouch"
-
-[node name="Run" type="Node" parent="StateChart/Roor/Character/Grounded"]
-script = ExtResource("8_enft1")
-
-[node name="to Airborne" type="Node" parent="StateChart/Roor/Character/Grounded/Run"]
-script = ExtResource("3_22iiu")
-to = NodePath("../../../Airborne")
-event = &"jump"
-
-[node name="to Walk" type="Node" parent="StateChart/Roor/Character/Grounded/Run"]
-script = ExtResource("3_22iiu")
-to = NodePath("../../Walk")
-event = &"walk"
-
-[node name="To Crouch" type="Node" parent="StateChart/Roor/Character/Grounded/Run"]
-script = ExtResource("3_22iiu")
-to = NodePath("../../Crouch")
-event = &"crouch"
-
-[node name="Crouch" type="Node" parent="StateChart/Roor/Character/Grounded"]
-script = ExtResource("8_enft1")
-
-[node name="To Walk" type="Node" parent="StateChart/Roor/Character/Grounded/Crouch"]
-script = ExtResource("3_22iiu")
-to = NodePath("../../Walk")
-event = &"crouch_to_walk"
-
-[node name="ParryCooldown" type="Timer" parent="."]
-one_shot = true
-
-[connection signal="state_entered" from="StateChart/Roor/Character/Grounded" to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_grounded_state_entered"]
-[connection signal="state_entered" from="StateChart/Roor/Character/Grounded/Walk" to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_walk_state_entered"]
-[connection signal="state_entered" from="StateChart/Roor/Character/Grounded/Run" to="Head/Camera/SubViewportContainer/SubViewport/view_model_cam" method="_on_run_state_entered"]
-[connection signal="state_entered" from="StateChart/Roor/Character/Grounded/Crouch" to="." method="_on_crouch_state_entered"]
-[connection signal="state_exited" from="StateChart/Roor/Character/Grounded/Crouch" to="." method="_on_crouch_state_exited"]
-[connection signal="timeout" from="ParryCooldown" to="." method="_on_parry_cooldown_timeout"]
 
 [editable path="Head/Camera/SubViewportContainer/SubViewport/view_model_cam"]
 [editable path="UserInterface/Reticle_1"]

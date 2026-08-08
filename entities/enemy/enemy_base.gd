@@ -47,7 +47,7 @@ func _ready() -> void:
 	animation_player.animation_finished.connect(on_animation_finished)
 	moving_timer.timeout.connect(on_distance_timer_timeout)
 	attack_timer.timeout.connect(on_attack_timer_timeout)
-	Global.on_parry_pressed.connect(get_parry)
+	Events.on_parry_pressed.connect(get_parry)
 	base_distance = position.distance_to(player.position)
 
 
@@ -58,9 +58,6 @@ func _physics_process(delta: float) -> void:
 
 	update_wait_time(delta)
 	handle_movement()
-
-
-
 
 
 func handle_movement():
@@ -186,10 +183,10 @@ func enable_parry():
 func get_parry():
 	if can_be_parry:
 		animation_player.play("RESET")
-		Global.on_parry_success.emit()
+		Events.on_parry_success.emit()
 		can_be_parry = false
 	else:
-		Global.on_parry_failed.emit()
+		Events.on_parry_failed.emit()
 
 func switch_state(state_name: String):
 	state_chart.send_event(state_name)
