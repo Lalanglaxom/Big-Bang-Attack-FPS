@@ -1,11 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://dixnwefcmk136"]
+[gd_scene format=3 uid="uid://dixnwefcmk136"]
 
-[ext_resource type="Script" path="res://entities/enemy/dummy.gd" id="1_cva7j"]
+[ext_resource type="Script" uid="uid://d3pb2mbvld5jl" path="res://entities/enemy/dummy.gd" id="1_cva7j"]
 [ext_resource type="Resource" uid="uid://x2rdiqgq3ujc" path="res://entities/enemy/dummy.tres" id="2_13im6"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_mniyf"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_4hqos"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_wd3gv"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_pserh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8m4qj"]
+size = Vector3(1, 2.36768, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_amdgj"]
 
@@ -23,9 +22,6 @@ size = Vector3(0.2, 0.2, 1.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_lmsxe"]
 size = Vector3(0.2, 0.2, 1.5)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_8m4qj"]
-size = Vector3(1, 2.36768, 1)
 
 [sub_resource type="Animation" id="Animation_gon1u"]
 length = 0.001
@@ -296,119 +292,52 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vnc8t"]
 _data = {
-"RESET": SubResource("Animation_gon1u"),
-"beam": SubResource("Animation_84v6n"),
-"left punch": SubResource("Animation_f2mc2"),
-"leg sweep": SubResource("Animation_j6d8v"),
-"right punch": SubResource("Animation_tg3av")
+&"RESET": SubResource("Animation_gon1u"),
+&"beam": SubResource("Animation_84v6n"),
+&"left punch": SubResource("Animation_f2mc2"),
+&"leg sweep": SubResource("Animation_j6d8v"),
+&"right punch": SubResource("Animation_tg3av")
 }
 
-[node name="Dummy" type="CharacterBody3D"]
+[node name="Dummy" type="CharacterBody3D" unique_id=1058703588]
 script = ExtResource("1_cva7j")
 enemy_resource = ExtResource("2_13im6")
 
-[node name="Model" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+[node name="BodyCollision" type="CollisionShape3D" parent="." unique_id=723252853]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1849253, 0)
+shape = SubResource("BoxShape3D_8m4qj")
 
-[node name="Capsule" type="MeshInstance3D" parent="Model"]
+[node name="Model" type="Node3D" parent="." unique_id=608692184]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.8914149, 0)
+
+[node name="Capsule" type="MeshInstance3D" parent="Model" unique_id=433126902]
 mesh = SubResource("BoxMesh_amdgj")
 skeleton = NodePath("../../..")
 
-[node name="Left Arm" type="MeshInstance3D" parent="Model"]
-transform = Transform3D(1, 0, 0, 0, 0.918122, -0.396299, 0, 0.396299, 0.918122, 0.601494, 0.00041914, 0.403341)
+[node name="Left Arm" type="MeshInstance3D" parent="Model" unique_id=1919865194]
+transform = Transform3D(1, 0, 0, 0, 0.91812205, -0.39629894, 0, 0.39629894, 0.91812205, 0.601494, 0.00041914, 0.403341)
 material_override = SubResource("StandardMaterial3D_xj801")
 mesh = SubResource("BoxMesh_kj3fx")
 
-[node name="Right Arm" type="MeshInstance3D" parent="Model"]
-transform = Transform3D(1, 0, 0, 0, 0.918122, -0.396299, 0, 0.396299, 0.918122, -0.591414, -0.00041914, 0.405283)
+[node name="Right Arm" type="MeshInstance3D" parent="Model" unique_id=2066648918]
+transform = Transform3D(1, 0, 0, 0, 0.91812205, -0.39629894, 0, 0.39629894, 0.91812205, -0.591414, -0.00041914, 0.405283)
 material_override = SubResource("StandardMaterial3D_xj801")
 mesh = SubResource("BoxMesh_0olkk")
 
-[node name="Right Leg" type="MeshInstance3D" parent="Model"]
-transform = Transform3D(1, 0, 0, 0, -0.0113634, -0.999935, 0, 0.999936, -0.0113634, -0.245351, -1.12523, 0.00376934)
+[node name="Right Leg" type="MeshInstance3D" parent="Model" unique_id=164305217]
+transform = Transform3D(1, 0, 0, 0, -0.01136343, -0.999935, 0, 0.9999359, -0.011363419, -0.245351, -1.12523, 0.00376934)
 material_override = SubResource("StandardMaterial3D_xj801")
 mesh = SubResource("BoxMesh_ed6kf")
 
-[node name="Left Leg" type="MeshInstance3D" parent="Model"]
+[node name="Left Leg" type="MeshInstance3D" parent="Model" unique_id=730754959]
 transform = Transform3D(1, 0, 0, 0, -0.011362, -0.999936, 0, 0.999936, -0.011362, 0.322194, -1.12523, 0.00376939)
 material_override = SubResource("StandardMaterial3D_xj801")
 mesh = SubResource("BoxMesh_lmsxe")
 
-[node name="Collision" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.683838, 0)
-shape = SubResource("BoxShape3D_8m4qj")
+[node name="Area3D" type="Area3D" parent="." unique_id=982270821]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1849253, 0)
 
-[node name="MovingTimer" type="Timer" parent="."]
-wait_time = 5.0
-autostart = true
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1406090391]
+libraries/ = SubResource("AnimationLibrary_vnc8t")
 
-[node name="AttackTimer" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
-autostart = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_vnc8t")
-}
-
-[node name="AnimationTree" type="AnimationTree" parent="."]
-anim_player = NodePath("../AnimationPlayer")
-
-[node name="EnemyStateChart" type="Node" parent="."]
-script = ExtResource("2_mniyf")
-
-[node name="Grounded" type="Node" parent="EnemyStateChart"]
-script = ExtResource("3_4hqos")
-initial_state = NodePath("Movement")
-
-[node name="Movement" type="Node" parent="EnemyStateChart/Grounded"]
-script = ExtResource("3_4hqos")
-initial_state = NodePath("Walk")
-
-[node name="Walk" type="Node" parent="EnemyStateChart/Grounded/Movement"]
-script = ExtResource("4_wd3gv")
-
-[node name="ToDamage" type="Node" parent="EnemyStateChart/Grounded/Movement"]
-script = ExtResource("5_pserh")
-to = NodePath("../../Damage")
-event = &"damage"
-
-[node name="ToNegate" type="Node" parent="EnemyStateChart/Grounded/Movement"]
-script = ExtResource("5_pserh")
-to = NodePath("../../Negate")
-event = &"negate"
-
-[node name="ToAttack" type="Node" parent="EnemyStateChart/Grounded/Movement"]
-script = ExtResource("5_pserh")
-to = NodePath("../../Attack")
-event = &"attack"
-
-[node name="Attack" type="Node" parent="EnemyStateChart/Grounded"]
-script = ExtResource("3_4hqos")
-initial_state = NodePath("Beam Attack")
-
-[node name="Normal Attack" type="Node" parent="EnemyStateChart/Grounded/Attack"]
-script = ExtResource("4_wd3gv")
-
-[node name="ToBeam" type="Node" parent="EnemyStateChart/Grounded/Attack/Normal Attack"]
-script = ExtResource("5_pserh")
-to = NodePath("../../Beam Attack")
-event = &"beam"
-
-[node name="Beam Attack" type="Node" parent="EnemyStateChart/Grounded/Attack"]
-script = ExtResource("4_wd3gv")
-
-[node name="ToMove" type="Node" parent="EnemyStateChart/Grounded/Attack"]
-script = ExtResource("5_pserh")
-to = NodePath("../../Movement")
-event = &"move"
-
-[node name="Damage" type="Node" parent="EnemyStateChart/Grounded"]
-script = ExtResource("4_wd3gv")
-
-[node name="Negate" type="Node" parent="EnemyStateChart/Grounded"]
-script = ExtResource("4_wd3gv")
-
-[connection signal="timeout" from="MovingTimer" to="." method="_on_distance_timer_timeout"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]

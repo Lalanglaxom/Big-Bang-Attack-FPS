@@ -5,6 +5,7 @@
 [ext_resource type="Resource" uid="uid://t2t5fhfs6jja" path="res://items/weapon/rocket_launcher/rocket_launcher.tres" id="3_ie6yc"]
 [ext_resource type="Script" uid="uid://dxoxth8a1rwvt" path="res://items/weapon/weapon_resources.gd" id="3_xhbcf"]
 [ext_resource type="Resource" uid="uid://x5i3w1h6ik73" path="res://items/weapon/gloves/gloves.tres" id="4_srkvv"]
+[ext_resource type="PackedScene" uid="uid://bariqy2yln4rg" path="res://items/weapon/gloves/gloves.tscn" id="6_eim4f"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nvwyq"]
 animation = &"Enter"
@@ -75,15 +76,15 @@ states/Walk/position = Vector2(360, 9)
 transitions = ["Walk", "Run", SubResource("AnimationNodeStateMachineTransition_43btv"), "Run", "Walk", SubResource("AnimationNodeStateMachineTransition_yg7ws"), "Walk", "Shoot", SubResource("AnimationNodeStateMachineTransition_02wp8"), "Shoot", "Walk", SubResource("AnimationNodeStateMachineTransition_y030y"), "Run", "Shoot", SubResource("AnimationNodeStateMachineTransition_4y36u"), "Shoot", "Run", SubResource("AnimationNodeStateMachineTransition_3nrh0"), "Start", "Enter", SubResource("AnimationNodeStateMachineTransition_xv3ti"), "Enter", "Walk", SubResource("AnimationNodeStateMachineTransition_cc2ey"), "Enter", "Run", SubResource("AnimationNodeStateMachineTransition_tp5cy")]
 graph_offset = Vector2(-184.386, -37)
 
-[node name="view_model_cam" type="Camera3D" node_paths=PackedStringArray("animation_tree")]
+[node name="view_model_cam" type="Camera3D" unique_id=1937902203 node_paths=PackedStringArray("animation_tree")]
 cull_mask = 1047554
 current = true
 fov = 35.0
 script = ExtResource("1_jhvm1")
 animation_tree = NodePath("AnimationTree")
-lerp_speed = 7
+lerp_speed = 3
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1628081515]
 root_node = NodePath("../FPS_Rig/Weapon/gloves")
 tree_root = SubResource("AnimationNodeStateMachine_icjai")
 anim_player = NodePath("/root/@EditorNode@17141/@Panel@13/@VBoxContainer@14/@HSplitContainer@17/@HSplitContainer@25/@HSplitContainer@33/@VBoxContainer@34/@VSplitContainer@36/@VSplitContainer@62/@VBoxContainer@63/@PanelContainer@110/MainScreen/@CanvasItemEditor@9462/@VSplitContainer@9281/@HSplitContainer@9283/@HSplitContainer@9285/@Control@9286/@SubViewportContainer@9287/@SubViewport@9288/view_model_cam/FPS_Rig/Weapon/gloves/AnimationPlayer")
@@ -91,15 +92,17 @@ parameters/conditions/run = false
 parameters/conditions/shoot = false
 parameters/conditions/walk = false
 
-[node name="FPS_Rig" type="Node3D" parent="."]
+[node name="FPS_Rig" type="Node3D" parent="." unique_id=2076295765]
 
-[node name="Weapon" type="Node3D" parent="FPS_Rig" node_paths=PackedStringArray("animation_tree")]
+[node name="Weapon" type="Node3D" parent="FPS_Rig" unique_id=939316181 node_paths=PackedStringArray("animation_tree")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, -0.24)
 script = ExtResource("2_duwvg")
 animation_tree = NodePath("../../AnimationTree")
 weapon_loadout = Array[ExtResource("3_xhbcf")]([ExtResource("4_srkvv"), ExtResource("3_ie6yc")])
 
-[node name="Aim_End" type="Node3D" parent="FPS_Rig"]
+[node name="gloves" parent="FPS_Rig/Weapon" unique_id=482736469 instance=ExtResource("6_eim4f")]
+
+[node name="Aim_End" type="Node3D" parent="FPS_Rig" unique_id=1571192793]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
 
 [connection signal="animation_player_changed" from="AnimationTree" to="." method="_on_animation_tree_animation_player_changed"]

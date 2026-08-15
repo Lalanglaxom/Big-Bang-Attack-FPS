@@ -1,51 +1,72 @@
 extends CharacterBody3D
 
-## Gameplay properties
-@export var health: float = 100
-
-
-@export_group("Nodes")
-@export var HEAD : Node3D
-@export var camera : Camera3D
-@export var CAMERA_ANIMATION : AnimationPlayer
-@export var TARGET: Node3D
-
-
-@export_group("Others")
-@onready var view_model_cam = $Head/Camera/SubViewportContainer/SubViewport/view_model_cam
-@onready var fps_rig: Node3D = $Head/Camera/SubViewportContainer/SubViewport/view_model_cam/FPS_Rig
-@onready var main = $".."
+@export var camera: Camera3D
+@export var gun_cam: Camera3D
+@export var animation_tree: AnimationTree
 
 var camera_rotation: Vector2 = Vector2(0.0,0.0)
 var mouse_sensitivity = 0.001
+var crouched: bool = false
+var crouch_blocked: bool = false
 
-# We are using UI controls because they are built into Godot Engine so they can be used right away
-var PAUSE : String = "ui_cancel"
-var LEFT : String = "left"
-var RIGHT : String = "right"
-var UP : String = "up"
-var DOWN : String = "down"
-var DODGE : String = "dodge"
-var ATTACK : String = "attack"
-var canAtack: bool = true
+@export_category("Crouch Parametres")
+@export var enable_crouch: bool = true
+@export var crouch_toggle: bool = false
+@export var crouch_collision: ShapeCast3D
+@export_range(0.0,3.0) var crouch_speed_reduction = 2.0
+@export_range(0.0,0.50) var crouch_blend_speed = .2
+enum {GROUND_CROUCH = -1, STANDING = 0, AIR_CROUCH = 1}
 
-@export var _animation_tree: AnimationTree
+@export_category("speed Parameters")
+@export var enable_sprint: bool = true
+@export var sprint_timer: Timer
+@export var sprint_cooldown_time: float = 3.0
+@export var sprint_time: float = 1.0
+@export var sprint_replenish_rate: float = 0.30
+@export var acceleration: float = 120
+@export_range(0.01,1.0) var air_acceleration_modifier: float = 0.1
+var sprint_on_cooldown: bool = false
+var sprint_time_remaining: float = sprint_time
+@onready var sprint_bar: Range = $CanvasLayer/SprintBar
 
-# UI
-@onready var health_text = $UserInterface/HealthText
+const NORMAL_speed = 1
+@export_range(1.0,3.0) var sprint_speed: float = 2.0
+@export_range(0.1,1.0) var walk_speed: float = 0.5
+var speed_modifier: float = NORMAL_speed
+
+@export_category("Jump Parameters")
+@export var coyote_timer: Timer
+@export var jump_peak_time: float = .5
+@export var jump_fall_time: float = .5
+@export var jump_height: float = 2.0
+@export var jump_distance: float = 4.0
+@export var coyote_time: float = .1
+@export var jump_buffer_time: float = .2
+
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var jump_gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+var fall_gravity: float
+var jump_velocity: float
+var base_speed: float 
+var _speed: float 
+var jump_available: bool = true
+var jump_buffer: bool = false
+
+func _ready() -> void:
+	update_camera_rotation()
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	calculate_movement_parameters()
 
 
-# Get the gravity from the project settings to be synced with RigidBody nodes
-var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
+func _process(delta: float) -> void:
+	gun_cam.global_transform = camera.global_transform
 
 
-func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	$Head/Camera/SubViewportContainer/SubViewport.size = DisplayServer.window_get_size()
-
-func _physics_process(delta):
-	#CAMERA.look_at(TARGET.global_position)
-	handle_movement(delta)
+func update_camera_rotation() -> void:
+	var current_rotation = get_rotation()
+	camera_rotation.x = current_rotation.y
+	camera_rotation.y = current_rotation.x
+	
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -57,19 +78,54 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		var MouseEvent = event.relative * mouse_sensitivity
 		camera_look(MouseEvent)
-
-#func _process(delta):
-	#if Input.is_action_just_pressed("ui_cancel"):
-		#if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		#elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
-			#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
-	#handle_game_input()
-	#handle_state()
-	#text_debugger()
 	
+	if enable_crouch:
+		if event.is_action_pressed("crouch"):
+			crouch()
+		if event.is_action_released("crouch"):
+			if !crouch_toggle and crouched:
+				crouch()
+		
+	if enable_sprint:
+		if Input.is_action_just_pressed("sprint") and !crouched:
+			if !sprint_on_cooldown:
+				speed_modifier = sprint_speed
+				sprint_timer.start(sprint_time_remaining)
+				
+		if Input.is_action_just_released("sprint") or Input.is_action_just_released("walk"):
+			if !(Input.is_action_pressed("walk") or Input.is_action_pressed("sprint")):
+				speed_modifier = NORMAL_speed
+				exit_sprint()
+				
+		if Input.is_action_just_pressed("walk") and !crouched:
+			speed_modifier = walk_speed
 
+func calculate_movement_parameters() -> void:
+	jump_gravity = (2*jump_height)/pow(jump_peak_time,2)
+	fall_gravity = (2*jump_height)/pow(jump_fall_time,2)
+	jump_velocity = jump_gravity * jump_peak_time
+	base_speed = jump_distance/(jump_peak_time+jump_fall_time)
+	_speed = base_speed
+
+
+func crouch() -> void:
+	var Blend
+	if !crouch_collision.is_colliding():
+		if crouched:
+			Blend = STANDING
+		else:
+			speed_modifier = NORMAL_speed
+			exit_sprint()
+			
+			if is_on_floor():
+				Blend = GROUND_CROUCH
+			else:
+				Blend = AIR_CROUCH
+		var blend_tween = get_tree().create_tween()
+		blend_tween.tween_property(animation_tree,"parameters/Crouch_Blend/blend_amount",Blend,crouch_blend_speed)
+		crouched = !crouched
+	else:
+		crouch_blocked = true
 
 func camera_look(Movement: Vector2) -> void:
 	camera_rotation += Movement
@@ -80,24 +136,100 @@ func camera_look(Movement: Vector2) -> void:
 	rotate_object_local(Vector3(0,1,0),-camera_rotation.x) # first rotate in Y
 	camera.rotate_object_local(Vector3(1,0,0), -camera_rotation.y) # then rotate in X
 	camera_rotation.y = clamp(camera_rotation.y,-1.5,1.2)
+	
+func exit_sprint() -> void:
+	if !sprint_timer.is_stopped():
+		sprint_time_remaining = sprint_timer.time_left
+		sprint_timer.stop()
+
+#func sprint_replenish(delta) -> void:
+	#var sprint_bar_Value
+#
+	#if !sprint_on_cooldown and (speed_modifier != sprint_speed):
+		#
+		#if is_on_floor():
+			#sprint_time_remaining = move_toward(sprint_time_remaining, sprint_time, delta*sprint_replenish_rate)
+			#
+		#sprint_bar_Value= (sprint_time_remaining/sprint_time)*100
+		#
+	#else:
+		#sprint_bar_Value = (sprint_timer.time_left/sprint_time)*100
+	#
+	#sprint_bar.value = sprint_bar_Value
+	#
+	#if sprint_bar_Value == 100:
+		#sprint_bar.hide()
+	#else:
+		#sprint_bar.show()
 
 
-func handle_movement(delta):
+
+func _physics_process(_delta: float) -> void:
+	#sprint_replenish(_delta)
+	#lean_collision()
+	
+	if crouched and crouch_blocked:
+		if !crouch_collision.is_colliding():
+			crouch_blocked = false
+			if !Input.is_action_pressed("crouch") and !crouch_toggle:
+				crouch()
+				
+	# Add the gravity.
+	var _acceleration
+	if not is_on_floor():
+		_acceleration = acceleration*air_acceleration_modifier
+		
+		if coyote_timer.is_stopped():
+			coyote_timer.start(coyote_time)
+	
+		if velocity.y>0:
+			velocity.y -= jump_gravity * _delta
+		else:
+			velocity.y -= fall_gravity * _delta
+	else:
+		_acceleration = acceleration
+		jump_available = true
+		coyote_timer.stop()
+		_speed = (base_speed / max((float(crouched)*crouch_speed_reduction),1)) * speed_modifier
+		if jump_buffer:
+			jump()
+			jump_buffer = false
+	# Handle Jump.
+	if Input.is_action_just_pressed("ui_accept"):
+		if jump_available:
+			if crouched:
+				crouch()
+			else:
+				#lean(CENTRE)
+				jump()
+		else:
+			jump_buffer = true
+			get_tree().create_timer(jump_buffer_time).timeout.connect(on_jump_buffer_timeout)
+
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var input_dir = Input.get_vector("left", "right", "up", "down")
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	velocity.x = move_toward(velocity.x, direction.x * _speed, _acceleration*_delta)
+	velocity.z = move_toward(velocity.z, direction.z * _speed, _acceleration*_delta)
+	
 	move_and_slide()
 
-func handle_game_input():
-	var input_dir = Input.get_vector("left", "right", "down", "up")
-	if Input.is_action_just_pressed("attack"):
-		#print("ATTACK")
-		return
-		
-	if Input.is_action_just_pressed("dodge"):
-		print("DODGE")
-	
-	#print(CharacterStand.keys()[cur_stand])
-	
-func handle_state():
-	return
+func jump()->void:
+	velocity.y = jump_velocity
+	jump_available = false
 
-func start():
-	pass
+func _on_sprint_timer_timeout() -> void:
+	sprint_on_cooldown = true
+	get_tree().create_timer(sprint_cooldown_time).timeout.connect(_on_sprint_cooldown_timeout)
+	speed_modifier = NORMAL_speed
+	sprint_time_remaining = 0
+
+func _on_sprint_cooldown_timeout():
+	sprint_on_cooldown = false
+
+func _on_coyote_timer_timeout() -> void:
+	jump_available = false
+
+func on_jump_buffer_timeout()->void:
+	jump_buffer = false

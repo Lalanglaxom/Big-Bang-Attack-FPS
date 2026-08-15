@@ -1,13 +1,13 @@
 [gd_scene format=4 uid="uid://oc13h3au02ro"]
 
-[ext_resource type="Script" uid="uid://cfdt8t4r8pxel" path="res://Player_Controller/scripts/Player_Character/player_character.gd" id="1_h0t42"]
-[ext_resource type="Script" uid="uid://cc3t6vk7qpwey" path="res://Player_Controller/scripts/Player_Character/HUD.gd" id="2_tvwwj"]
-[ext_resource type="Texture2D" uid="uid://bjh5ic6qy4jtl" path="res://Player_Controller/HUD ASSETS/crosshair001.png" id="3_7f0mw"]
-[ext_resource type="Texture2D" uid="uid://uidicgaojgdi" path="res://Player_Controller/HUD ASSETS/crosshair046.png" id="4_l32wb"]
-[ext_resource type="Script" uid="uid://cxxpp8cfxb8jp" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_State_Machine.gd" id="5_wuueu"]
-[ext_resource type="Resource" uid="uid://yc1f2j7pl4vr" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterI.tres" id="6_tpjp5"]
-[ext_resource type="Script" uid="uid://bw4j1fbww4k8s" path="res://Player_Controller/scripts/Weapon_State_Machine/WeaponSlot.gd" id="6_wj0qi"]
-[ext_resource type="AnimationLibrary" uid="uid://uybino34n0sj" path="res://Player_Controller/weapon_animation.res" id="13_lmhsg"]
+[ext_resource type="Script" uid="uid://cfdt8t4r8pxel" path="res://entities/player/Player_Controller/scripts/Player_Character/player_character.gd" id="1_h0t42"]
+[ext_resource type="Script" uid="uid://cc3t6vk7qpwey" path="res://entities/player/Player_Controller/scripts/Player_Character/HUD.gd" id="2_tvwwj"]
+[ext_resource type="Texture2D" uid="uid://bjh5ic6qy4jtl" path="res://entities/player/Player_Controller/HUD ASSETS/crosshair001.png" id="3_7f0mw"]
+[ext_resource type="Texture2D" uid="uid://uidicgaojgdi" path="res://entities/player/Player_Controller/HUD ASSETS/crosshair046.png" id="4_l32wb"]
+[ext_resource type="Script" uid="uid://cxxpp8cfxb8jp" path="res://entities/player/Player_Controller/scripts/Weapon_State_Machine/Weapon_State_Machine.gd" id="5_wuueu"]
+[ext_resource type="Resource" uid="uid://yc1f2j7pl4vr" path="res://entities/player/Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterI.tres" id="6_tpjp5"]
+[ext_resource type="Script" uid="uid://bw4j1fbww4k8s" path="res://entities/player/Player_Controller/scripts/Weapon_State_Machine/WeaponSlot.gd" id="6_wj0qi"]
+[ext_resource type="AnimationLibrary" uid="uid://uybino34n0sj" path="res://entities/player/Player_Controller/weapon_animation.res" id="13_lmhsg"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_rj3p7"]
 
@@ -52,7 +52,7 @@ render_priority = 1
 transparency = 1
 no_depth_test = true
 shading_mode = 0
-albedo_color = Color(0.90588236, 0.9137255, 0.94509804, 1)
+albedo_color = Color(0, 0, 0, 1)
 stencil_mode = 3
 stencil_flags = 1
 stencil_compare = 5
@@ -2279,10 +2279,11 @@ cull_mask = 524287
 current = true
 
 [node name="Weapons_Manager" type="Node3D" parent="Camera/LeanPivot/MainCamera" unique_id=1982237883 node_paths=PackedStringArray("animation_player", "melee_hitbox")]
+process_mode = 4
 script = ExtResource("5_wuueu")
+weapon_stack = Array[ExtResource("6_wj0qi")]([SubResource("Resource_4pcyg")])
 animation_player = NodePath("Weapons_Models/AnimationPlayer")
 melee_hitbox = NodePath("Melee_Hitbox")
-weapon_stack = Array[ExtResource("6_wj0qi")]([SubResource("Resource_4pcyg")])
 
 [node name="Weapons_Models" type="Node3D" parent="Camera/LeanPivot/MainCamera/Weapons_Manager" unique_id=79488914]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.54919, 0)
@@ -2409,12 +2410,6 @@ one_shot = true
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=530751673]
 
 [connection signal="timeout" from="CanvasLayer/HitSight/HitSightTimer" to="CanvasLayer" method="_on_hit_sight_timer_timeout"]
-[connection signal="add_signal_to_hud" from="Camera/LeanPivot/MainCamera/Weapons_Manager" to="CanvasLayer" method="_on_weapons_manager_add_signal_to_hud"]
-[connection signal="connect_weapon_to_hud" from="Camera/LeanPivot/MainCamera/Weapons_Manager" to="CanvasLayer" method="_on_weapons_manager_connect_weapon_to_hud"]
-[connection signal="hit_successfull" from="Camera/LeanPivot/MainCamera/Weapons_Manager" to="CanvasLayer" method="_on_weapons_manager_hit_successfull"]
-[connection signal="update_ammo" from="Camera/LeanPivot/MainCamera/Weapons_Manager" to="CanvasLayer" method="_on_weapons_manager_update_ammo"]
-[connection signal="update_weapon_stack" from="Camera/LeanPivot/MainCamera/Weapons_Manager" to="CanvasLayer" method="_on_weapons_manager_update_weapon_stack"]
-[connection signal="weapon_changed" from="Camera/LeanPivot/MainCamera/Weapons_Manager" to="CanvasLayer" method="_on_weapons_manager_weapon_changed"]
 [connection signal="body_entered" from="PickUpDetection" to="Camera/LeanPivot/MainCamera/Weapons_Manager" method="_on_pick_up_detection_body_entered"]
 [connection signal="timeout" from="SprintTimer" to="." method="_on_sprint_timer_timeout"]
 [connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]
