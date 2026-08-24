@@ -193,7 +193,7 @@ func sprint_replenish(delta) -> void:
 func _process(_delta: float) -> void:
 	if subviewport_camera:
 		subviewport_camera.global_transform = main_camera.global_transform
-
+	pass
 
 func _physics_process(_delta: float) -> void:
 	sprint_replenish(_delta)

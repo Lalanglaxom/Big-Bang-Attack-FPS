@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://ylkvl7gsmxhm"]
+
+[ext_resource type="PackedScene" uid="uid://d3ghi4xl6t8a3" path="res://items/weapon/kitchen_knife/kitchen_knife.glb" id="1_tbrce"]
+
+[sub_resource type="Animation" id="Animation_tbrce"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Handle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Handle:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -1.5707964, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8ule8"]
+resource_name = "knife_swing"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Handle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.36666667, 0.56666666, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.11530306, 0.08307078), Vector3(-0.23948221, 0.08637239, -0.02776895), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Handle:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.36666667, 0.56666666, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -1.5707964, 0), Vector3(-0.13047901, -1.7050165, -0.76683295), Vector3(-0.7196916, -1.4518571, 2.029333), Vector3(0, -1.5707964, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lfswr"]
+_data = {
+&"RESET": SubResource("Animation_tbrce"),
+&"knife_swing": SubResource("Animation_8ule8")
+}
+
+[node name="KitchenKnife" unique_id=1893489909 instance=ExtResource("1_tbrce")]
+transform = Transform3D(1.0000001, 0, 0, 0, 0.99999976, 0, 0, 0, 0.9999998, 0, 0, 0)
+
+[node name="Handle" parent="." index="0" unique_id=304123438]
+transform = Transform3D(-6.0169164e-10, 0, -0.0029925283, 0, 0.045175634, 0, 0.0137651, 0, -1.3080756e-10, 0, 0, 0)
+layers = 2
+
+[node name="Blade" parent="Handle" index="0" unique_id=450502751]
+layers = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1" unique_id=1632888751]
+libraries/ = SubResource("AnimationLibrary_lfswr")

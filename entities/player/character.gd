@@ -59,7 +59,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	gun_cam.global_transform = camera.global_transform
+	if gun_cam:
+		gun_cam.global_transform = camera.global_transform
+	pass
 
 
 func update_camera_rotation() -> void:

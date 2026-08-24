@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bi0mjqfq0586x"]
 
-[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://entities/player/prefab/character.tscn" id="1_u31gk"]
-[ext_resource type="Texture2D" uid="uid://cr1lqchpf8byy" path="res://stages/prototype/textures/kenney_prototype_textures/dark/texture_01.png" id="12_qgk6i"]
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://entities/player/prefab/player.tscn" id="1_u31gk"]
+[ext_resource type="Texture2D" uid="uid://cr1lqchpf8byy" path="res://stages/development/textures/kenney_prototype_textures/dark/texture_01.png" id="12_qgk6i"]
 [ext_resource type="PackedScene" uid="uid://dixnwefcmk136" path="res://entities/enemy/dummy.tscn" id="14_vdq85"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mgxq1"]
