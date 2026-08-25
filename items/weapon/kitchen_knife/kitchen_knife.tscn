@@ -1,6 +1,22 @@
 [gd_scene format=3 uid="uid://ylkvl7gsmxhm"]
 
 [ext_resource type="PackedScene" uid="uid://d3ghi4xl6t8a3" path="res://items/weapon/kitchen_knife/kitchen_knife.glb" id="1_tbrce"]
+[ext_resource type="Texture2D" uid="uid://dwfljrtim58ar" path="res://items/weapon/kitchen_knife/kitchen_knife_1K-Silver_Base Color.jpg" id="4_lxdb4"]
+[ext_resource type="Texture2D" uid="uid://dv65tn1vys0hk" path="res://items/weapon/kitchen_knife/kitchen_knife_1K-Silver_Metallic-1K-Silver_Roughness.png" id="5_n8iti"]
+[ext_resource type="Texture2D" uid="uid://cvhw62q8n82oq" path="res://items/weapon/kitchen_knife/kitchen_knife_1K-Silver_Normal.jpg" id="6_60toj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_skth1"]
+resource_name = "Blade"
+cull_mode = 2
+albedo_texture = ExtResource("4_lxdb4")
+metallic = 1.0
+metallic_texture = ExtResource("5_n8iti")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("5_n8iti")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_texture = ExtResource("6_60toj")
+metadata/_gltf_primary_texture_coord = 0
 
 [sub_resource type="Animation" id="Animation_tbrce"]
 length = 0.001
@@ -72,6 +88,7 @@ layers = 2
 
 [node name="Blade" parent="Handle" index="0" unique_id=764470389]
 layers = 2
+material_override = SubResource("StandardMaterial3D_skth1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1" unique_id=1632888751]
 libraries/ = SubResource("AnimationLibrary_lfswr")

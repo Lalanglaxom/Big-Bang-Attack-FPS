@@ -107,8 +107,9 @@ knife_anim = NodePath("CanvasLayer/SubViewportContainer/SubViewport/GunCam/Kitch
 [node name="Reticle_1" parent="CanvasLayer" unique_id=1497184641 node_paths=PackedStringArray("reticle_lines", "character") instance=ExtResource("2_fu0dy")]
 reticle_lines = [NodePath("top"), NodePath("left"), NodePath("right"), NodePath("bottom")]
 character = NodePath("../..")
+animated_reticle = false
 
-[node name="dot" parent="CanvasLayer/Reticle_1" index="0"]
+[node name="dot" parent="CanvasLayer/Reticle_1" index="0" unique_id=113755080]
 visible = false
 
 [node name="HealthText" type="Label" parent="CanvasLayer" unique_id=49567931]
@@ -149,6 +150,17 @@ fov = 45.0
 [node name="KitchenKnife" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=1893489909 instance=ExtResource("3_m8mgq")]
 transform = Transform3D(1, 0, 0, 0, 0.97817343, -0.20778978, 0, 0.20778976, 0.9781735, 0.19173491, -0.11827505, -0.4659209)
 
+[node name="OmniLight3D" type="OmniLight3D" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=549445558]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10048375, 0.12604988, -0.076702654)
+layers = 2
+light_energy = 0.5
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=682334636]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.024463952, -0.113054395, -0.50689757)
+layers = 2
+light_energy = 0.2
+light_cull_mask = 4294966274
+
 [node name="SprintBar" type="HSlider" parent="CanvasLayer" unique_id=1216210254]
 anchors_preset = 7
 anchor_left = 0.5
@@ -174,6 +186,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0)
 
 [node name="Camera" type="Camera3D" parent="Head" unique_id=1898295705]
 cull_mask = 1048061
+
+[node name="MeleeCast" type="RayCast3D" parent="Head/Camera" unique_id=1636018233]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+collision_mask = 2
+debug_shape_custom_color = Color(1, 0.37799093, 0.31005007, 1)
 
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=1135996709]
 
