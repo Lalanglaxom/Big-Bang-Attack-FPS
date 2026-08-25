@@ -2105,6 +2105,7 @@ animation = &"lean_right_collision"
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_nrrb5"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_5pepu"]
+graph_offset = Vector2(-109.47174, -74.40634)
 nodes/output/position = Vector2(1100, 240)
 nodes/Crouch_Blend/node = SubResource("AnimationNodeBlend3_ryreg")
 nodes/Crouch_Blend/position = Vector2(500, 140)
@@ -2125,13 +2126,13 @@ nodes/lean_left_collision/position = Vector2(0, 900)
 nodes/lean_reset/node = SubResource("AnimationNodeAnimation_ms17y")
 nodes/lean_reset/position = Vector2(380, 660)
 nodes/lean_right/node = SubResource("AnimationNodeAnimation_cd2xa")
-nodes/lean_right/position = Vector2(100, 500)
+nodes/lean_right/position = Vector2(140, 680)
 nodes/lean_right_collision/node = SubResource("AnimationNodeAnimation_rlexb")
-nodes/lean_right_collision/position = Vector2(40, 640)
+nodes/lean_right_collision/position = Vector2(100, 760)
 nodes/left_collision_blend/node = SubResource("AnimationNodeBlend2_otrul")
 nodes/left_collision_blend/position = Vector2(360, 820)
 nodes/right_collision_blend/node = SubResource("AnimationNodeBlend2_nrrb5")
-nodes/right_collision_blend/position = Vector2(360, 460)
+nodes/right_collision_blend/position = Vector2(40, 720)
 node_connections = [&"output", 0, &"lean", &"Crouch_Blend", 0, &"ground", &"Crouch_Blend", 1, &"crouch reset", &"Crouch_Blend", 2, &"air", &"lean", 0, &"Crouch_Blend", &"lean", 1, &"lean_blend", &"lean_blend", 0, &"right_collision_blend", &"lean_blend", 1, &"lean_reset", &"lean_blend", 2, &"left_collision_blend", &"left_collision_blend", 0, &"lean_left", &"left_collision_blend", 1, &"lean_left_collision", &"right_collision_blend", 0, &"lean_right", &"right_collision_blend", 1, &"lean_right_collision"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_cx3sy"]

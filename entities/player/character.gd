@@ -21,10 +21,14 @@ func _ready() -> void:
 	input_comp.init(self)
 	movement_comp.init(self)
 
+
 func _process(delta: float) -> void:
 	if gun_cam:
 		gun_cam.global_transform = camera.global_transform
 
+
+func _physics_process(delta: float) -> void:
+	pass
 
 func update_camera_rotation() -> void:
 	var current_rotation = get_rotation()

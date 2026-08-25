@@ -26,81 +26,295 @@ thickness = 10
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_fu0dy"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_fu0dy"]
+height = 1.75
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_rxsxd"]
-height = 1.9999999
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fu0dy"]
+height = 1.8
+
+[sub_resource type="AnimationNodeBlend3" id="AnimationNodeBlend3_ryreg"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lnag4"]
+animation = &"crouch_air"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mvxnv"]
+animation = &"crouch_reset"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0yifg"]
+animation = &"crouch_ground"
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_fu0dy"]
+graph_offset = Vector2(-350.60907, 93.46803)
+nodes/output/position = Vector2(860, 220)
+nodes/Crouch_Blend/node = SubResource("AnimationNodeBlend3_ryreg")
+nodes/Crouch_Blend/position = Vector2(500, 140)
+nodes/air/node = SubResource("AnimationNodeAnimation_lnag4")
+nodes/air/position = Vector2(80, 420)
+"nodes/crouch reset/node" = SubResource("AnimationNodeAnimation_mvxnv")
+"nodes/crouch reset/position" = Vector2(80, 220)
+nodes/ground/node = SubResource("AnimationNodeAnimation_0yifg")
+nodes/ground/position = Vector2(140, 40)
+node_connections = [&"output", 0, &"Crouch_Blend", &"Crouch_Blend", 0, &"ground", &"Crouch_Blend", 1, &"crouch reset", &"Crouch_Blend", 2, &"air"]
 
 [sub_resource type="Animation" id="Animation_m8mgq"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Head:position")
+tracks/0/path = NodePath("Collider:shape:height")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.8]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Collider:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.9, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Head:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.75, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CrouchCollider:target_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.8, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CrouchCollider:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.25, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_0sump"]
+resource_name = "crouch_air"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Collider:shape:height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.08]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Collider:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(0, 1.35, 0)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CrouchCollider:target_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.6, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CrouchCollider:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.8, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_fu0dy"]
+resource_name = "crouch_ground"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Collider:shape:height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.08]
+}
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../Head:rotation")
+tracks/1/path = NodePath("Collider:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0, 0)]
+"values": [Vector3(0, 0.54, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Head:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.05, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CrouchCollider:target_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.5, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CrouchCollider:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.08, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_fu0dy"]
-resource_name = "crouch"
-length = 0.13333334
+[sub_resource type="Animation" id="Animation_cjbjj"]
+resource_name = "crouch_reset"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Head:position")
+tracks/0/path = NodePath("Head:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.13333334),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 1.35, 0), Vector3(0, 0.9510149, 0)]
+"values": [Vector3(0, 1.75, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../Head:rotation")
+tracks/1/path = NodePath("Collider:shape:height")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.13333334),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, 0)]
+"values": [1.8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Collider:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.9, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CrouchCollider:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.8, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CrouchCollider:target_position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.5, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_m8mgq"]
 _data = {
 &"RESET": SubResource("Animation_m8mgq"),
-&"crouch": SubResource("Animation_fu0dy")
+&"crouch_air": SubResource("Animation_0sump"),
+&"crouch_ground": SubResource("Animation_fu0dy"),
+&"crouch_reset": SubResource("Animation_cjbjj")
 }
 
-[node name="Player" type="CharacterBody3D" unique_id=1838307977 node_paths=PackedStringArray("camera", "gun_cam", "anim_player", "input_comp", "movement_comp", "knife_anim")]
-collision_mask = 2
+[node name="Player" type="CharacterBody3D" unique_id=1838307977 node_paths=PackedStringArray("camera", "gun_cam", "animation_tree", "anim_player", "input_comp", "movement_comp", "knife_anim")]
+collision_mask = 18
 script = ExtResource("1_rxsxd")
 camera = NodePath("Head/Camera")
 gun_cam = NodePath("CanvasLayer/SubViewportContainer/SubViewport/GunCam")
-anim_player = NodePath("AnimationPlayer")
+animation_tree = NodePath("AnimationTree")
+anim_player = NodePath("PlayerAnimPlayer")
 input_comp = NodePath("Components/Input")
 movement_comp = NodePath("Components/Movement")
-knife_anim = NodePath("CanvasLayer/SubViewportContainer/SubViewport/GunCam/KitchenKnife/AnimationPlayer")
+knife_anim = NodePath("CanvasLayer/SubViewportContainer/SubViewport/GunCam/KitchenKnife/GunAnimPlayer")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1922444484]
 
@@ -143,19 +357,20 @@ size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="GunCam" type="Camera3D" parent="CanvasLayer/SubViewportContainer/SubViewport" unique_id=1168946923]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.337, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 cull_mask = 1047554
 fov = 45.0
 
 [node name="KitchenKnife" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=1893489909 instance=ExtResource("3_m8mgq")]
 transform = Transform3D(1, 0, 0, 0, 0.97817343, -0.20778978, 0, 0.20778976, 0.9781735, 0.19173491, -0.11827505, -0.4659209)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=549445558]
+[node name="GunLight" type="OmniLight3D" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=549445558]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10048375, 0.12604988, -0.076702654)
 layers = 2
 light_energy = 0.5
+light_cull_mask = 4294966274
 
-[node name="OmniLight3D2" type="OmniLight3D" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=682334636]
+[node name="GunLight2" type="OmniLight3D" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=682334636]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.024463952, -0.113054395, -0.50689757)
 layers = 2
 light_energy = 0.2
@@ -182,13 +397,14 @@ editable = false
 scrollable = false
 
 [node name="Head" type="Node3D" parent="." unique_id=243022474]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 
 [node name="Camera" type="Camera3D" parent="Head" unique_id=1898295705]
 cull_mask = 1048061
 
 [node name="MeleeCast" type="RayCast3D" parent="Head/Camera" unique_id=1636018233]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+visible = false
 collision_mask = 2
 debug_shape_custom_color = Color(1, 0.37799093, 0.31005007, 1)
 
@@ -199,22 +415,28 @@ wait_time = 2.0
 one_shot = true
 
 [node name="CrouchCollider" type="ShapeCast3D" parent="." unique_id=1042465665]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
 shape = SubResource("SphereShape3D_fu0dy")
-target_position = Vector3(0, 1.5, 0)
+target_position = Vector3(0, 1.8, 0)
+collision_mask = 18
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=1552208494]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
 visible = false
 layers = 512
-mesh = SubResource("CapsuleMesh_g4v7s")
+mesh = SubResource("CapsuleMesh_fu0dy")
 
-[node name="Collider" type="CollisionShape3D" parent="." unique_id=998280465]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CylinderShape3D_rxsxd")
-debug_color = Color(0.68926024, 0.4989549, 7.70092e-07, 0.41960785)
+[node name="Collider" type="CollisionShape3D" parent="." unique_id=308697704]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_fu0dy")
+debug_color = Color(0.722278, 0.47877353, 0.005087613, 0.41960785)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1718339556]
-root_node = NodePath("../Collider")
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1923637163]
+tree_root = SubResource("AnimationNodeBlendTree_fu0dy")
+anim_player = NodePath("../PlayerAnimPlayer")
+parameters/Crouch_Blend/blend_amount = 0.0
+
+[node name="PlayerAnimPlayer" type="AnimationPlayer" parent="." unique_id=1718339556]
 libraries/ = SubResource("AnimationLibrary_m8mgq")
 
 [node name="Components" type="Node" parent="." unique_id=1868742090]
@@ -225,6 +447,9 @@ crouch_collider = NodePath("../../CrouchCollider")
 sprint_timer = NodePath("../../SprintTimer")
 sprint_bar = NodePath("../../CanvasLayer/SprintBar")
 coyote_timer = NodePath("../../CoyoteTimer")
+jump_peak_time = 0.3
+jump_fall_time = 0.3
+jump_height = 1.5
 player = NodePath("../..")
 
 [node name="Input" parent="Components" unique_id=959249441 instance=ExtResource("4_cjbjj")]

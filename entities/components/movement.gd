@@ -4,9 +4,10 @@ class_name MovementComponent
 var crouched: bool = false
 var crouch_blocked: bool = false
 
+enum {GROUND_CROUCH = -1, STANDING = 0, AIR_CROUCH = 1}
+
 @export_category("Crouch Parametres")
 @export var enable_crouch: bool = true
-@export var crouch_toggle: bool = false
 @export var crouch_collider: ShapeCast3D
 @export_range(0.0,3.0) var crouch_speed_reduction = 2.0
 @export_range(0.0,0.50) var crouch_blend_speed = .2
@@ -33,8 +34,8 @@ var speed_modifier: float = NORMAL_speed
 @export var coyote_timer: Timer
 @export var jump_peak_time: float = .5
 @export var jump_fall_time: float = .5
-@export var jump_height: float = 2.0
-@export var jump_distance: float = 4.0
+@export_range(.5,5,.5) var jump_height: float = 2.0
+@export_range(.5,5,.5) var jump_distance: float = 4.0
 @export var coyote_time: float = .1
 @export var jump_buffer_time: float = .2
 
@@ -58,8 +59,8 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("crouch"):
 			crouch()
 		if event.is_action_released("crouch"):
-			if !crouch_toggle and crouched:
-				uncrouch()
+			if crouched:
+				crouch()
 		
 	if enable_sprint:
 		if Input.is_action_just_pressed("sprint") and !crouched:
@@ -88,7 +89,6 @@ func _physics_process(_delta: float) -> void:
 	#sprint_replenish(_delta)
 	#lean_collision()
 
-
 	# Add the gravity.
 	var _acceleration
 	if not player.is_on_floor():
@@ -110,6 +110,13 @@ func _physics_process(_delta: float) -> void:
 			jump()
 			jump_buffer = false
 		
+	# Continuous check to auto-uncrouch once the ceiling obstacle clears
+	if crouched and crouch_blocked:
+		if crouch_collider and !crouch_collider.is_colliding():
+			crouch_blocked = false
+			if !Input.is_action_pressed("crouch"):
+				crouch()
+		
 	# Handle Jump.
 	if Input.is_action_just_pressed("ui_accept"):
 		if jump_available:
@@ -120,7 +127,7 @@ func _physics_process(_delta: float) -> void:
 		else:
 			jump_buffer = true
 			get_tree().create_timer(jump_buffer_time).timeout.connect(on_jump_buffer_timeout)
-
+		
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("left", "right", "up", "down")
@@ -131,15 +138,40 @@ func _physics_process(_delta: float) -> void:
 	player.move_and_slide()
 
 
+#func crouch() -> void:
+	#player.anim_player.play("crouch")
+	#crouched = true
+
+
 func crouch() -> void:
-	player.anim_player.play("crouch")
-	crouched = true
-
-
-func uncrouch() -> void:
+	var blend_val
 	if !crouch_collider.is_colliding():
-		player.anim_player.play("crouch", -1, -1, true)
-		crouched = false
+		if crouched:
+			blend_val = STANDING
+		else:
+			speed_modifier = NORMAL_speed
+			exit_sprint()
+			
+			if player.is_on_floor():
+				blend_val = GROUND_CROUCH
+			else:
+				blend_val = AIR_CROUCH
+				
+		if player.animation_tree:
+			var blend_tween = get_tree().create_tween()
+			blend_tween.tween_property(player.animation_tree, 
+			"parameters/Crouch_Blend/blend_amount", 
+			blend_val, crouch_blend_speed)
+			
+		crouched = !crouched
+	else:
+		crouch_blocked = true
+
+
+#func uncrouch() -> void:
+	#player.anim_player.play("crouch", -1, -1, true)
+	#crouched = false
+
 
 func exit_sprint() -> void:
 	if !sprint_timer.is_stopped():
@@ -149,6 +181,7 @@ func exit_sprint() -> void:
 
 func sprint_replenish(delta) -> void:
 	var sprint_bar_Value
+
 
 	if !sprint_on_cooldown and (speed_modifier != sprint_speed):
 		
