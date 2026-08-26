@@ -2,9 +2,11 @@
 
 [ext_resource type="Script" uid="uid://dshfdjs3ghfl8" path="res://entities/player/character.gd" id="1_rxsxd"]
 [ext_resource type="PackedScene" uid="uid://3mij3cjhkwsm" path="res://addons/fpc/reticles/reticle_1.tscn" id="2_fu0dy"]
+[ext_resource type="Script" uid="uid://bdpjeoa05xc1s" path="res://entities/components/input.gd" id="3_fu0dy"]
 [ext_resource type="PackedScene" uid="uid://ylkvl7gsmxhm" path="res://items/weapon/kitchen_knife/kitchen_knife.tscn" id="3_m8mgq"]
-[ext_resource type="PackedScene" uid="uid://lv3jerex23ym" path="res://entities/components/input.tscn" id="4_cjbjj"]
 [ext_resource type="Script" uid="uid://crtdo8j1o541f" path="res://entities/components/movement.gd" id="4_fu0dy"]
+[ext_resource type="Texture2D" uid="uid://363sqo7f4nj0" path="res://stages/development/textures/grid/logo_blue_512x512.png" id="6_m8mgq"]
+[ext_resource type="Texture2D" uid="uid://dvr7iywhubw0" path="res://stages/development/textures/grid/logo_red_512x512.png" id="7_cjbjj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_cqqaq"]
 font_size = 45
@@ -26,8 +28,19 @@ thickness = 10
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_fu0dy"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cjbjj"]
+albedo_texture = ExtResource("6_m8mgq")
+uv1_offset = Vector3(0.5, 0.1, 0)
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_fu0dy"]
-height = 1.75
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0sump"]
+albedo_texture = ExtResource("7_cjbjj")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_bhunq"]
+radius = 0.1
+height = 0.5
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fu0dy"]
 height = 1.8
@@ -316,6 +329,24 @@ input_comp = NodePath("Components/Input")
 movement_comp = NodePath("Components/Movement")
 knife_anim = NodePath("CanvasLayer/SubViewportContainer/SubViewport/GunCam/KitchenKnife/GunAnimPlayer")
 
+[node name="Components" type="Node" parent="." unique_id=1868742090]
+
+[node name="Movement" type="Node" parent="Components" unique_id=1057481580 node_paths=PackedStringArray("crouch_collider", "sprint_timer", "sprint_bar", "coyote_timer", "player")]
+script = ExtResource("4_fu0dy")
+crouch_collider = NodePath("../../CrouchCollider")
+crouch_blend_speed = 0.1
+sprint_timer = NodePath("../../SprintTimer")
+sprint_bar = NodePath("../../CanvasLayer/SprintBar")
+sprint_speed = 1.5
+coyote_timer = NodePath("../../CoyoteTimer")
+jump_peak_time = 0.3
+jump_fall_time = 0.3
+jump_height = 1.5
+player = NodePath("../..")
+
+[node name="Input" type="Node" parent="Components" unique_id=959249441]
+script = ExtResource("3_fu0dy")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1922444484]
 
 [node name="Reticle_1" parent="CanvasLayer" unique_id=1497184641 node_paths=PackedStringArray("reticle_lines", "character") instance=ExtResource("2_fu0dy")]
@@ -401,6 +432,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 
 [node name="Camera" type="Camera3D" parent="Head" unique_id=1898295705]
 cull_mask = 1048061
+current = true
 
 [node name="MeleeCast" type="RayCast3D" parent="Head/Camera" unique_id=1636018233]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
@@ -421,10 +453,16 @@ target_position = Vector3(0, 1.8, 0)
 collision_mask = 18
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=1552208494]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 layers = 512
+material_override = SubResource("StandardMaterial3D_cjbjj")
 mesh = SubResource("CapsuleMesh_fu0dy")
+
+[node name="FrontPoint" type="MeshInstance3D" parent="Mesh" unique_id=1265699850]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.25862193, -0.6871575)
+layers = 512
+material_override = SubResource("StandardMaterial3D_0sump")
+mesh = SubResource("CapsuleMesh_bhunq")
 
 [node name="Collider" type="CollisionShape3D" parent="." unique_id=308697704]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -438,21 +476,6 @@ parameters/Crouch_Blend/blend_amount = 0.0
 
 [node name="PlayerAnimPlayer" type="AnimationPlayer" parent="." unique_id=1718339556]
 libraries/ = SubResource("AnimationLibrary_m8mgq")
-
-[node name="Components" type="Node" parent="." unique_id=1868742090]
-
-[node name="Movement" type="Node" parent="Components" unique_id=1057481580 node_paths=PackedStringArray("crouch_collider", "sprint_timer", "sprint_bar", "coyote_timer", "player")]
-script = ExtResource("4_fu0dy")
-crouch_collider = NodePath("../../CrouchCollider")
-sprint_timer = NodePath("../../SprintTimer")
-sprint_bar = NodePath("../../CanvasLayer/SprintBar")
-coyote_timer = NodePath("../../CoyoteTimer")
-jump_peak_time = 0.3
-jump_fall_time = 0.3
-jump_height = 1.5
-player = NodePath("../..")
-
-[node name="Input" parent="Components" unique_id=959249441 instance=ExtResource("4_cjbjj")]
 
 [connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]
 

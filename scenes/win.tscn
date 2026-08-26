@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bph0pl80iywmj"]
+[gd_scene format=3 uid="uid://bph0pl80iywmj"]
 
-[ext_resource type="Script" path="res://scenes/win.gd" id="1_2a7hc"]
-[ext_resource type="Texture2D" uid="uid://jdw2as2lr3fh" path="res://ui/menu/yamaha-vs-saibaman-how-it-should-of-ended-v0-m0x8w25rt3hb1.png" id="1_2r7ck"]
+[ext_resource type="Script" uid="uid://blvvpfq5htgya" path="res://scenes/win.gd" id="1_2a7hc"]
+[ext_resource type="Texture2D" uid="uid://jdw2as2lr3fh" path="res://hud/menu/yamaha-vs-saibaman-how-it-should-of-ended-v0-m0x8w25rt3hb1.png" id="1_2r7ck"]
 
 [sub_resource type="SystemFont" id="SystemFont_bn3bo"]
 font_names = PackedStringArray("SVN-A Love Of Thunder")

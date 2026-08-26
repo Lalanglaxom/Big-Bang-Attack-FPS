@@ -168,11 +168,6 @@ func crouch() -> void:
 		crouch_blocked = true
 
 
-#func uncrouch() -> void:
-	#player.anim_player.play("crouch", -1, -1, true)
-	#crouched = false
-
-
 func exit_sprint() -> void:
 	if !sprint_timer.is_stopped():
 		sprint_time_remaining = sprint_timer.time_left

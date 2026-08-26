@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cf4lumoyoyb07"]
+[gd_scene format=3 uid="uid://cf4lumoyoyb07"]
 
-[ext_resource type="Script" path="res://scenes/death.gd" id="1_p5sc6"]
-[ext_resource type="Texture2D" uid="uid://dmxn6qtrnk82y" path="res://ui/menu/Yamcha-Dragon-Ball-Death.png" id="1_uo3md"]
+[ext_resource type="Script" uid="uid://bkrglscu7q566" path="res://scenes/death.gd" id="1_p5sc6"]
+[ext_resource type="Texture2D" uid="uid://dmxn6qtrnk82y" path="res://hud/menu/Yamcha-Dragon-Ball-Death.png" id="1_uo3md"]
 
 [sub_resource type="SystemFont" id="SystemFont_72vc5"]
 font_names = PackedStringArray("SVN-A Love Of Thunder")

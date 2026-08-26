@@ -23,19 +23,19 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	pass
+
+
+func _physics_process(delta: float) -> void:
 	if gun_cam:
 		gun_cam.global_transform = camera.global_transform
 
 
-func _physics_process(delta: float) -> void:
-	pass
-
 func update_camera_rotation() -> void:
-	var current_rotation = get_rotation()
-	camera_rotation.x = current_rotation.y
-	camera_rotation.y = current_rotation.x
-	
-	
+	camera_rotation.x = -rotation.y
+	camera_rotation.y = -camera.rotation.x
+
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
