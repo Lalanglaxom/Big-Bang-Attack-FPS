@@ -43,6 +43,8 @@ size = Vector3(0.1, 0.1, 0.6)
 size = Vector3(0.1, 0.1, 0.8)
 
 [node name="Dummy" type="CharacterBody3D" unique_id=1058703588]
+collision_layer = 2
+collision_mask = 17
 script = ExtResource("1_cva7j")
 
 [node name="BodyCollision" type="CollisionShape3D" parent="." unique_id=723252853]
@@ -51,6 +53,7 @@ shape = SubResource("CapsuleShape3D_026v1")
 debug_color = Color(0.7003044, 0.48289633, 0.2724778, 0.41960785)
 
 [node name="Model" type="Node3D" parent="." unique_id=608692184]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="Head" type="MeshInstance3D" parent="Model" unique_id=461941540]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, 0)

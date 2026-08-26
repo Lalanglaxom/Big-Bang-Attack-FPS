@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://bdpjeoa05xc1s" path="res://entities/components/input.gd" id="3_fu0dy"]
 [ext_resource type="PackedScene" uid="uid://ylkvl7gsmxhm" path="res://items/weapon/kitchen_knife/kitchen_knife.tscn" id="3_m8mgq"]
 [ext_resource type="Script" uid="uid://crtdo8j1o541f" path="res://entities/components/movement.gd" id="4_fu0dy"]
+[ext_resource type="PackedScene" uid="uid://bfvjmlekuu8c4" path="res://items/weapon/gun/gun.tscn" id="5_0sump"]
 [ext_resource type="Texture2D" uid="uid://363sqo7f4nj0" path="res://stages/development/textures/grid/logo_blue_512x512.png" id="6_m8mgq"]
 [ext_resource type="Texture2D" uid="uid://dvr7iywhubw0" path="res://stages/development/textures/grid/logo_red_512x512.png" id="7_cjbjj"]
 
@@ -57,7 +58,7 @@ animation = &"crouch_reset"
 animation = &"crouch_ground"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_fu0dy"]
-graph_offset = Vector2(-350.60907, 93.46803)
+graph_offset = Vector2(-215.25464, 45.09259)
 nodes/output/position = Vector2(860, 220)
 nodes/Crouch_Blend/node = SubResource("AnimationNodeBlend3_ryreg")
 nodes/Crouch_Blend/position = Vector2(500, 140)
@@ -98,38 +99,38 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Head:position")
+tracks/2/path = NodePath("CrouchCollider:target_position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 1.75, 0)]
+"values": [Vector3(0, 1.8, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CrouchCollider:target_position")
+tracks/3/path = NodePath("CrouchCollider:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 1.8, 0)]
+"values": [Vector3(0, 1.25, 0)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("CrouchCollider:position")
+tracks/4/path = NodePath("Head:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 1.25, 0)]
+"values": [Vector3(0, 1.5, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_0sump"]
@@ -182,6 +183,18 @@ tracks/3/keys = {
 "update": 0,
 "values": [Vector3(0, 1.8, 0)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Head:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.75, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_fu0dy"]
 resource_name = "crouch_ground"
@@ -220,7 +233,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 1.05, 0)]
+"values": [Vector3(0, 0.9, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -249,65 +262,66 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_cjbjj"]
 resource_name = "crouch_reset"
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Head:position")
+tracks/0/path = NodePath("Collider:shape:height")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 1.75, 0)]
+"values": [1.8]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Collider:shape:height")
+tracks/1/path = NodePath("Collider:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.8]
+"values": [Vector3(0, 0.9, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Collider:position")
+tracks/2/path = NodePath("CrouchCollider:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0.9, 0)]
+"values": [Vector3(0, 0.8, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CrouchCollider:position")
+tracks/3/path = NodePath("CrouchCollider:target_position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0.8, 0)]
+"values": [Vector3(0, 0.5, 0)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("CrouchCollider:target_position")
+tracks/4/path = NodePath("Head:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0.5, 0)]
+"values": [Vector3(0, 1.5, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_m8mgq"]
@@ -388,12 +402,16 @@ size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="GunCam" type="Camera3D" parent="CanvasLayer/SubViewportContainer/SubViewport" unique_id=1168946923]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 cull_mask = 1047554
 fov = 45.0
 
+[node name="Gun" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=1918401807 instance=ExtResource("5_0sump")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23718715, -0.15046382, -0.57422584)
+
 [node name="KitchenKnife" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=1893489909 instance=ExtResource("3_m8mgq")]
 transform = Transform3D(1, 0, 0, 0, 0.97817343, -0.20778978, 0, 0.20778976, 0.9781735, 0.19173491, -0.11827505, -0.4659209)
+visible = false
 
 [node name="GunLight" type="OmniLight3D" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=549445558]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10048375, 0.12604988, -0.076702654)
@@ -428,7 +446,7 @@ editable = false
 scrollable = false
 
 [node name="Head" type="Node3D" parent="." unique_id=243022474]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="Camera" type="Camera3D" parent="Head" unique_id=1898295705]
 cull_mask = 1048061
@@ -436,7 +454,6 @@ current = true
 
 [node name="MeleeCast" type="RayCast3D" parent="Head/Camera" unique_id=1636018233]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-visible = false
 collision_mask = 2
 debug_shape_custom_color = Color(1, 0.37799093, 0.31005007, 1)
 

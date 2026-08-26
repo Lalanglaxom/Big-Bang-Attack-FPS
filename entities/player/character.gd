@@ -56,4 +56,4 @@ func camera_look(Movement: Vector2) -> void:
 	
 	rotate_object_local(Vector3(0,1,0),-camera_rotation.x) # first rotate in Y
 	camera.rotate_object_local(Vector3(1,0,0), -camera_rotation.y) # then rotate in X
-	camera_rotation.y = clamp(camera_rotation.y,-1.5,1.2)
+	camera_rotation.y = clamp(camera_rotation.y,-1.5,1.5)

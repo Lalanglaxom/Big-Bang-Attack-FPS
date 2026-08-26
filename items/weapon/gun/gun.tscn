@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bfvjmlekuu8c4"]
+
+[ext_resource type="PackedScene" uid="uid://d3or8bk6w1o71" path="res://items/weapon/gun/gun.glb" id="1_r530d"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r530d"]
+albedo_color = Color(0.73333335, 0.15686275, 0.23921569, 1)
+
+[node name="Gun" unique_id=1918401807 instance=ExtResource("1_r530d")]
+
+[node name="Cube" parent="." index="0" unique_id=669750728]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+layers = 2
+material_override = SubResource("StandardMaterial3D_r530d")
