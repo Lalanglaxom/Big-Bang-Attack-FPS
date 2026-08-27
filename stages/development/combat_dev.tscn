@@ -36,7 +36,7 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 
 [node name="DebugCamera" type="Camera3D" parent="." unique_id=2032534430]
-transform = Transform3D(0.52821165, -0.44084513, 0.72570527, 0, 0.854663, 0.5191833, -0.84911275, -0.27423865, 0.45144293, -20.483522, 3.9263847, 6.349964)
+transform = Transform3D(0.9914444, 0.092700265, -0.09189481, 0, 0.7040148, 0.71018535, 0.13052967, -0.7041093, 0.6979915, -3.2207177, 5.0621824, 5.2793007)
 
 [node name="Floor" type="MeshInstance3D" parent="." unique_id=2071648950]
 material_override = SubResource("StandardMaterial3D_gy15v")

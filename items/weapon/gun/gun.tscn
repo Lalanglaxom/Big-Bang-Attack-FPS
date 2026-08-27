@@ -1,13 +1,90 @@
 [gd_scene format=3 uid="uid://bfvjmlekuu8c4"]
 
 [ext_resource type="PackedScene" uid="uid://d3or8bk6w1o71" path="res://items/weapon/gun/gun.glb" id="1_r530d"]
+[ext_resource type="Script" uid="uid://bfk41aj5i4mpy" path="res://items/weapon/weapon.gd" id="2_akfj1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r530d"]
 albedo_color = Color(0.73333335, 0.15686275, 0.23921569, 1)
 
-[node name="Gun" unique_id=1918401807 instance=ExtResource("1_r530d")]
+[sub_resource type="Animation" id="Animation_akfj1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cube:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.5707964, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cube:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
 
-[node name="Cube" parent="." index="0" unique_id=669750728]
+[sub_resource type="Animation" id="Animation_r530d"]
+resource_name = "shoot"
+length = 0.23333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cube:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.23333333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 1.5707964, 0), Vector3(0, 1.5707964, 0.65449846), Vector3(0, 1.5707964, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cube:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.23333333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.048, 0.107), Vector3(0, 0, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_akfj1"]
+_data = {
+&"RESET": SubResource("Animation_akfj1"),
+&"shoot": SubResource("Animation_r530d")
+}
+
+[node name="Gun" unique_id=1918401807 instance=ExtResource("1_r530d")]
+script = ExtResource("2_akfj1")
+
+[node name="Cube" parent="." index="0" unique_id=1269007043]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 layers = 2
 material_override = SubResource("StandardMaterial3D_r530d")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1" unique_id=1742112101]
+libraries/ = SubResource("AnimationLibrary_akfj1")

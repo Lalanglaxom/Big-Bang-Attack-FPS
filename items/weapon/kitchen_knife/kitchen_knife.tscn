@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ylkvl7gsmxhm"]
 
 [ext_resource type="PackedScene" uid="uid://d3ghi4xl6t8a3" path="res://items/weapon/kitchen_knife/kitchen_knife.glb" id="1_tbrce"]
+[ext_resource type="Script" uid="uid://bfk41aj5i4mpy" path="res://items/weapon/weapon.gd" id="2_sxrps"]
 [ext_resource type="Texture2D" uid="uid://dwfljrtim58ar" path="res://items/weapon/kitchen_knife/kitchen_knife_1K-Silver_Base Color.jpg" id="4_lxdb4"]
 [ext_resource type="Texture2D" uid="uid://dv65tn1vys0hk" path="res://items/weapon/kitchen_knife/kitchen_knife_1K-Silver_Metallic-1K-Silver_Roughness.png" id="5_n8iti"]
 [ext_resource type="Texture2D" uid="uid://cvhw62q8n82oq" path="res://items/weapon/kitchen_knife/kitchen_knife_1K-Silver_Normal.jpg" id="6_60toj"]
@@ -46,7 +47,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_8ule8"]
-resource_name = "knife_swing"
+resource_name = "shoot"
 length = 0.7
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -76,11 +77,12 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lfswr"]
 _data = {
 &"RESET": SubResource("Animation_tbrce"),
-&"knife_swing": SubResource("Animation_8ule8")
+&"shoot": SubResource("Animation_8ule8")
 }
 
 [node name="KitchenKnife" unique_id=1893489909 instance=ExtResource("1_tbrce")]
 transform = Transform3D(1.0000001, 0, 0, 0, 0.99999976, 0, 0, 0, 0.9999998, 0, 0, 0)
+script = ExtResource("2_sxrps")
 
 [node name="Handle" parent="." index="0" unique_id=1056686335]
 transform = Transform3D(-6.0169164e-10, 0, -0.0029925283, 0, 0.045175638, 0, 0.0137651, 0, -1.3080756e-10, 0, 0, 0)
@@ -90,5 +92,5 @@ layers = 2
 layers = 2
 material_override = SubResource("StandardMaterial3D_skth1")
 
-[node name="GunAnimPlayer" type="AnimationPlayer" parent="." index="1" unique_id=1632888751]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1" unique_id=1632888751]
 libraries/ = SubResource("AnimationLibrary_lfswr")

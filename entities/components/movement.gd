@@ -34,8 +34,8 @@ var speed_modifier: float = NORMAL_speed
 @export var coyote_timer: Timer
 @export var jump_peak_time: float = .5
 @export var jump_fall_time: float = .5
-@export_range(.5,5,.5) var jump_height: float = 2.0
-@export_range(.5,5,.5) var jump_distance: float = 4.0
+@export_range(.4,4,.2) var jump_height: float = 2.0
+@export_range(.4,4,.2) var jump_distance: float = 4.0
 @export var coyote_time: float = .1
 @export var jump_buffer_time: float = .2
 
@@ -54,7 +54,7 @@ func init(new_player: Player) -> void:
 	player = new_player
 	calculate_movement_parameters()
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if enable_crouch:
 		if event.is_action_pressed("crouch"):
 			crouch()

@@ -1,12 +1,8 @@
-extends EnemyBase
+extends Enemy
 
 #@export var enemy_resource: Enemy
-#
-#var left_punch_attack = Attack.new(5, ["RIGHT", "CENTER"], "left punch", 0)
-#var right_punch_attack = Attack.new(4, ["LEFT", "CENTER"], "right punch", 0)
-#var leg_sweep_attack = Attack.new(8, ["DOWN", "CENTER"], "leg sweep", 0)
-#var beam_attack = Attack.new(10, ["RIGHT", "LEFT", "UP", "DOWN", "CENTER"], "beam", 1)
-#
+
+
 #func _ready() -> void:
 	#super()
 	#minium_beam_count = enemy_resource.minium_beam_count

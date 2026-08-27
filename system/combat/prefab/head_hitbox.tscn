@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cvgujw2a0ibyo"]
+
+[ext_resource type="Script" uid="uid://cfprtqv5n8ato" path="res://system/combat/hurtbox.gd" id="1_ax1wj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bhunq"]
+radius = 0.25
+
+[node name="HeadHitbox" type="Area3D" unique_id=1128959703]
+collision_layer = 128
+collision_mask = 64
+script = ExtResource("1_ax1wj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1044629152]
+shape = SubResource("SphereShape3D_bhunq")

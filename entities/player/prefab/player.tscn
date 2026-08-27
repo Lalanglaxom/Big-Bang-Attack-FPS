@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://3mij3cjhkwsm" path="res://addons/fpc/reticles/reticle_1.tscn" id="2_fu0dy"]
 [ext_resource type="Script" uid="uid://bdpjeoa05xc1s" path="res://entities/components/input.gd" id="3_fu0dy"]
 [ext_resource type="PackedScene" uid="uid://ylkvl7gsmxhm" path="res://items/weapon/kitchen_knife/kitchen_knife.tscn" id="3_m8mgq"]
+[ext_resource type="Script" uid="uid://ccnlsxr3x0mgu" path="res://entities/components/combat.gd" id="4_3i4rx"]
 [ext_resource type="Script" uid="uid://crtdo8j1o541f" path="res://entities/components/movement.gd" id="4_fu0dy"]
 [ext_resource type="PackedScene" uid="uid://bfvjmlekuu8c4" path="res://items/weapon/gun/gun.tscn" id="5_0sump"]
 [ext_resource type="Texture2D" uid="uid://363sqo7f4nj0" path="res://stages/development/textures/grid/logo_blue_512x512.png" id="6_m8mgq"]
@@ -332,16 +333,13 @@ _data = {
 &"crouch_reset": SubResource("Animation_cjbjj")
 }
 
-[node name="Player" type="CharacterBody3D" unique_id=1838307977 node_paths=PackedStringArray("camera", "gun_cam", "animation_tree", "anim_player", "input_comp", "movement_comp", "knife_anim")]
+[node name="Player" type="CharacterBody3D" unique_id=1838307977 node_paths=PackedStringArray("camera", "gun_cam", "animation_tree", "anim_player")]
 collision_mask = 18
 script = ExtResource("1_rxsxd")
 camera = NodePath("Head/Camera")
 gun_cam = NodePath("CanvasLayer/SubViewportContainer/SubViewport/GunCam")
 animation_tree = NodePath("AnimationTree")
 anim_player = NodePath("PlayerAnimPlayer")
-input_comp = NodePath("Components/Input")
-movement_comp = NodePath("Components/Movement")
-knife_anim = NodePath("CanvasLayer/SubViewportContainer/SubViewport/GunCam/KitchenKnife/GunAnimPlayer")
 
 [node name="Components" type="Node" parent="." unique_id=1868742090]
 
@@ -355,11 +353,18 @@ sprint_speed = 1.5
 coyote_timer = NodePath("../../CoyoteTimer")
 jump_peak_time = 0.3
 jump_fall_time = 0.3
-jump_height = 1.5
+jump_height = 1.2000000000000002
+jump_distance = 3.4
 player = NodePath("../..")
 
 [node name="Input" type="Node" parent="Components" unique_id=959249441]
 script = ExtResource("3_fu0dy")
+
+[node name="Combat" type="Node" parent="Components" unique_id=612487649 node_paths=PackedStringArray("melee_cast", "gun_cast", "weapon")]
+script = ExtResource("4_3i4rx")
+melee_cast = NodePath("../../Head/Camera/MeleeCast")
+gun_cast = NodePath("../../Head/Camera/GunCast")
+weapon = NodePath("../../CanvasLayer/SubViewportContainer/SubViewport/GunCam/Gun")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1922444484]
 
@@ -370,6 +375,7 @@ animated_reticle = false
 
 [node name="dot" parent="CanvasLayer/Reticle_1" index="0" unique_id=113755080]
 visible = false
+polygon = PackedVector2Array(-1, -1, 1, -1, 1, 0.0072951317, 1, 1, -1, 1)
 
 [node name="HealthText" type="Label" parent="CanvasLayer" unique_id=49567931]
 anchors_preset = 7
@@ -453,9 +459,21 @@ cull_mask = 1048061
 current = true
 
 [node name="MeleeCast" type="RayCast3D" parent="Head/Camera" unique_id=1636018233]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-collision_mask = 2
+enabled = false
+target_position = Vector3(0, 0, -1)
+collision_mask = 128
+collide_with_areas = true
+collide_with_bodies = false
 debug_shape_custom_color = Color(1, 0.37799093, 0.31005007, 1)
+
+[node name="GunCast" type="RayCast3D" parent="Head/Camera" unique_id=727454711]
+enabled = false
+target_position = Vector3(0, 0, -1)
+collision_mask = 128
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3862068, 0.5842791, 0.9762712, 1)
+debug_shape_thickness = 1
 
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=1135996709]
 

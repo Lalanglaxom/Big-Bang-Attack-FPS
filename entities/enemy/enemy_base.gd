@@ -1,5 +1,6 @@
 extends CharacterBody3D
-class_name EnemyBase
+class_name Enemy
+
 #
 #const SPEED = 5.0
 #const JUMP_VELOCITY = 10
@@ -7,8 +8,8 @@ class_name EnemyBase
 #@onready var moving_timer: Timer = $MovingTimer
 #@onready var attack_timer: Timer = $AttackTimer
 #
-#@onready var animation_player: AnimationPlayer = $AnimationPlayer
-#@onready var animation_tree: AnimationTree = $AnimationTree
+@export var animation_player: AnimationPlayer
+@export var animation_tree: AnimationTree
 #
 ##@onready var player = get_tree().get_nodes_in_group("player")[0]
 #
@@ -91,33 +92,8 @@ class_name EnemyBase
 			#approach_speed = 0
 		#
 	#move_and_slide()
-#
-#func get_skill() -> Attack:
-	#if skill_array.size() == 1:
-		#return skill_array[0]
-	#
-	#var random_skill = skill_array[randi() % skill_array.size()]
-	## skill only repeat once
-	#while last_skill_count == 1:
-		#random_skill = skill_array[randi() % skill_array.size()]
-		#if random_skill != last_skill:
-			#last_skill_count = 0
-				#
-	#if random_skill == last_skill:
-		#last_skill_count = 1
-#
-	#last_skill = random_skill
-		#
-	#if total_skill_count >= skill_need_to_beam:
-		#random_skill = beam_array[randi() % beam_array.size()]
-		#skill_need_to_beam = rng.randi_range(minium_beam_count, minium_beam_count + 3)
-		#total_skill_count = 0
-	#else:
-		#total_skill_count += 1
-		#
-	#return random_skill
-#
-#
+
+
 #func damage(attack: Attack):
 	#player.take_damage(attack)
 #
@@ -125,10 +101,12 @@ class_name EnemyBase
 #func call_damage():
 	#damage(attack)
 	#can_be_parry = false
-#
-#func take_damage(attack: Attack):
-	#pass
-#
+
+
+func take_damage(attack: Attack):
+	animation_player.play("hit")
+
+
 #func add_attack_object(new_attack: Attack):
 	#if !new_attack.isBeam:
 		#skill_array.append(new_attack)

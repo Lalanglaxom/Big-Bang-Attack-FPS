@@ -5,21 +5,25 @@ class_name Player
 @export var gun_cam: Camera3D
 @export var animation_tree: AnimationTree
 @export var anim_player: AnimationPlayer
+@onready var components: Node = $Components
 
 var camera_rotation: Vector2 = Vector2(0.0,0.0)
 var mouse_sensitivity = 0.001
 
 @export_category("Components")
-@export var input_comp: InputComponent
-@export var movement_comp: MovementComponent
+@onready var movement: MovementComponent = $Components/Movement
+@onready var input: InputComponent = $Components/Input
+@onready var combat: CombatComponent = $Components/Combat
+
 
 @export var knife_anim: AnimationPlayer
 
 func _ready() -> void:
 	update_camera_rotation()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	input_comp.init(self)
-	movement_comp.init(self)
+	
+	for comp in components.get_children():
+		comp.init(self)
 
 
 func _process(delta: float) -> void:
@@ -36,7 +40,7 @@ func update_camera_rotation() -> void:
 	camera_rotation.y = -camera.rotation.x
 
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

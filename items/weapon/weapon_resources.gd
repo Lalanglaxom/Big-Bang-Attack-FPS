@@ -1,5 +1,5 @@
 extends Resource
-class_name Weapon
+class_name WeaponResource
 
 @export var weapon_scene: PackedScene
 @export var weapon_ammo: Ammo

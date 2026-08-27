@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c84fp5qeqdo21"]
 
-[ext_resource type="Script" uid="uid://dxxu37u5dv6oo" path="res://scenes/scripts/menu.gd" id="1_a0ssx"]
+[ext_resource type="Script" uid="uid://dxxu37u5dv6oo" path="res://system/manager/menu.gd" id="1_a0ssx"]
 [ext_resource type="Texture2D" uid="uid://cyeqsdf2g57sx" path="res://hud/menu/Yamcha_with_Saibaman_Level_Sets.webp" id="2_72q0j"]
 
 [sub_resource type="SystemFont" id="SystemFont_rqdf2"]
