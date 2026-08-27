@@ -1,5 +1,5 @@
 extends Node
-class_name CombatComponent
+class_name PLayerCombat
 
 var player: Player
 
@@ -10,6 +10,7 @@ var player: Player
 @export var gun_range: float = 1000.0
 
 @export var weapon: Weapon
+@export var wea_dmg: int = 10
 
 func init(n_player: Player) -> void:
 	player = n_player
@@ -78,4 +79,4 @@ func _perform_projectile() -> void:
 
 
 func _apply_damage(target: HurtBox, _hit_point: Vector3, _hit_normal: Vector3) -> void:
-	print_debug(target.Type.keys()[target.type])
+	target.take_damage(wea_dmg)

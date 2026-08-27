@@ -1,56 +1,21 @@
 extends CharacterBody3D
 class_name Enemy
 
-#
+
+@export var hurtbox_list: Array[HurtBox]
+
 #const SPEED = 5.0
 #const JUMP_VELOCITY = 10
-#
-#@onready var moving_timer: Timer = $MovingTimer
-#@onready var attack_timer: Timer = $AttackTimer
-#
-@export var animation_player: AnimationPlayer
-@export var animation_tree: AnimationTree
-#
-##@onready var player = get_tree().get_nodes_in_group("player")[0]
-#
-#@export var hello: int
-#
-## walking
-#var	time = 0
-#var walk_speed = 1
-#var approach_speed = 0
-#var cur_approach_speed: float
-#var rng = RandomNumberGenerator.new()
-#var base_distance: float
-#var lock_movement = false
-#
-#
-## Attack
-#var skill_array: Array[Attack]
-#var skill_anim = []
-#var beam_array: Array[Attack]
-#var beam_anim = []
-#var minium_beam_count = 4
-#
-#var last_skill: Attack
-#var last_skill_count = 0
-#var total_skill_count = 0
-#var skill_need_to_beam = 6
-#
-#var attack: Attack
-#
-## parry/dodge
-#var can_be_parry: bool = false
-#
-#func _ready() -> void:
-	#rng.randomize()
-	#animation_player.animation_finished.connect(on_animation_finished)
-	#moving_timer.timeout.connect(on_distance_timer_timeout)
-	#attack_timer.timeout.connect(on_attack_timer_timeout)
-	#Events.on_parry_pressed.connect(get_parry)
-	#base_distance = position.distance_to(player.position)
-#
-#
+
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var animation_tree: AnimationTree = $AnimationTree
+
+#@onready var player = get_tree().get_nodes_in_group("player")[0]
+
+func _ready() -> void:
+	pass
+
+
 #func _physics_process(delta: float) -> void:
 	#look_at(player.global_position)
 	#rotation.x = 0

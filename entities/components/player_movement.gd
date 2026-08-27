@@ -1,5 +1,5 @@
 extends Node
-class_name MovementComponent
+class_name PlayerMovement
 
 var crouched: bool = false
 var crouch_blocked: bool = false

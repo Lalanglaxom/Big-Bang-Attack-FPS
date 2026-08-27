@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dshfdjs3ghfl8" path="res://entities/player/character.gd" id="1_rxsxd"]
 [ext_resource type="PackedScene" uid="uid://3mij3cjhkwsm" path="res://addons/fpc/reticles/reticle_1.tscn" id="2_fu0dy"]
-[ext_resource type="Script" uid="uid://bdpjeoa05xc1s" path="res://entities/components/input.gd" id="3_fu0dy"]
+[ext_resource type="Script" uid="uid://bdpjeoa05xc1s" path="res://entities/components/player_input.gd" id="3_fu0dy"]
 [ext_resource type="PackedScene" uid="uid://ylkvl7gsmxhm" path="res://items/weapon/kitchen_knife/kitchen_knife.tscn" id="3_m8mgq"]
-[ext_resource type="Script" uid="uid://ccnlsxr3x0mgu" path="res://entities/components/combat.gd" id="4_3i4rx"]
-[ext_resource type="Script" uid="uid://crtdo8j1o541f" path="res://entities/components/movement.gd" id="4_fu0dy"]
+[ext_resource type="Script" uid="uid://ccnlsxr3x0mgu" path="res://entities/components/player_combat.gd" id="4_3i4rx"]
+[ext_resource type="Script" uid="uid://crtdo8j1o541f" path="res://entities/components/player_movement.gd" id="4_fu0dy"]
 [ext_resource type="PackedScene" uid="uid://bfvjmlekuu8c4" path="res://items/weapon/gun/gun.tscn" id="5_0sump"]
 [ext_resource type="Texture2D" uid="uid://363sqo7f4nj0" path="res://stages/development/textures/grid/logo_blue_512x512.png" id="6_m8mgq"]
 [ext_resource type="Texture2D" uid="uid://dvr7iywhubw0" path="res://stages/development/textures/grid/logo_red_512x512.png" id="7_cjbjj"]
@@ -365,6 +365,7 @@ script = ExtResource("4_3i4rx")
 melee_cast = NodePath("../../Head/Camera/MeleeCast")
 gun_cast = NodePath("../../Head/Camera/GunCast")
 weapon = NodePath("../../CanvasLayer/SubViewportContainer/SubViewport/GunCam/Gun")
+wea_dmg = 15
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1922444484]
 

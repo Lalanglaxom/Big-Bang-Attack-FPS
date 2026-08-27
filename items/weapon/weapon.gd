@@ -8,7 +8,7 @@ enum ShootType { HITSCAN, MELEE, PROJECTILE }
 @export var shoot_type: ShootType = ShootType.HITSCAN
 @export var shoot_anim_name: StringName = &"shoot"
 
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 var player: Player
 
@@ -20,7 +20,6 @@ func fire() -> void:
 	match shoot_type:
 		ShootType.HITSCAN:
 			_handle_hitscan_fire()
-			trigger_raycast()
 		ShootType.MELEE:
 			_handle_melee_fire()
 		ShootType.PROJECTILE:
@@ -30,9 +29,9 @@ func fire() -> void:
 
 
 func play_shoot_anim() -> void:
-	if animation_player and animation_player.has_animation(shoot_anim_name):
-		animation_player.seek(0.0, true)
-		animation_player.play(shoot_anim_name)
+	if anim_player and anim_player.has_animation(shoot_anim_name):
+		anim_player.seek(0.0, true)
+		anim_player.play(shoot_anim_name)
 
 
 func trigger_raycast() -> void:

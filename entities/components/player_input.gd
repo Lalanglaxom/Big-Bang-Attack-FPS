@@ -1,5 +1,5 @@
 extends Node
-class_name InputComponent
+class_name PlayerInput
 
 signal on_shoot_clicked
 

@@ -11,9 +11,9 @@ var camera_rotation: Vector2 = Vector2(0.0,0.0)
 var mouse_sensitivity = 0.001
 
 @export_category("Components")
-@onready var movement: MovementComponent = $Components/Movement
-@onready var input: InputComponent = $Components/Input
-@onready var combat: CombatComponent = $Components/Combat
+@onready var movement: PlayerMovement = $Components/Movement
+@onready var input: PlayerInput = $Components/Input
+@onready var combat: PLayerCombat = $Components/Combat
 
 
 @export var knife_anim: AnimationPlayer
