@@ -8,13 +8,22 @@ class_name Entity
 
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var health_text: Label3D = $HealthText
+@onready var components: Node = $Components
 
 var health: int = 100
 
 func _ready() -> void:
 	for hurtbox in hurtbox_list:
-		hurtbox.init(self)
-
+		if hurtbox.has_method("init"):
+			hurtbox.init(self)
+		else:
+			printerr(str(hurtbox) + "Has no init method")
+		
+	for comp in components.get_children():
+		if comp.has_method("init"):
+			comp.init(self)
+		else:
+			printerr(str(comp) + "Has no init method")
 
 func add_health(value: int):
 	health += value

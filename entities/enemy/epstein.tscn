@@ -407,7 +407,7 @@ _data = {
 &"walk": SubResource("Animation_qj7bw")
 }
 
-[node name="Epstein" type="CharacterBody3D" unique_id=1058703588 node_paths=PackedStringArray("hurtbox_list")]
+[node name="Epstein" type="CharacterBody3D" unique_id=1058703588 node_paths=PackedStringArray("hurtbox_list") groups=["Enemies"]]
 collision_layer = 2
 collision_mask = 17
 script = ExtResource("1_k36s6")
@@ -415,8 +415,9 @@ hurtbox_list = [NodePath("Model/Body/Head/HeadHitbox"), NodePath("Model/Body/Bod
 
 [node name="Components" type="Node" parent="." unique_id=2070263098]
 
-[node name="Movement" type="Node" parent="Components" unique_id=1826374025]
+[node name="Movement" type="Node" parent="Components" unique_id=1826374025 node_paths=PackedStringArray("nav_agent")]
 script = ExtResource("2_narw4")
+nav_agent = NodePath("../../NavigationAgent3D")
 
 [node name="BodyCollision" type="CollisionShape3D" parent="." unique_id=723252853]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -497,3 +498,8 @@ autoplay = &"walk"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2033417, 0)
 billboard = 1
 text = "HP: 100"
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1182351659]
+avoidance_enabled = true
+height = 2.0
+neighbor_distance = 20.0

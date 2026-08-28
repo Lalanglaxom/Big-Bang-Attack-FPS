@@ -25,10 +25,10 @@ var sprint_on_cooldown: bool = false
 var sprint_time_remaining: float = sprint_time
 @export var sprint_bar: Range
 
-const NORMAL_speed = 1
-@export_range(1.0,3.0) var sprint_speed: float = 2.0
-@export_range(0.1,1.0) var walk_speed: float = 0.5
-var speed_modifier: float = NORMAL_speed
+@export_range(1.0,3.0,0.2) var sprint_speed: float = 2.0
+@export_range(0.2,2.0,0.2) var move_speed: float = 1.0
+
+var speed_modifier: float = move_speed
 
 @export_category("Jump Parameters")
 @export var coyote_timer: Timer
@@ -68,13 +68,10 @@ func _unhandled_input(event: InputEvent) -> void:
 				speed_modifier = sprint_speed
 				sprint_timer.start(sprint_time_remaining)
 				
-		if Input.is_action_just_released("sprint") or Input.is_action_just_released("walk"):
-			if !(Input.is_action_pressed("walk") or Input.is_action_pressed("sprint")):
-				speed_modifier = NORMAL_speed
+		if Input.is_action_just_released("sprint"):
+			if !Input.is_action_pressed("sprint"):
+				speed_modifier = move_speed
 				exit_sprint()
-				
-		if Input.is_action_just_pressed("walk") and !crouched:
-			speed_modifier = walk_speed
 
 
 func calculate_movement_parameters() -> void:
@@ -149,7 +146,7 @@ func crouch() -> void:
 		if crouched:
 			blend_val = STANDING
 		else:
-			speed_modifier = NORMAL_speed
+			speed_modifier = move_speed
 			exit_sprint()
 			
 			if player.is_on_floor():
@@ -204,7 +201,7 @@ func jump()->void:
 func _on_sprint_timer_timeout() -> void:
 	sprint_on_cooldown = true
 	get_tree().create_timer(sprint_cooldown_time).timeout.connect(_on_sprint_cooldown_timeout)
-	speed_modifier = NORMAL_speed
+	speed_modifier = move_speed
 	sprint_time_remaining = 0
 
 func _on_sprint_cooldown_timeout():

@@ -50,7 +50,8 @@ import/blender/enabled=false
 
 [global_group]
 
-player=""
+Player=""
+Enemies=""
 
 [input]
 
@@ -112,6 +113,7 @@ gym_dev_scene={
 
 [layer_names]
 
+3d_render/layer_1="Game"
 3d_render/layer_2="Hand - Weapon"
 3d_render/layer_10="No Draw"
 3d_physics/layer_1="Player"
