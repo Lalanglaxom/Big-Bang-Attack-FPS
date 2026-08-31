@@ -36,5 +36,9 @@ func add_health(value: int):
 	
 	if health <= 0:
 		anim_player.play("die")
+		
+		for hurtbox in hurtbox_list:
+			hurtbox.process_mode = PROCESS_MODE_DISABLED
+				
 		await anim_player.animation_finished
 		queue_free()

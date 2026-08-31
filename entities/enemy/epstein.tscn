@@ -409,7 +409,8 @@ _data = {
 
 [node name="Epstein" type="CharacterBody3D" unique_id=1058703588 node_paths=PackedStringArray("hurtbox_list") groups=["Enemies"]]
 collision_layer = 2
-collision_mask = 17
+collision_mask = 49
+floor_snap_length = 0.2
 script = ExtResource("1_k36s6")
 hurtbox_list = [NodePath("Model/Body/Head/HeadHitbox"), NodePath("Model/Body/BodyHitbox")]
 
@@ -500,6 +501,7 @@ billboard = 1
 text = "HP: 100"
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1182351659]
+path_desired_distance = 0.8
 avoidance_enabled = true
 height = 2.0
 neighbor_distance = 20.0

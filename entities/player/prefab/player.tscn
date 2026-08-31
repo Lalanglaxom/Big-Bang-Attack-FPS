@@ -335,6 +335,7 @@ _data = {
 
 [node name="Player" type="CharacterBody3D" unique_id=1838307977 node_paths=PackedStringArray("camera", "gun_cam", "animation_tree", "anim_player") groups=["Player"]]
 collision_mask = 18
+floor_snap_length = 0.2
 script = ExtResource("1_rxsxd")
 camera = NodePath("Head/Camera")
 gun_cam = NodePath("CanvasLayer/SubViewportContainer/SubViewport/GunCam")

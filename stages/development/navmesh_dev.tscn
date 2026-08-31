@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://bul8ieby12dc3"]
+
+[ext_resource type="Texture2D" uid="uid://bjxcrdjpnm0bl" path="res://environment/skybox/Painterly Sky BGs (173).png" id="1_oj6s0"]
+[ext_resource type="Texture2D" uid="uid://nxfjrmnbay4t" path="res://stages/development/textures/grid/grids/Dark/texture_07.png" id="2_7e81y"]
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://entities/player/prefab/player.tscn" id="3_ryibo"]
+[ext_resource type="Script" uid="uid://jd103sbbx88u" path="res://system/manager/director.gd" id="4_5pkja"]
+[ext_resource type="PackedScene" uid="uid://dixnwefcmk136" path="res://entities/enemy/epstein.tscn" id="5_e14jf"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_riqys"]
+panorama = ExtResource("1_oj6s0")
+
+[sub_resource type="Sky" id="Sky_bhunq"]
+sky_material = SubResource("PanoramaSkyMaterial_riqys")
+
+[sub_resource type="Environment" id="Environment_x31ai"]
+background_mode = 2
+sky = SubResource("Sky_bhunq")
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gy15v"]
+albedo_texture = ExtResource("2_7e81y")
+uv1_scale = Vector3(4, 4, 4)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i7qql"]
+size = Vector2(128, 128)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_utfmk"]
+data = PackedVector3Array(64, 0, 64, -64, 0, 64, 64, 0, -64, -64, 0, 64, -64, 0, -64, 64, 0, -64)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_bhunq"]
+geometry_parsed_geometry_type = 1
+geometry_collision_mask = 4294967100
+agent_height = 2.0
+
+[node name="Root" type="Node3D" unique_id=1794377303]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1308282837]
+environment = SubResource("Environment_x31ai")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=465781053]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="DebugCamera" type="Camera3D" parent="." unique_id=2032534430]
+transform = Transform3D(0.9914444, 0.092700265, -0.09189481, 0, 0.7040148, 0.71018535, 0.13052967, -0.7041093, 0.6979915, -3.2207177, 5.0621824, 5.2793007)
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=2071648950]
+material_override = SubResource("StandardMaterial3D_gy15v")
+mesh = SubResource("PlaneMesh_i7qql")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor" unique_id=336367082]
+collision_layer = 16
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D" unique_id=1057213998]
+shape = SubResource("ConcavePolygonShape3D_utfmk")
+
+[node name="NavmeshStair" type="NavigationRegion3D" parent="." unique_id=1519187538]
+navigation_mesh = SubResource("NavigationMesh_bhunq")
+
+[node name="FloorStair" type="MeshInstance3D" parent="NavmeshStair" unique_id=246777589]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+material_override = SubResource("StandardMaterial3D_gy15v")
+mesh = SubResource("PlaneMesh_i7qql")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavmeshStair/FloorStair" unique_id=2088869078]
+collision_layer = 16
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavmeshStair/FloorStair/StaticBody3D" unique_id=1340288325]
+shape = SubResource("ConcavePolygonShape3D_utfmk")
+
+[node name="Stair" type="CSGPolygon3D" parent="NavmeshStair" unique_id=529212151]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.3113416e-06, 0, -0.0049991608)
+use_collision = true
+collision_layer = 16
+collision_mask = 3
+polygon = PackedVector2Array(0, 0, 0, 3, 2, 1, 3, 0)
+depth = 5.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavmeshStair/Stair" unique_id=381438152]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, -2.5)
+size = Vector3(5, 3, 5)
+
+[node name="Player" parent="." unique_id=1838307977 instance=ExtResource("3_ryibo")]
+transform = Transform3D(-0.9964982, 0, 0.08361398, 0, 1, 0, -0.08361398, 0, -0.9964982, -1.0312395, 0, -20.448242)
+
+[node name="Director" type="Node3D" parent="." unique_id=2050104043]
+visible = false
+script = ExtResource("4_5pkja")
+
+[node name="Epstein" parent="Director" unique_id=1058703588 instance=ExtResource("5_e14jf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6065683, 0, -1.1566987)
+
+[node name="Epstein2" parent="Director" unique_id=766565813 instance=ExtResource("5_e14jf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7150192, 0, -5.1964684)
+
+[node name="Epstein3" parent="Director" unique_id=694408796 instance=ExtResource("5_e14jf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.872213, 0, -2.7046685)
+
+[node name="Epstein4" parent="Director" unique_id=126867183 instance=ExtResource("5_e14jf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6916637, 0, -8.078955)
+
+[node name="Epstein5" parent="Director" unique_id=854368071 instance=ExtResource("5_e14jf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2760735, 0, -4.754184)
+
+[node name="Epstein6" parent="Director" unique_id=2143749482 instance=ExtResource("5_e14jf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.116576, 0, 9.348324)
+
+[node name="Epstein7" parent="Director" unique_id=966192023 instance=ExtResource("5_e14jf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.794989, 0, 5.3085546)
+
+[node name="Epstein8" parent="Director" unique_id=896699343 instance=ExtResource("5_e14jf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.637795, 0, 7.8003545)
+
+[node name="Epstein9" parent="Director" unique_id=1773273534 instance=ExtResource("5_e14jf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.818344, 0, 2.4260683)
+
+[node name="Epstein10" parent="Director" unique_id=1262812761 instance=ExtResource("5_e14jf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.786081, 0, 5.750839)
