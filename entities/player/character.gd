@@ -14,9 +14,11 @@ var mouse_sensitivity = 0.001
 @onready var movement: PlayerMovement = $Components/Movement
 @onready var input: PlayerInput = $Components/Input
 @onready var combat: PLayerCombat = $Components/Combat
+@onready var player_hud: PlayerHUD = $CanvasLayer
 
+@onready var interact_cast: RayCast3D = %InteractCast
 
-@export var knife_anim: AnimationPlayer
+var interactable: WeaponPickup
 
 func _ready() -> void:
 	update_camera_rotation()
@@ -27,7 +29,14 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	pass
+	if interact_cast.is_colliding():
+		var hit = interact_cast.get_collider() as WeaponPickup
+		player_hud.interact_label.visible = true
+		player_hud.set_interact_text(hit.interact_text)
+		interactable = hit
+	else:
+		player_hud.interact_label.visible = false
+		interactable = null
 
 
 func _physics_process(delta: float) -> void:

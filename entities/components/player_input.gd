@@ -12,3 +12,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			player.combat.shoot_weapon()
+	
+	if Input.is_action_just_pressed("interact"):
+		if player.interactable:
+			player.interactable.interact(player)

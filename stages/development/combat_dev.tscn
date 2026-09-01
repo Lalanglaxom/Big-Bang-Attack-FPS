@@ -2,9 +2,13 @@
 
 [ext_resource type="Texture2D" uid="uid://bjxcrdjpnm0bl" path="res://environment/skybox/Painterly Sky BGs (173).png" id="1_2a110"]
 [ext_resource type="Texture2D" uid="uid://nxfjrmnbay4t" path="res://stages/development/textures/grid/grids/Dark/texture_07.png" id="2_2a110"]
+[ext_resource type="Texture2D" uid="uid://uhaxxvc6atfe" path="res://stages/development/textures/grid/grid_white_512x512.png" id="3_50kqa"]
 [ext_resource type="NavigationMesh" uid="uid://bh3b0tei0oqcr" path="res://environment/navigation_mesh.tres" id="3_r37pm"]
 [ext_resource type="Texture2D" uid="uid://cv7lsb6vdof3o" path="res://stages/development/textures/grid/grid_red_512x512.png" id="3_xo3m8"]
+[ext_resource type="PackedScene" uid="uid://bngjokoip2yiy" path="res://items/weapon/weapon_pickup.tscn" id="4_50kqa"]
+[ext_resource type="PackedScene" uid="uid://bfvjmlekuu8c4" path="res://items/weapon/gun/gun.tscn" id="5_bj2rw"]
 [ext_resource type="Script" uid="uid://jd103sbbx88u" path="res://system/manager/director.gd" id="5_i7qql"]
+[ext_resource type="PackedScene" uid="uid://ylkvl7gsmxhm" path="res://items/weapon/kitchen_knife/kitchen_knife.tscn" id="6_0ungj"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://entities/player/prefab/player.tscn" id="7_gcfbj"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_riqys"]
@@ -27,6 +31,11 @@ size = Vector2(128, 128)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_utfmk"]
 data = PackedVector3Array(64, 0, 64, -64, 0, 64, 64, 0, -64, -64, 0, 64, -64, 0, -64, 64, 0, -64)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bj2rw"]
+albedo_texture = ExtResource("3_50kqa")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xo3m8"]
 albedo_texture = ExtResource("3_xo3m8")
@@ -60,6 +69,24 @@ collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D" unique_id=1057213998]
 shape = SubResource("ConcavePolygonShape3D_utfmk")
+
+[node name="WeaponRack" type="CSGBox3D" parent="Floor" unique_id=876425015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 2, 0)
+material_override = SubResource("StandardMaterial3D_bj2rw")
+transparency = 1.0
+cast_shadow = 0
+collision_layer = 16
+collision_mask = 3
+size = Vector3(1, 4, 16)
+
+[node name="GunPickup" parent="Floor/WeaponRack" unique_id=400003551 instance=ExtResource("4_50kqa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.60410655, 0)
+weapon_scene = ExtResource("5_bj2rw")
+
+[node name="KnifePickup" parent="Floor/WeaponRack" unique_id=94553832 instance=ExtResource("4_50kqa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.60410655, -1.1415224)
+weapon_scene = ExtResource("6_0ungj")
+weapon_name = "Knife"
 
 [node name="NavmeshFloor" type="NavigationRegion3D" parent="." unique_id=1519187538]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
@@ -213,10 +240,10 @@ collision_mask = 2
 size = Vector3(1, 5, 56)
 
 [node name="Player" parent="." unique_id=1838307977 instance=ExtResource("7_gcfbj")]
-transform = Transform3D(-0.90479976, 0, -0.42583728, 0, 1, 0, 0.42583728, 0, -0.90479976, -9.569903, 0, -22.80442)
+transform = Transform3D(0.99842703, 0, -0.056066524, 0, 1, 0, 0.056066524, 0, 0.99842703, -4.3832884, 0, -2.1479568)
 
 [node name="Director" type="Node3D" parent="." unique_id=991704063]
 script = ExtResource("5_i7qql")
 
 [node name="SpawnPoint" type="Node3D" parent="Director" unique_id=137380549]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.1, 24)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.593109, 0.1, -24.987968)

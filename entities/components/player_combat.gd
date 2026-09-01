@@ -12,9 +12,27 @@ var player: Player
 @export var weapon: Weapon
 @export var wea_dmg: int = 10
 
+@onready var weapon_holder: Node3D = %WeaponHolder
+
 func init(n_player: Player) -> void:
 	player = n_player
+	set_weapon_range()
+
+
+func equip(weapon_scene: PackedScene) -> void:
+	if not weapon_scene:
+		push_warning("Equip failed: weapon_scene is null.")
+		return
+		
+	Utils.remove_all_child(weapon_holder)
 	
+	var new_weapon = weapon_scene.instantiate()
+	weapon = new_weapon
+	weapon_holder.add_child(weapon)
+	set_weapon_range()
+
+
+func set_weapon_range():
 	if melee_cast:
 		melee_cast.target_position = Vector3(0, 0, -melee_range)
 		melee_cast.enabled = false

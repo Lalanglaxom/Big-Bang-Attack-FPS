@@ -7,12 +7,18 @@
 [ext_resource type="Script" uid="uid://ccnlsxr3x0mgu" path="res://entities/components/player_combat.gd" id="4_3i4rx"]
 [ext_resource type="Script" uid="uid://crtdo8j1o541f" path="res://entities/components/player_movement.gd" id="4_fu0dy"]
 [ext_resource type="PackedScene" uid="uid://bfvjmlekuu8c4" path="res://items/weapon/gun/gun.tscn" id="5_0sump"]
+[ext_resource type="Script" uid="uid://bp4p68smxh670" path="res://entities/player/player_hud.gd" id="5_60ujp"]
 [ext_resource type="Texture2D" uid="uid://363sqo7f4nj0" path="res://stages/development/textures/grid/logo_blue_512x512.png" id="6_m8mgq"]
 [ext_resource type="Texture2D" uid="uid://dvr7iywhubw0" path="res://stages/development/textures/grid/logo_red_512x512.png" id="7_cjbjj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_cqqaq"]
 font_size = 45
 outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3i4rx"]
+font_size = 20
+outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ImageTexture" id="ImageTexture_fu0dy"]
@@ -365,10 +371,12 @@ script = ExtResource("3_fu0dy")
 script = ExtResource("4_3i4rx")
 melee_cast = NodePath("../../Head/Camera/MeleeCast")
 gun_cast = NodePath("../../Head/Camera/GunCast")
-weapon = NodePath("../../CanvasLayer/SubViewportContainer/SubViewport/GunCam/Gun")
+melee_range = 1.5
+weapon = NodePath("../../CanvasLayer/SubViewportContainer/SubViewport/GunCam/WeaponHolder/Gun")
 wea_dmg = 15
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1922444484]
+script = ExtResource("5_60ujp")
 
 [node name="Reticle_1" parent="CanvasLayer" unique_id=1497184641 node_paths=PackedStringArray("reticle_lines", "character") instance=ExtResource("2_fu0dy")]
 reticle_lines = [NodePath("top"), NodePath("left"), NodePath("right"), NodePath("bottom")]
@@ -395,6 +403,23 @@ text = "100"
 label_settings = SubResource("LabelSettings_cqqaq")
 horizontal_alignment = 1
 
+[node name="InteractText" type="Label" parent="CanvasLayer" unique_id=652445030]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -169.5
+offset_top = 29.5
+offset_right = 169.5
+offset_bottom = 57.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press E to Goon"
+label_settings = SubResource("LabelSettings_3i4rx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer" unique_id=83553676]
 anchors_preset = 15
 anchor_right = 1.0
@@ -414,11 +439,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 cull_mask = 1047554
 fov = 45.0
 
-[node name="Gun" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=1918401807 instance=ExtResource("5_0sump")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23718715, -0.15046382, -0.57422584)
+[node name="WeaponHolder" type="Node3D" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=422141147]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.206218, -0.11685729, -0.47430182)
 
-[node name="KitchenKnife" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=1893489909 instance=ExtResource("3_m8mgq")]
-transform = Transform3D(1, 0, 0, 0, 0.97817343, -0.20778978, 0, 0.20778976, 0.9781735, 0.19173491, -0.11827505, -0.4659209)
+[node name="Gun" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam/WeaponHolder" unique_id=1918401807 instance=ExtResource("5_0sump")]
+visible = false
+
+[node name="KitchenKnife" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam/WeaponHolder" unique_id=1893489909 instance=ExtResource("3_m8mgq")]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
 visible = false
 
 [node name="GunLight" type="OmniLight3D" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=549445558]
@@ -467,6 +496,14 @@ collision_mask = 128
 collide_with_areas = true
 collide_with_bodies = false
 debug_shape_custom_color = Color(1, 0.37799093, 0.31005007, 1)
+
+[node name="InteractCast" type="RayCast3D" parent="Head/Camera" unique_id=735507744]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -1.5)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(1, 1, 0.30980393, 1)
 
 [node name="GunCast" type="RayCast3D" parent="Head/Camera" unique_id=727454711]
 enabled = false
