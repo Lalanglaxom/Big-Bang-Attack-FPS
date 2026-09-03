@@ -13,12 +13,12 @@ var mouse_sensitivity = 0.001
 @export_category("Components")
 @onready var movement: PlayerMovement = $Components/Movement
 @onready var input: PlayerInput = $Components/Input
-@onready var combat: PLayerCombat = $Components/Combat
+@onready var combat: PlayerCombat = $Components/Combat
 @onready var player_hud: PlayerHUD = $CanvasLayer
 
 @onready var interact_cast: RayCast3D = %InteractCast
 
-var interactable: WeaponPickup
+#var interactable: WeaponPickup
 
 func _ready() -> void:
 	update_camera_rotation()
@@ -26,17 +26,19 @@ func _ready() -> void:
 	
 	for comp in components.get_children():
 		comp.init(self)
-
+		
+	player_hud.init(self)
 
 func _process(delta: float) -> void:
-	if interact_cast.is_colliding():
-		var hit = interact_cast.get_collider() as WeaponPickup
-		player_hud.interact_label.visible = true
-		player_hud.set_interact_text(hit.interact_text)
-		interactable = hit
-	else:
-		player_hud.interact_label.visible = false
-		interactable = null
+	#if interact_cast.is_colliding():
+		#var hit = interact_cast.get_collider() as WeaponPickup
+		#player_hud.interact_label.visible = true
+		#player_hud.set_interact_text(hit.interact_text)
+		#interactable = hit
+	#else:
+	player_hud.interact_label.hide()
+		#interactable = null
+	pass
 
 
 func _physics_process(delta: float) -> void:

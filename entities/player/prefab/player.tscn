@@ -10,11 +10,7 @@
 [ext_resource type="Script" uid="uid://bp4p68smxh670" path="res://entities/player/player_hud.gd" id="5_60ujp"]
 [ext_resource type="Texture2D" uid="uid://363sqo7f4nj0" path="res://stages/development/textures/grid/logo_blue_512x512.png" id="6_m8mgq"]
 [ext_resource type="Texture2D" uid="uid://dvr7iywhubw0" path="res://stages/development/textures/grid/logo_red_512x512.png" id="7_cjbjj"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_cqqaq"]
-font_size = 45
-outline_size = 10
-outline_color = Color(0, 0, 0, 1)
+[ext_resource type="Script" uid="uid://qws0bk2mtgj2" path="res://hud/debug/debug_hud.gd" id="9_u3048"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3i4rx"]
 font_size = 20
@@ -33,6 +29,10 @@ thickness = 6
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_0sump"]
 color = Color(1, 1, 1, 1)
 thickness = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_u3048"]
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_fu0dy"]
 
@@ -65,7 +65,6 @@ animation = &"crouch_reset"
 animation = &"crouch_ground"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_fu0dy"]
-graph_offset = Vector2(-215.25464, 45.09259)
 nodes/output/position = Vector2(860, 220)
 nodes/Crouch_Blend/node = SubResource("AnimationNodeBlend3_ryreg")
 nodes/Crouch_Blend/position = Vector2(500, 140)
@@ -340,7 +339,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody3D" unique_id=1838307977 node_paths=PackedStringArray("camera", "gun_cam", "animation_tree", "anim_player") groups=["Player"]]
-collision_mask = 18
+collision_mask = 22
 floor_snap_length = 0.2
 script = ExtResource("1_rxsxd")
 camera = NodePath("Head/Camera")
@@ -367,18 +366,19 @@ player = NodePath("../..")
 [node name="Input" type="Node" parent="Components" unique_id=959249441]
 script = ExtResource("3_fu0dy")
 
-[node name="Combat" type="Node" parent="Components" unique_id=612487649 node_paths=PackedStringArray("melee_cast", "gun_cast", "weapon")]
+[node name="Combat" type="Node" parent="Components" unique_id=612487649 node_paths=PackedStringArray("melee_cast", "gun_cast", "weapons")]
 script = ExtResource("4_3i4rx")
 melee_cast = NodePath("../../Head/Camera/MeleeCast")
 gun_cast = NodePath("../../Head/Camera/GunCast")
 melee_range = 1.5
-weapon = NodePath("../../CanvasLayer/SubViewportContainer/SubViewport/GunCam/WeaponHolder/Gun")
+weapons = [NodePath("../../CanvasLayer/SubViewportContainer/SubViewport/GunCam/WeaponHolder/Gun"), NodePath("../../CanvasLayer/SubViewportContainer/SubViewport/GunCam/WeaponHolder/Knife"), null, null]
 wea_dmg = 15
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1922444484]
 script = ExtResource("5_60ujp")
 
 [node name="Reticle_1" parent="CanvasLayer" unique_id=1497184641 node_paths=PackedStringArray("reticle_lines", "character") instance=ExtResource("2_fu0dy")]
+visible = false
 reticle_lines = [NodePath("top"), NodePath("left"), NodePath("right"), NodePath("bottom")]
 character = NodePath("../..")
 animated_reticle = false
@@ -386,22 +386,6 @@ animated_reticle = false
 [node name="dot" parent="CanvasLayer/Reticle_1" index="0" unique_id=113755080]
 visible = false
 polygon = PackedVector2Array(-1, -1, 1, -1, 1, 0.0072951317, 1, 1, -1, 1)
-
-[node name="HealthText" type="Label" parent="CanvasLayer" unique_id=49567931]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -530.0
-offset_top = -132.0
-offset_right = -372.0
-offset_bottom = -17.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "100"
-label_settings = SubResource("LabelSettings_cqqaq")
-horizontal_alignment = 1
 
 [node name="InteractText" type="Label" parent="CanvasLayer" unique_id=652445030]
 anchors_preset = 8
@@ -441,14 +425,12 @@ fov = 45.0
 
 [node name="WeaponHolder" type="Node3D" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=422141147]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.206218, -0.11685729, -0.47430182)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, -0.1, -0.5)
 
 [node name="Gun" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam/WeaponHolder" unique_id=1918401807 instance=ExtResource("5_0sump")]
-visible = false
 
-[node name="KitchenKnife" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam/WeaponHolder" unique_id=1893489909 instance=ExtResource("3_m8mgq")]
+[node name="Knife" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam/WeaponHolder" unique_id=1893489909 instance=ExtResource("3_m8mgq")]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
-visible = false
 
 [node name="GunLight" type="OmniLight3D" parent="CanvasLayer/SubViewportContainer/SubViewport/GunCam" unique_id=549445558]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10048375, 0.12604988, -0.076702654)
@@ -463,6 +445,7 @@ light_energy = 0.2
 light_cull_mask = 4294966274
 
 [node name="SprintBar" type="HSlider" parent="CanvasLayer" unique_id=1216210254]
+visible = false
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -481,6 +464,36 @@ theme_override_styles/grabber_area = SubResource("StyleBoxLine_0sump")
 value = 100.0
 editable = false
 scrollable = false
+
+[node name="Debug" type="Control" parent="CanvasLayer" unique_id=202996155]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("9_u3048")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Debug" unique_id=776545371]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="XVelo" type="Label" parent="CanvasLayer/Debug/HBoxContainer" unique_id=182057864]
+custom_minimum_size = Vector2(70, 10)
+layout_mode = 2
+text = "X:123"
+label_settings = SubResource("LabelSettings_u3048")
+
+[node name="YVelo" type="Label" parent="CanvasLayer/Debug/HBoxContainer" unique_id=1127705096]
+custom_minimum_size = Vector2(70, 10)
+layout_mode = 2
+text = "X:123"
+label_settings = SubResource("LabelSettings_u3048")
+
+[node name="ZVelo" type="Label" parent="CanvasLayer/Debug/HBoxContainer" unique_id=1937067392]
+custom_minimum_size = Vector2(70, 10)
+layout_mode = 2
+text = "X:123"
+label_settings = SubResource("LabelSettings_u3048")
 
 [node name="Head" type="Node3D" parent="." unique_id=243022474]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.2)

@@ -1,7 +1,6 @@
 [gd_scene format=4 uid="uid://bngjokoip2yiy"]
 
 [ext_resource type="Script" uid="uid://ced0hm1qohkbr" path="res://items/weapon/weapon_pickup.gd" id="1_wfv78"]
-[ext_resource type="PackedScene" uid="uid://bfvjmlekuu8c4" path="res://items/weapon/gun/gun.tscn" id="2_a1ftg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r530d"]
 albedo_color = Color(0.1882353, 0.22745098, 0.8156863, 1)
@@ -47,8 +46,6 @@ size = Vector3(0.08016968, 0.15298462, 0.23803711)
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("1_wfv78")
-weapon_asset = ExtResource("2_a1ftg")
-weapon_name = "Gun"
 
 [node name="Cube" type="MeshInstance3D" parent="." unique_id=1608382444]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)

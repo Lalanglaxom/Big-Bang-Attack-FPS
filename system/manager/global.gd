@@ -14,9 +14,9 @@ func _unhandled_input(event):
 		#capture.save_png(filename)
 		#print("AAA")
 		
-	if event.is_action_pressed("combat_scene") :
-		get_tree().change_scene_to_packed(COMBAT_DEV)
-	if event.is_action_pressed("gym_dev_scene") :
-		get_tree().change_scene_to_packed(GYM_DEV)
+	#if event.is_action_pressed("combat_scene") :
+		#get_tree().change_scene_to_packed(COMBAT_DEV)
+	#if event.is_action_pressed("gym_dev_scene") :
+		#get_tree().change_scene_to_packed(GYM_DEV)
 		
 	pass

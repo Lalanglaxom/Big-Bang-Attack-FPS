@@ -7,7 +7,9 @@ enum ShootType { HITSCAN, MELEE, PROJECTILE }
 
 @export var shoot_type: ShootType = ShootType.HITSCAN
 @export var shoot_anim_name: StringName = &"shoot"
+@export var projectile: PackedScene
 
+@onready var muzzle: Node3D = $Muzzle
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 var player: Player
@@ -47,4 +49,6 @@ func _handle_melee_fire() -> void:
 
 
 func _handle_projectile_fire() -> void:
-	pass
+	var proj = projectile.instantiate() as Node3D
+	get_tree().current_scene.add_child(proj)
+	proj.setup_target(muzzle.global_position)

@@ -12,7 +12,6 @@ enum {GROUND_CROUCH = -1, STANDING = 0, AIR_CROUCH = 1}
 @export_range(0.0,3.0) var crouch_speed_reduction = 2.0
 @export_range(0.0,0.50) var crouch_blend_speed = .2
 
-
 @export_category("Speed Parameters")
 @export var enable_sprint: bool = true
 @export var sprint_timer: Timer
@@ -39,7 +38,9 @@ var speed_modifier: float = move_speed
 @export var coyote_time: float = .1
 @export var jump_buffer_time: float = .2
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
+# Knockback momentum dampening
+@export var air_drag: float = 2.0  # Controls how quickly rocket jump momentum bleeds off in air
+
 var jump_gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var fall_gravity: float
 var jump_velocity: float
@@ -50,9 +51,11 @@ var jump_buffer: bool = false
 
 @export var player: Player
 
+
 func init(new_player: Player) -> void:
 	player = new_player
 	calculate_movement_parameters()
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if enable_crouch:
@@ -75,26 +78,24 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func calculate_movement_parameters() -> void:
-	jump_gravity = (2*jump_height)/pow(jump_peak_time,2)
-	fall_gravity = (2*jump_height)/pow(jump_fall_time,2)
+	jump_gravity = (2 * jump_height) / pow(jump_peak_time, 2)
+	fall_gravity = (2 * jump_height) / pow(jump_fall_time, 2)
 	jump_velocity = jump_gravity * jump_peak_time
-	base_speed = jump_distance/(jump_peak_time+jump_fall_time)
+	base_speed = jump_distance / (jump_peak_time + jump_fall_time)
 	_speed = base_speed
 
 
 func _physics_process(_delta: float) -> void:
-	#sprint_replenish(_delta)
-	#lean_collision()
-
-	# Add the gravity.
-	var _acceleration
+	var _acceleration: float
+	
+	# Gravity & Air/Ground acceleration
 	if not player.is_on_floor():
-		_acceleration = acceleration*air_acceleration_modifier
+		_acceleration = acceleration * air_acceleration_modifier
 		
 		if coyote_timer.is_stopped():
 			coyote_timer.start(coyote_time)
 	
-		if player.velocity.y>0:
+		if player.velocity.y > 0:
 			player.velocity.y -= jump_gravity * _delta
 		else:
 			player.velocity.y -= fall_gravity * _delta
@@ -102,19 +103,20 @@ func _physics_process(_delta: float) -> void:
 		_acceleration = acceleration
 		jump_available = true
 		coyote_timer.stop()
-		_speed = (base_speed / max((float(crouched)*crouch_speed_reduction),1)) * speed_modifier
+		_speed = (base_speed / max((float(crouched) * crouch_speed_reduction), 1)) * speed_modifier
+		
 		if jump_buffer:
 			jump()
 			jump_buffer = false
 		
-	# Continuous check to auto-uncrouch once the ceiling obstacle clears
+	# Un-crouch obstruction check
 	if crouched and crouch_blocked:
 		if crouch_collider and !crouch_collider.is_colliding():
 			crouch_blocked = false
 			if !Input.is_action_pressed("crouch"):
 				crouch()
 		
-	# Handle Jump.
+	# Handle Jump Input
 	if Input.is_action_just_pressed("ui_accept"):
 		if jump_available:
 			if crouched:
@@ -125,19 +127,37 @@ func _physics_process(_delta: float) -> void:
 			jump_buffer = true
 			get_tree().create_timer(jump_buffer_time).timeout.connect(on_jump_buffer_timeout)
 		
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
+	# Movement Vector Calculation
 	var input_dir = Input.get_vector("left", "right", "up", "down")
 	var direction = (player.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	player.velocity.x = move_toward(player.velocity.x, direction.x * _speed, _acceleration*_delta)
-	player.velocity.z = move_toward(player.velocity.z, direction.z * _speed, _acceleration*_delta)
+	var target_vel = direction * _speed
+
+	# ROCKET JUMP FIX: Only clamp horizontal velocity if player is moving SLOWER than max walk speed.
+	# If current horizontal velocity is higher than target speed (due to explosion), apply air drag instead of clamping.
+	var current_h_vel = Vector3(player.velocity.x, 0, player.velocity.z)
+	
+	if current_h_vel.length() > _speed and not player.is_on_floor():
+		# Preserve high-speed momentum in air while applying mild drag + user input influence
+		current_h_vel = current_h_vel.move_toward(target_vel, air_drag * _delta)
+		player.velocity.x = current_h_vel.x
+		player.velocity.z = current_h_vel.z
+	else:
+		# Standard walking/running acceleration
+		player.velocity.x = move_toward(player.velocity.x, target_vel.x, _acceleration * _delta)
+		player.velocity.z = move_toward(player.velocity.z, target_vel.z, _acceleration * _delta)
 	
 	player.move_and_slide()
 
 
-#func crouch() -> void:
-	#player.anim_player.play("crouch")
-	#crouched = true
+func add_explosion_knockback(impact_velocity: Vector3) -> void:
+	# Force player off floor instantly
+	jump_available = false
+	
+	# Apply full 3D velocity vector
+	player.velocity += impact_velocity
+	
+	# Force step frame to break floor lock
+	player.move_and_slide()
 
 
 func crouch() -> void:
@@ -156,9 +176,12 @@ func crouch() -> void:
 				
 		if player.animation_tree:
 			var blend_tween = get_tree().create_tween()
-			blend_tween.tween_property(player.animation_tree, 
-			"parameters/Crouch_Blend/blend_amount", 
-			blend_val, crouch_blend_speed)
+			blend_tween.tween_property(
+				player.animation_tree, 
+				"parameters/Crouch_Blend/blend_amount", 
+				blend_val, 
+				crouch_blend_speed
+			)
 			
 		crouched = !crouched
 	else:
@@ -171,32 +194,10 @@ func exit_sprint() -> void:
 		sprint_timer.stop()
 
 
-func sprint_replenish(delta) -> void:
-	var sprint_bar_Value
-
-
-	if !sprint_on_cooldown and (speed_modifier != sprint_speed):
-		
-		if player.is_on_floor():
-			sprint_time_remaining = move_toward(sprint_time_remaining, sprint_time, delta*sprint_replenish_rate)
-			
-		sprint_bar_Value = (sprint_time_remaining/sprint_time)*100
-		
-	else:
-		sprint_bar_Value = (sprint_timer.time_left/sprint_time)*100
-	
-	sprint_bar.value = sprint_bar_Value
-	
-	if sprint_bar_Value == 100:
-		sprint_bar.hide()
-	else:
-		sprint_bar.show()
-
-
-
-func jump()->void:
+func jump() -> void:
 	player.velocity.y = jump_velocity
 	jump_available = false
+
 
 func _on_sprint_timer_timeout() -> void:
 	sprint_on_cooldown = true
@@ -204,11 +205,14 @@ func _on_sprint_timer_timeout() -> void:
 	speed_modifier = move_speed
 	sprint_time_remaining = 0
 
+
 func _on_sprint_cooldown_timeout():
 	sprint_on_cooldown = false
+
 
 func _on_coyote_timer_timeout() -> void:
 	jump_available = false
 
-func on_jump_buffer_timeout()->void:
+
+func on_jump_buffer_timeout() -> void:
 	jump_buffer = false

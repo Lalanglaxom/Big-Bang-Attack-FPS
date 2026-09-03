@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d3or8bk6w1o71" path="res://items/weapon/gun/gun.glb" id="1_r530d"]
 [ext_resource type="Script" uid="uid://bfk41aj5i4mpy" path="res://items/weapon/weapon.gd" id="2_akfj1"]
+[ext_resource type="PackedScene" uid="uid://btxrdc3mm2hei" path="res://items/weapon/gun/rocket.tscn" id="3_vn3vg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r530d"]
 albedo_color = Color(0.1882353, 0.22745098, 0.8156863, 1)
@@ -83,6 +84,8 @@ _data = {
 
 [node name="Gun" unique_id=1918401807 instance=ExtResource("1_r530d")]
 script = ExtResource("2_akfj1")
+shoot_type = 2
+projectile = ExtResource("3_vn3vg")
 
 [node name="Cube" parent="." index="0" unique_id=1269007043]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
@@ -91,3 +94,6 @@ material_override = SubResource("StandardMaterial3D_r530d")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1" unique_id=1742112101]
 libraries/ = SubResource("AnimationLibrary_akfj1")
+
+[node name="Muzzle" type="Node3D" parent="." index="2" unique_id=568723903]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.07331255, -0.18610111)
