@@ -240,40 +240,40 @@ depth = 4.0
 [node name="BoxesVertical" type="Node3D" parent="." unique_id=1233893841]
 
 [node name="10m Wall" type="CSGBox3D" parent="BoxesVertical" unique_id=448426806]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 14.5, -18.5)
 material_override = SubResource("StandardMaterial3D_ar3qb")
 use_collision = true
 collision_layer = 16
 collision_mask = 3
-size = Vector3(4, 10, 1)
+size = Vector3(10, 29, 1)
 
 [node name="Label3D" type="Label3D" parent="BoxesVertical/10m Wall" unique_id=1969877308]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.651629)
 text = "5m"
 font_size = 128
 
-[node name="2_5m Wall" type="CSGBox3D" parent="BoxesVertical" unique_id=1823344274]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1.25, 1.5)
+[node name="15m Wall" type="CSGBox3D" parent="BoxesVertical" unique_id=1823344274]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 25.5, -18.5)
 material_override = SubResource("StandardMaterial3D_mo8u7")
 use_collision = true
 collision_layer = 16
 collision_mask = 3
-size = Vector3(4, 2.5, 1)
+size = Vector3(11, 51, 1)
 
-[node name="Label3D" type="Label3D" parent="BoxesVertical/2_5m Wall" unique_id=104626897]
+[node name="Label3D" type="Label3D" parent="BoxesVertical/15m Wall" unique_id=104626897]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.016957283, 0.031735897, 0.651629)
 text = "2.5m"
 font_size = 128
 
-[node name="1_5m Wall" type="CSGBox3D" parent="BoxesVertical" unique_id=1122132357]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0.5, 1.5)
+[node name="12m Wall" type="CSGBox3D" parent="BoxesVertical" unique_id=1122132357]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 6, -18.5)
 material_override = SubResource("StandardMaterial3D_05pjw")
 use_collision = true
 collision_layer = 16
 collision_mask = 3
-size = Vector3(4, 1, 1)
+size = Vector3(13, 12, 1)
 
-[node name="Label3D" type="Label3D" parent="BoxesVertical/1_5m Wall" unique_id=1470158791]
+[node name="Label3D" type="Label3D" parent="BoxesVertical/12m Wall" unique_id=1470158791]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.035320282, 0.041701555, 0.651629)
 text = "1m"
 font_size = 128
@@ -318,12 +318,12 @@ text = "4m"
 font_size = 128
 
 [node name="Jumpbox2" type="CSGBox3D" parent="BoxesVertical" unique_id=1399189725]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0.5, 11)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 4)
 material_override = SubResource("StandardMaterial3D_81luj")
 use_collision = true
 collision_layer = 16
 collision_mask = 3
-size = Vector3(1, 1, 4)
+size = Vector3(7, 1, 8)
 
 [node name="Label3D2" type="Label3D" parent="BoxesVertical/Jumpbox2" unique_id=1501731933]
 transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.371139e-08, 1, -1, 4.371139e-08, 1.9106855e-15, 2, 0, 0)
@@ -331,12 +331,12 @@ text = "3m"
 font_size = 128
 
 [node name="Jumpbox" type="CSGBox3D" parent="BoxesVertical" unique_id=1640759845]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, 11)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0.5, 4)
 material_override = SubResource("StandardMaterial3D_awybe")
 use_collision = true
 collision_layer = 16
 collision_mask = 3
-size = Vector3(1, 1, 4)
+size = Vector3(8, 1, 8)
 
 [node name="2m Ceiling" type="CSGBox3D" parent="BoxesVertical" unique_id=1344105238]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2.5, 4.5)
@@ -375,12 +375,12 @@ text = "1.5m"
 font_size = 64
 
 [node name="Ramp" type="CSGPolygon3D" parent="BoxesVertical" unique_id=2134400723]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 21.875635)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -32, 0, -7.124365)
 material_override = SubResource("StandardMaterial3D_hm65s")
 use_collision = true
 collision_layer = 16
 collision_mask = 3
-polygon = PackedVector2Array(-7, 0, -2.9, 1.6, 1, 3, 1, 0)
+polygon = PackedVector2Array(-7, 0, -2.9, 1.6, 4, 9, 16.9, 0)
 depth = 4.0
 
 [node name="Ramp2" type="CSGPolygon3D" parent="BoxesVertical" unique_id=329112367]
@@ -389,11 +389,11 @@ material_override = SubResource("StandardMaterial3D_hm65s")
 use_collision = true
 collision_layer = 16
 collision_mask = 3
-polygon = PackedVector2Array(-7, 0, -2.9, 1.5, 1, 3, 1, 0)
+polygon = PackedVector2Array(-21, 0, -10, 5, 1, 10, 1, 0)
 depth = 4.0
 
 [node name="Player" parent="." unique_id=1838307977 instance=ExtResource("6_0cwyi")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.359642, 0, 7.983492)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 8.359642, 0, 6.983492)
 
 [node name="DebugCamera" type="Camera3D" parent="." unique_id=2032534430]
-transform = Transform3D(0.5282116, -0.44084513, 0.7257052, 0, 0.85466295, 0.5191832, -0.84911275, -0.27423862, 0.45144287, -20.48352, 3.9263844, 6.349964)
+transform = Transform3D(-0.9958065, -0.061805278, 0.067449115, 0, 0.73727983, 0.67558753, -0.09148374, 0.67275447, -0.734188, 9.704954, 8.359545, -1.0128365)

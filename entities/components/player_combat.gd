@@ -56,6 +56,7 @@ func equip(new_weapon: Weapon) -> void:
 
 	# Show new weapon and set as active
 	cur_weapon = new_weapon
+	cur_weapon.init(player)
 	cur_weapon.show()
 
 	# Connect signal for the new active weapon

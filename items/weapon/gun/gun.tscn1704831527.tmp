@@ -86,7 +86,6 @@ _data = {
 script = ExtResource("2_akfj1")
 shoot_type = 2
 projectile = ExtResource("3_vn3vg")
-fire_rate = 0.4
 
 [node name="Cube" parent="." index="0" unique_id=1269007043]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)

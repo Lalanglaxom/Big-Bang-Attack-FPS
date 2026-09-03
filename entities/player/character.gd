@@ -5,6 +5,7 @@ class_name Player
 @export var gun_cam: Camera3D
 @export var animation_tree: AnimationTree
 @export var anim_player: AnimationPlayer
+
 @onready var components: Node = $Components
 
 var camera_rotation: Vector2 = Vector2(0.0,0.0)

@@ -19,3 +19,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			
 	if Input.is_action_just_pressed("weapon_up"):
 		player.combat.equip_next()
+	
+	
+	if Input.is_action_just_pressed("noclip"):
+		player.movement.toggle_noclip()

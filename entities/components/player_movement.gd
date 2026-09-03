@@ -1,6 +1,9 @@
 extends Node
 class_name PlayerMovement
 
+var noclip: bool = false
+@export var noclip_speed: float = 15.0
+
 var crouched: bool = false
 var crouch_blocked: bool = false
 
@@ -57,24 +60,39 @@ func init(new_player: Player) -> void:
 	calculate_movement_parameters()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if enable_crouch:
-		if event.is_action_pressed("crouch"):
-			crouch()
-		if event.is_action_released("crouch"):
-			if crouched:
-				crouch()
-		
-	if enable_sprint:
-		if Input.is_action_just_pressed("sprint") and !crouched:
-			if !sprint_on_cooldown:
-				speed_modifier = sprint_speed
-				sprint_timer.start(sprint_time_remaining)
+func toggle_noclip() -> void:
+	noclip = !noclip
+	
+	# Disable/enable player collision shape
+	if player:
+		for child in player.get_children():
+			if child is CollisionShape3D:
+				child.disabled = noclip
 				
-		if Input.is_action_just_released("sprint"):
-			if !Input.is_action_pressed("sprint"):
-				speed_modifier = move_speed
-				exit_sprint()
+		# Reset velocity when toggling off
+		if not noclip:
+			player.velocity = Vector3.ZERO
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if !noclip:
+		if enable_crouch:
+			if event.is_action_pressed("crouch"):
+				crouch()
+			if event.is_action_released("crouch"):
+				if crouched:
+					crouch()
+		
+		if enable_sprint:
+			if Input.is_action_just_pressed("sprint") and !crouched:
+				if !sprint_on_cooldown:
+					speed_modifier = sprint_speed
+					sprint_timer.start(sprint_time_remaining)
+					
+			if Input.is_action_just_released("sprint"):
+				if !Input.is_action_pressed("sprint"):
+					speed_modifier = move_speed
+					exit_sprint()
 
 
 func calculate_movement_parameters() -> void:
@@ -86,6 +104,10 @@ func calculate_movement_parameters() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	if noclip:
+		_process_noclip_movement(_delta)
+		return
+
 	var _acceleration: float
 	
 	# Gravity & Air/Ground acceleration
@@ -133,30 +155,56 @@ func _physics_process(_delta: float) -> void:
 	var target_vel = direction * _speed
 
 	# ROCKET JUMP FIX: Only clamp horizontal velocity if player is moving SLOWER than max walk speed.
-	# If current horizontal velocity is higher than target speed (due to explosion), apply air drag instead of clamping.
 	var current_h_vel = Vector3(player.velocity.x, 0, player.velocity.z)
 	
 	if current_h_vel.length() > _speed and not player.is_on_floor():
-		# Preserve high-speed momentum in air while applying mild drag + user input influence
 		current_h_vel = current_h_vel.move_toward(target_vel, air_drag * _delta)
 		player.velocity.x = current_h_vel.x
 		player.velocity.z = current_h_vel.z
 	else:
-		# Standard walking/running acceleration
 		player.velocity.x = move_toward(player.velocity.x, target_vel.x, _acceleration * _delta)
 		player.velocity.z = move_toward(player.velocity.z, target_vel.z, _acceleration * _delta)
 	
 	player.move_and_slide()
 
 
+## Flying 3D movement when noclip is active
+func _process_noclip_movement(delta: float) -> void:
+	var cam = get_viewport().get_camera_3d()
+	var move_dir = Vector3.ZERO
+	
+	var input_dir = Input.get_vector("left", "right", "up", "down")
+	
+	if cam:
+		# Direction based on 3D camera orientation (Forward/Back/Left/Right)
+		move_dir += cam.global_transform.basis.z * input_dir.y
+		move_dir += cam.global_transform.basis.x * input_dir.x
+	else:
+		move_dir += player.transform.basis.z * input_dir.y
+		move_dir += player.transform.basis.x * input_dir.x
+
+	# Fly Up (Jump / Space) and Down (Crouch / Ctrl)
+	if Input.is_action_pressed("ui_accept"):
+		move_dir.y += 1.0
+	if Input.is_action_pressed("crouch"):
+		move_dir.y -= 1.0
+
+	move_dir = move_dir.normalized()
+	
+	# Fast speed when sprinting in noclip
+	var current_speed = noclip_speed
+	if Input.is_action_pressed("sprint"):
+		current_speed *= 2.5
+		
+	player.global_position += move_dir * current_speed * delta
+
+
 func add_explosion_knockback(impact_velocity: Vector3) -> void:
-	# Force player off floor instantly
+	if noclip:
+		return
+		
 	jump_available = false
-	
-	# Apply full 3D velocity vector
 	player.velocity += impact_velocity
-	
-	# Force step frame to break floor lock
 	player.move_and_slide()
 
 

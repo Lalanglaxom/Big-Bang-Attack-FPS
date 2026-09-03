@@ -1,8 +1,10 @@
 extends Node3D
+class_name Projectile
 
-@export var speed: float = 40.0
+@export var speed: float = 10.0
 @export var lifetime: float = 5.0
 
+@onready var mesh: MeshInstance3D = $Mesh
 @onready var ray_cast: RayCast3D = $RayCast3D
 
 var time_alive: float = 0.0
@@ -10,13 +12,23 @@ const VFX_EXPLOSION = preload("uid://c7tpfpuxtinqa")
 
 
 ## Call this immediately after spawning the rocket
-func setup_target(spawn_position: Vector3) -> void:
+func setup_target(spawn_position: Vector3, muzzle_position: Vector3) -> void:
+	# 1. Place physics root at camera spawn position
 	global_position = spawn_position
 	
 	var camera = get_viewport().get_camera_3d()
 	if camera:
-		# Rocket simply flies straight along the camera's view direction
+		# Align physics root with camera rotation
 		global_transform.basis = camera.global_transform.basis
+		
+	# 2. Visually place the mesh model at the muzzle position
+	mesh.global_position = muzzle_position
+	
+	# 3. Smoothly slide the mesh model onto the physics root over 0.08 seconds
+	var tween = create_tween()
+	tween.tween_property(mesh, "position", Vector3.ZERO, 0.2)\
+		 .set_trans(Tween.TRANS_QUAD)\
+		 .set_ease(Tween.EASE_OUT)
 
 
 func _physics_process(delta: float) -> void:

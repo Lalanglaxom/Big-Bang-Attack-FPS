@@ -56,15 +56,15 @@ func _launch_player(player: Node3D) -> void:
 
 	# Corner / Zero-Distance Guard: If shot lands right against/inside player collision
 	var blast_dir: Vector3
-	#if distance < 0.2:
-		#var cam = get_viewport().get_camera_3d()
-		#if cam:
-			#blast_dir = -cam.global_transform.basis.z + Vector3(0, 0.4, 0)
-		#else:
-			#blast_dir = Vector3.UP
-		#distance = 0.2
-	#else:
-	blast_dir = blast_vec.normalized()
+	if distance < 0.2:
+		var cam = get_viewport().get_camera_3d()
+		if cam:
+			blast_dir = -cam.global_transform.basis.z + Vector3(0, 0.4, 0)
+		else:
+			blast_dir = Vector3.UP
+		distance = 0.2
+	else:
+		blast_dir = blast_vec.normalized()
 
 	# Moderate vertical boost bias
 	blast_dir.y += y_bias

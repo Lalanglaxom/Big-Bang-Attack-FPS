@@ -9,16 +9,35 @@ enum ShootType { HITSCAN, MELEE, PROJECTILE }
 @export var shoot_anim_name: StringName = &"shoot"
 @export var projectile: PackedScene
 
+@export_category("Stats")
+@export var fire_rate: float = 0.5  # Time in seconds between shots (e.g. 0.5s = 2 shots/sec)
+
 @onready var muzzle: Node3D = $Muzzle
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 var player: Player
+var fire_cooldown: float = 0.0  # Tracks remaining cooldown time
+
 
 func init(n_player: Player) -> void:
 	player = n_player
 
 
+func _process(delta: float) -> void:
+	# Continuously decrement cooldown until it hits 0
+	if fire_cooldown > 0.0:
+		fire_cooldown -= delta
+
+
 func fire() -> void:
+	# 1. Check if weapon is ready to fire
+	if fire_cooldown > 0.0:
+		return
+
+	# 2. Reset cooldown timer to fire_rate interval
+	fire_cooldown = fire_rate
+
+	# 3. Fire logic
 	match shoot_type:
 		ShootType.HITSCAN:
 			_handle_hitscan_fire()
@@ -49,6 +68,10 @@ func _handle_melee_fire() -> void:
 
 
 func _handle_projectile_fire() -> void:
-	var proj = projectile.instantiate() as Node3D
+	if not projectile:
+		push_warning("No projectile scene assigned to weapon!")
+		return
+
+	var proj = projectile.instantiate() as Projectile
 	get_tree().current_scene.add_child(proj)
-	proj.setup_target(muzzle.global_position)
+	proj.setup_target(player.camera.global_position, muzzle.global_position)
