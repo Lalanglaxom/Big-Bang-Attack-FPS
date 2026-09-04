@@ -279,12 +279,12 @@ text = "1m"
 font_size = 128
 
 [node name="Jumpbox4" type="CSGBox3D" parent="BoxesVertical" unique_id=1167814044]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.5, 0.5, 11)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5, 16, 11)
 material_override = SubResource("StandardMaterial3D_nn4sj")
 use_collision = true
 collision_layer = 16
 collision_mask = 3
-size = Vector3(1, 1, 4)
+size = Vector3(5, 4, 4)
 
 [node name="Label3D" type="Label3D" parent="BoxesVertical/Jumpbox4" unique_id=2042402640]
 transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.371139e-08, 1, -1, 4.371139e-08, 1.9106855e-15, 3, 0, 0)
@@ -292,12 +292,12 @@ text = "5m"
 font_size = 128
 
 [node name="Jumpbox5" type="CSGBox3D" parent="BoxesVertical" unique_id=203077215]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 0.5, 11)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5, 2.5, -5)
 material_override = SubResource("StandardMaterial3D_nn4sj")
 use_collision = true
 collision_layer = 16
 collision_mask = 3
-size = Vector3(1, 1, 4)
+size = Vector3(3, 5, 12)
 
 [node name="Label3D" type="Label3D" parent="BoxesVertical/Jumpbox5" unique_id=622767961]
 transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.371139e-08, 1, -1, 4.371139e-08, 1.9106855e-15, 4, 4.371139e-08, -4.371139e-08)
@@ -305,12 +305,12 @@ text = "7m"
 font_size = 128
 
 [node name="Jumpbox3" type="CSGBox3D" parent="BoxesVertical" unique_id=2012118744]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 0.5, 11)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 3.5, 16)
 material_override = SubResource("StandardMaterial3D_3w5cg")
 use_collision = true
 collision_layer = 16
 collision_mask = 3
-size = Vector3(1, 1, 4)
+size = Vector3(5, 7, 4)
 
 [node name="Label3D2" type="Label3D" parent="BoxesVertical/Jumpbox3" unique_id=877112412]
 transform = Transform3D(-4.371139e-08, -1, -4.371139e-08, 0, -4.371139e-08, 1, -1, 4.371139e-08, 1.9106855e-15, 2.4, 0, 0)
@@ -339,12 +339,12 @@ collision_mask = 3
 size = Vector3(8, 1, 8)
 
 [node name="2m Ceiling" type="CSGBox3D" parent="BoxesVertical" unique_id=1344105238]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2.5, 4.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 11, 16)
 material_override = SubResource("StandardMaterial3D_0cwyi")
 use_collision = true
 collision_layer = 16
 collision_mask = 3
-size = Vector3(4, 1, 1)
+size = Vector3(4, 10, 8)
 
 [node name="Label3D" type="Label3D" parent="BoxesVertical/2m Ceiling" unique_id=361414234]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.016957283, 0.031735897, 0.651629)
@@ -352,14 +352,27 @@ text = "2m"
 font_size = 128
 
 [node name="1_5m Ceiling" type="CSGBox3D" parent="BoxesVertical" unique_id=77509435]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.5, 12, 1)
 material_override = SubResource("StandardMaterial3D_ast7g")
 use_collision = true
 collision_layer = 16
 collision_mask = 3
-size = Vector3(4, 1, 1)
+size = Vector3(21, 1, 10)
 
 [node name="Label3D" type="Label3D" parent="BoxesVertical/1_5m Ceiling" unique_id=276579437]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.016957283, 0.031735897, 0.651629)
+text = "1.5m"
+font_size = 128
+
+[node name="1_5m Ceiling2" type="CSGBox3D" parent="BoxesVertical" unique_id=1981439117]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 22, 1)
+material_override = SubResource("StandardMaterial3D_ast7g")
+use_collision = true
+collision_layer = 16
+collision_mask = 3
+size = Vector3(23, 1, 10)
+
+[node name="Label3D" type="Label3D" parent="BoxesVertical/1_5m Ceiling2" unique_id=2111058107]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.016957283, 0.031735897, 0.651629)
 text = "1.5m"
 font_size = 128

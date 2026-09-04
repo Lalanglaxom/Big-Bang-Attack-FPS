@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ylkvl7gsmxhm" path="res://items/weapon/kitchen_knife/kitchen_knife.tscn" id="3_m8mgq"]
 [ext_resource type="Script" uid="uid://ccnlsxr3x0mgu" path="res://entities/components/player_combat.gd" id="4_3i4rx"]
 [ext_resource type="Script" uid="uid://crtdo8j1o541f" path="res://entities/components/player_movement.gd" id="4_fu0dy"]
-[ext_resource type="PackedScene" uid="uid://bfvjmlekuu8c4" path="res://items/weapon/gun/gun.tscn" id="5_0sump"]
+[ext_resource type="PackedScene" uid="uid://bfvjmlekuu8c4" path="res://items/weapon/glocket/glocket.tscn" id="5_0sump"]
 [ext_resource type="Script" uid="uid://bp4p68smxh670" path="res://entities/player/player_hud.gd" id="5_60ujp"]
 [ext_resource type="Texture2D" uid="uid://363sqo7f4nj0" path="res://stages/development/textures/grid/logo_blue_512x512.png" id="6_m8mgq"]
 [ext_resource type="Texture2D" uid="uid://dvr7iywhubw0" path="res://stages/development/textures/grid/logo_red_512x512.png" id="7_cjbjj"]
@@ -356,6 +356,7 @@ script = ExtResource("4_fu0dy")
 crouch_collider = NodePath("../../CrouchCollider")
 crouch_blend_speed = 0.1
 sprint_timer = NodePath("../../SprintTimer")
+air_acceleration_modifier = 0.05
 sprint_bar = NodePath("../../CanvasLayer/SprintBar")
 sprint_speed = 1.5
 coyote_timer = NodePath("../../CoyoteTimer")

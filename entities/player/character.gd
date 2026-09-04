@@ -7,6 +7,7 @@ class_name Player
 @export var anim_player: AnimationPlayer
 
 @onready var components: Node = $Components
+@onready var collider: CollisionShape3D = $Collider
 
 var camera_rotation: Vector2 = Vector2(0.0,0.0)
 var mouse_sensitivity = 0.001
@@ -72,4 +73,4 @@ func camera_look(Movement: Vector2) -> void:
 	
 	rotate_object_local(Vector3(0,1,0),-camera_rotation.x) # first rotate in Y
 	camera.rotate_object_local(Vector3(1,0,0), -camera_rotation.y) # then rotate in X
-	camera_rotation.y = clamp(camera_rotation.y,-1.5,1.5)
+	camera_rotation.y = clamp(camera_rotation.y, -1.565, 1.565)

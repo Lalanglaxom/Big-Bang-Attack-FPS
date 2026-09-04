@@ -1,11 +1,11 @@
-[gd_scene format=3 uid="uid://bfvjmlekuu8c4"]
+[gd_scene format=3 uid="uid://bfulev14uhsj1"]
 
-[ext_resource type="PackedScene" uid="uid://d3or8bk6w1o71" path="res://items/weapon/gun/gun.glb" id="1_r530d"]
-[ext_resource type="Script" uid="uid://bfk41aj5i4mpy" path="res://items/weapon/weapon.gd" id="2_akfj1"]
-[ext_resource type="PackedScene" uid="uid://btxrdc3mm2hei" path="res://items/weapon/gun/rocket.tscn" id="3_vn3vg"]
+[ext_resource type="PackedScene" uid="uid://dlb8p54puxudm" path="res://items/weapon/cannolt/gun.glb" id="1_bo2pu"]
+[ext_resource type="Script" uid="uid://bfk41aj5i4mpy" path="res://items/weapon/weapon.gd" id="2_qaoga"]
+[ext_resource type="PackedScene" uid="uid://bxy8x0l40d23u" path="res://items/weapon/cannolt/cannon.tscn" id="3_vhl1e"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r530d"]
-albedo_color = Color(0.1882353, 0.22745098, 0.8156863, 1)
+albedo_color = Color(0.85490197, 0.22745098, 0.26666668, 1)
 
 [sub_resource type="Animation" id="Animation_akfj1"]
 length = 0.001
@@ -82,13 +82,13 @@ _data = {
 &"shoot": SubResource("Animation_r530d")
 }
 
-[node name="Gun" unique_id=1918401807 instance=ExtResource("1_r530d")]
-script = ExtResource("2_akfj1")
+[node name="Cannolt" unique_id=1918401807 instance=ExtResource("1_bo2pu")]
+script = ExtResource("2_qaoga")
 shoot_type = 2
-projectile = ExtResource("3_vn3vg")
+projectile = ExtResource("3_vhl1e")
 fire_rate = 0.4
 
-[node name="Cube" parent="." index="0" unique_id=1269007043]
+[node name="Cube" parent="." index="0" unique_id=169652048]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 layers = 2
 material_override = SubResource("StandardMaterial3D_r530d")

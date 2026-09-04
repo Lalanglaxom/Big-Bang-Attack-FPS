@@ -6,7 +6,7 @@
 [ext_resource type="NavigationMesh" uid="uid://bh3b0tei0oqcr" path="res://environment/navigation_mesh.tres" id="3_r37pm"]
 [ext_resource type="Texture2D" uid="uid://cv7lsb6vdof3o" path="res://stages/development/textures/grid/grid_red_512x512.png" id="3_xo3m8"]
 [ext_resource type="PackedScene" uid="uid://bngjokoip2yiy" path="res://items/weapon/weapon_pickup.tscn" id="4_50kqa"]
-[ext_resource type="PackedScene" uid="uid://bfvjmlekuu8c4" path="res://items/weapon/gun/gun.tscn" id="5_bj2rw"]
+[ext_resource type="PackedScene" uid="uid://bfvjmlekuu8c4" path="res://items/weapon/glocket/glocket.tscn" id="5_bj2rw"]
 [ext_resource type="Script" uid="uid://jd103sbbx88u" path="res://system/manager/director.gd" id="5_i7qql"]
 [ext_resource type="PackedScene" uid="uid://ylkvl7gsmxhm" path="res://items/weapon/kitchen_knife/kitchen_knife.tscn" id="6_0ungj"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://entities/player/prefab/player.tscn" id="7_gcfbj"]

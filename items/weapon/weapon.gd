@@ -74,4 +74,19 @@ func _handle_projectile_fire() -> void:
 
 	var proj = projectile.instantiate() as Projectile
 	get_tree().current_scene.add_child(proj)
-	proj.setup_target(player.camera.global_position, muzzle.global_position)
+	
+	# Get camera pitch angle
+	var cam_euler = player.camera.global_basis.get_euler()
+	var pitch = cam_euler.x
+	
+	var spawn_pos: Vector3 = player.camera.global_position
+	
+	# Check if looking almost straight down
+	if pitch < -1.565:
+		proj.global_basis = Basis.looking_at(Vector3.DOWN, Vector3.FORWARD)
+	
+	if pitch > 1.565:
+		proj.global_basis = Basis.looking_at(Vector3.UP, Vector3.FORWARD)
+		
+	# Normal camera aim setup
+	proj.setup_target(spawn_pos, muzzle.global_position)

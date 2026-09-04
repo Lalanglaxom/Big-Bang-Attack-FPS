@@ -31,9 +31,8 @@ func _apply_explosion_force() -> void:
 
 	var query = PhysicsShapeQueryParameters3D.new()
 	query.shape = sphere
-	# Uses global_transform after trigger_explosion updates global_position
 	query.transform = global_transform
-	query.collision_mask = 1  # Scans all collision layers
+	query.collision_mask = 1
 
 	var space_state = get_world_3d().direct_space_state
 	var results = space_state.intersect_shape(query)
@@ -41,43 +40,48 @@ func _apply_explosion_force() -> void:
 	for result in results:
 		var body = result.collider
 		if body is Player or body.is_in_group("Player"):
-			_launch_player(body)
+			# Uses your Player script's collider variable directly
+			if body.collider:
+				_launch_player_capsule(body, body.collider)
 
 
+func _launch_player_capsule(player: Player, col_shape: CollisionShape3D) -> void:
+	# Target the exact center midpoint of the player's collision shape
+	var target_center: Vector3 = col_shape.global_position
 
-func _launch_player(player: Node3D) -> void:
-	# Vector from ACTUAL impact point to player center
-	var blast_vec = player.global_position - global_position
+	# Calculate blast vector directly from explosion center to shape midpoint
+	var blast_vec = target_center - global_position
 	var distance = blast_vec.length()
 
-	# If player is outside blast radius, ignore launch
+	# Range Check
 	if distance > blast_radius:
 		return
 
-	# Corner / Zero-Distance Guard: If shot lands right against/inside player collision
 	var blast_dir: Vector3
+
+	# Zero-Distance / Point-Blank Guard (World-Space, camera independent)
 	if distance < 0.2:
-		var cam = get_viewport().get_camera_3d()
-		if cam:
-			blast_dir = -cam.global_transform.basis.z + Vector3(0, 0.4, 0)
+		if global_position.y > target_center.y:
+			# Explosion is above player center -> Push straight DOWN
+			blast_dir = Vector3.DOWN
 		else:
+			# Explosion is below/beside player center -> Push straight UP
 			blast_dir = Vector3.UP
 		distance = 0.2
 	else:
 		blast_dir = blast_vec.normalized()
 
-	# Moderate vertical boost bias
-	blast_dir.y += y_bias
-	blast_dir = blast_dir.normalized()
+	# Apply y_bias ONLY when pushing UPWARDS (prevents ceiling shots from getting X/Z drift)
+	if blast_dir.y > 0.0:
+		blast_dir.y += y_bias
+		blast_dir = blast_dir.normalized()
 
-	# Linear distance falloff (1.0 at impact point, 0.0 at edge of blast_radius)
+	# Linear distance falloff
 	var falloff = 1.0 - (distance / blast_radius)
 	var final_velocity = blast_dir * force * falloff
 
-	if player.has_method("add_explosion_knockback"):
-		player.add_explosion_knockback(final_velocity)
-	elif "velocity" in player:
-		player.velocity += final_velocity
+	if player.movement and player.movement.has_method("add_explosion_knockback"):
+		player.movement.add_explosion_knockback(final_velocity)
 
 
 func getLifetime() -> void:
